@@ -6,13 +6,15 @@ public class LuckyNumberRecord {
 	int wid;
 	int lucky_money;
 	int round;
+	String trade_time;
 	public LuckyNumberRecord() {}
-	public LuckyNumberRecord(int rid, int wid, int lucky_money, int round) {
+	public LuckyNumberRecord(int rid, int wid, int lucky_money, int round, String trade_time) {
 		super();
 		this.rid = rid;
 		this.wid = wid;
 		this.lucky_money = lucky_money;
 		this.round = round;
+		this.trade_time = trade_time;
 	}
 	public int getRid() {
 		return rid;
@@ -37,6 +39,12 @@ public class LuckyNumberRecord {
 	}
 	public void setRound(int round) {
 		this.round = round;
+	}
+	public String getTrade_time() {
+		return trade_time;
+	}
+	public void setTrade_time(String trade_time) {
+		this.trade_time = trade_time;
 	}
 	
 }

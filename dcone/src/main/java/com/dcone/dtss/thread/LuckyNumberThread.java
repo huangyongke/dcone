@@ -46,8 +46,8 @@ public class LuckyNumberThread extends Thread{
 					int total = LuckyNumberDAO.getTotalByRound(round, jdbcTemplate);
 					int money = 0;
 					if(total>0) {
-						if(total>50000) {
-							money = r.nextInt(50000);
+						if(total>5000) {
+							money = r.nextInt(5000);
 						}
 						else 
 							money = total;

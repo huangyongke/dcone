@@ -1,5 +1,8 @@
 package com.dcone.dtss.dao;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -19,7 +22,10 @@ public class LuckyNumberRecordDAO {
 	 * @return    true:插入成功;false:插入失败
 	 */
 	public static boolean newLuckyNumberRecord(int wid,int luckymoney,int round,JdbcTemplate jdbcTemplate) {
-		int i = jdbcTemplate.update("insert into lucky_money_record values(null,?,?,?)", new Object[] {wid,luckymoney,round});
+		Date date = new Date();
+		String nowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+		Timestamp datetime = Timestamp.valueOf(nowTime);
+		int i = jdbcTemplate.update("insert into lucky_money_record values(null,?,?,?,?)", new Object[] {wid,luckymoney,round,datetime});
 		if(i>=0) {
 			return true;
 		}
