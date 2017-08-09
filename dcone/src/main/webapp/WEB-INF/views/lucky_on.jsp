@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-红包雨开启,一大波红包来袭...
+
+<div align="center"><h1>红包雨开启,一大波红包来袭···</h1><br><img height="400" width="350" align="middle" alt="" src="img/sendluckymoney.gif"><br><h2>查看红包发放<a href="getRecord">详情</a></h2></div>
+
 </body>
 </html>

@@ -8,11 +8,14 @@
 <title>Insert title here</title>
 </head>
 <body>
+<div align="center">
 <table cellspacing="20">
+<caption>红包发放记录</caption>
 <tr><td>钱包</td><td align="center">金额</td><td align="center">时间</td></tr>
 <c:forEach items="${records }" var="record">
 <tr><td>${record.wid }</td><td>${record.lucky_money }</td><td>${record.trade_time }</td></tr>
 </c:forEach>
 </table>
+</div>
 </body>
 </html>

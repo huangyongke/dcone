@@ -39,6 +39,8 @@ public class LuckyNumberThread extends Thread{
 		// TODO Auto-generated method stub
 		super.run();
 		List<dc_wallet> wallets = WalletDAO.getAllWallets(jdbcTemplate);
+		if(wallets.isEmpty())
+			return;
 		while(flag) {
 			for(dc_wallet wallet : wallets) {
 				if(flag) {

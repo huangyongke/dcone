@@ -29,6 +29,7 @@ public class AdminController {
 	}
 	@RequestMapping("/lucky_on") 
 	public String Lucky_on(String round) {
+		if(round!="") {
 		LuckyNumberThread t = new LuckyNumberThread();
 		t.setJdbcTemplate(jdbcTemplate);
 		int r = 0;
@@ -40,6 +41,7 @@ public class AdminController {
 		t.setFlag(true);
 		t.setRound(r);
 		t.start();
+		}
 		return "lucky_on";
 	}
 	@RequestMapping("/getRecord")
