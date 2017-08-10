@@ -60,7 +60,7 @@ public class UserDAO {
 				int i = jdbcTemplate.update("update dc_user set password = ? where itcode=?",new Object[] {password,itcode});
 				if(i>0) {
 					dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
-					jdbcTemplate.update("insert into dc_message values(?,null);",user.getUid());
+					jdbcTemplate.update("insert into dc_photo values(?,null);",user.getUid());
 					return 1;
 				}
 				else
