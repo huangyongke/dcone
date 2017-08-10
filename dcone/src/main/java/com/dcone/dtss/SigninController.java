@@ -1,7 +1,11 @@
 package com.dcone.dtss;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,43 +28,58 @@ public class SigninController {
 	
 	
 	@RequestMapping("/sign")
-	public String register(String itcode,String username,String password,String imagecheck,HttpSession session,Model model) {
+	public void register(String itcode,String username,String password,String imagecheck,HttpSession session,HttpServletResponse response) {
 		int answer=((Integer)session.getAttribute("answer")).intValue();
 		String image=Integer.toString(answer);
-		String result="";
-		if(image.equals(imagecheck)){
-			if(UserDAO.checkUserInfo(itcode, username, jdbcTemplate)) {
-				
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			if(image.equals(imagecheck)){
+				int i = UserDAO.setPassword(itcode, username, password, jdbcTemplate);
+				out.println(i);
+			}else
+				out.println("4");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 			}
-		}else
-			result="×¢²áÊ§°Ü£¬ÑéÖ¤Âë´íÎó£¡";
-		return "sign";
-	}
 	@RequestMapping("/login")
 	public String login() {
 		return "login";
 	}
 	@RequestMapping("/signin")
-	public String signin(String itcode,String username,String imagecheck,HttpSession session ,Model model) {
+	public void signin(String itcode,String password,String imagecheck,HttpSession session,HttpServletResponse response ,Model model) {
+		
 		try {
-			username = new String(username.getBytes("ISO-8859-1"),"UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		if(UserDAO.checkUserInfo(itcode, username, jdbcTemplate)) {
+			PrintWriter out = response.getWriter();
 			int answer = ((Integer)session.getAttribute("answer")).intValue();
 			int result = Integer.parseInt(imagecheck);
 			if(answer== result) {
-				session.setAttribute("itcode", itcode);
-				return "main";
+				if(UserDAO.checkUser(itcode, password, jdbcTemplate)) {
+					session.setAttribute("itcode", itcode);
+					out.println("1");
+				}
+				else {
+					out.println("0");
+				}
 			}
+			else
+				out.println("2");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return "filed";
+		
 	}
-	@RequestMapping("/target")
-	public String target() {
-		return "target";
+	
+	@RequestMapping("/main")
+	public String main() {
+		return "main";
 	}
 	
 }

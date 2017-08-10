@@ -39,71 +39,41 @@ function initAjax(){
 	   }
 	return xmlhttp;
 }
-function submit1(a){
+function submit1(a,b){
 	var money = document.getElementById(a).value
+	document.getElementById(a).value=""
 	var httprequest=initAjax();
+	if(money!=""){
 	httprequest.open("post", "setReward", true);
 	httprequest.onreadystatechange = function(){
-		if(httprequest.readyState==4)
-			{
+		if(httprequest.readyState==4){
 			if(httprequest.status == 200) {
-				
-				if(httprequest.responseText==1){
-					document.getElementById("info").innerHTML="打赏成功";
-					<% System.out.println("打赏成功"); %>
-					window.location.href="program";
-					}
-
-				else {
-					document.getElementById("info").innerHTML="登录失败！";
-					<% System.out.println("打赏失败"); %>
+				if(httprequest.responseText==0){
+					alert("打赏失败,余额不足")
 				}
-				
-				
+				else  {
+					alert("打赏成功")
+					document.getElementById(b).innerHTML=httprequest.responseText
+				}
 			}
-			}
+		}
 		
 	};
 	httprequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
 	var pr="pid="+a+"&money="+money;
 	httprequest.send(pr);
+	}
 }
 
 
-<%-- function setId(a){
-	document.getElementById("pid").value=a
-	//var mon=prompt("请输入打赏金额","0");
-		<% System.out.println("成功"); %>
-	document.getElementById("money").value=document.getElementById(a).value	
-
-$.ajax({
-    type: "post",
-    url: '/dtss/RewardController/setReward.hml',
-    async:true,
-    data: {money:$('#money').val(), pid:$('#pid').val()},
-    dataType: "json",
-    success: function(data){
-    	if(data=="success"){
-    		alert("打赏成功");
-    		<%="success" %>
-    	}
-    	else
-    		alert("账户余额不足");
-    }
-})
-}
- --%>
- </script>
+</script>
 <form action="" method="get" id="fram1" name="fram1">
 <table>
-<tr><td colspan="3"><div id="info" style="color: red;">你好</div></td></tr>
 <tr><td align="center">节目名称</td><td align="center">表演者</td><td align="center">表演时间</td><td align="center">部门</td><td align="center">总打赏金额</td><td align="center">打赏</td></tr>
 <c:forEach items="${menu }" var="program">
-<tr><td>${program.program}</td><td>${program.actor }</td><td>${program.showtime }</td><td>${program.department }</td><td>${program.reward}</td><td><input id="${program.pid }"></td><td><input type="button" value="打赏" onclick="submit1(${program.pid})"></td></tr>
-
+<tr><td>${program.program}</td><td>${program.actor }</td><td>${program.showtime }</td><td align="center">${program.department }</td><td align="center"><div id="${program.sequence }">${program.reward}</div></td><td><input id="${program.pid }"></td><td><input type="button" value="打赏" onclick="submit1(${program.pid},${program.sequence })"></td></tr>
 </c:forEach>
-<tr><td><input type="hidden" name="pid" id="pid" value="0"></td></tr>
-<tr><td><input type="hidden" name="money" id="money" value="0"></td></tr>
+
 </table>
 </form>
 </body>

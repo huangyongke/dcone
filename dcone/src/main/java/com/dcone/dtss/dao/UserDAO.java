@@ -24,7 +24,49 @@ public class UserDAO {
 			return true;
 		return false;
 	}
+	/**
+	 * 判断用户登录是否正确
+	 * @param itcode	用户的员工号
+	 * @param password   用户的密码
+	 * @param jdbcTemplate	 Spring JdbcTemplate 对象
+	 * @return   true:用户密码正确；false:用户密码错误
+	 */
+	public static boolean checkUser(String itcode,String password,JdbcTemplate jdbcTemplate) {
+		int i = jdbcTemplate.queryForInt("select count(*) from dc_user where itcode=? and password=?", new Object[] {itcode,password});
+		if(i>0)	
+			return true;
+		return false;
+	}
 	
+	public static boolean checkPassword(String itcode,JdbcTemplate jdbcTemplate) {
+		RowMapper<dc_user> user_mapper = new BeanPropertyRowMapper<dc_user>(dc_user.class);
+		dc_user user = jdbcTemplate.queryForObject("select * from dc_user where itcode=? ",user_mapper,itcode);
+		if(user.getPassword()==null)
+			return false;
+		return true;
+	}
+	
+	/**
+	 * 设置密码
+	 * @param itcode   用户员工号
+	 * @param username    用户姓名
+	 * @param password    用户设置密码
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return    0:用户名和员工号不匹配;1:设置成功;2:设置失败;3:该账户已经设置密码
+	 */
+	public static int setPassword(String itcode,String username,String password,JdbcTemplate jdbcTemplate) {
+		if(checkUserInfo(itcode, username, jdbcTemplate))
+			if(!checkPassword(itcode, jdbcTemplate)) {
+				int i = jdbcTemplate.update("update dc_user set password = ? where itcode=?",new Object[] {password,itcode});
+				if(i>0)
+					return 1;
+				else
+					return 2;
+			} else
+				return 3;
+		else
+			return 0;
+	}
 	/**
 	 * 通过用户id获取用户对象
 	 * @param uid	用户的id
@@ -82,8 +124,8 @@ public class UserDAO {
 	 * @param jdbcTemplate   Spring JdbcTemplate 对象
 	 * @return   true:创建用户成功; false:创建用户失败
 	 */
-	public static boolean createuser(String itcode,String username,JdbcTemplate jdbcTemplate) {
-		int i=jdbcTemplate.update("insert into dc_user values(null,?,?,0)", new Object[]{itcode,username});
+	public static boolean createuser(String itcode,String username,String password,JdbcTemplate jdbcTemplate) {
+		int i=jdbcTemplate.update("insert into dc_user values(null,?,?,?,0)", new Object[]{itcode,username,password});
 		if(i>0)
 			return true;
 		return false;

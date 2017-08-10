@@ -25,12 +25,6 @@ public class RewardController {
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
-	@RequestMapping("/reward")
-	public String programReward(int pid,int amount,HttpSession session, Model model) {
-		String itcode = (String)session.getAttribute("itcode");
-		RewardRecordDAO.Reward(itcode, pid, amount, jdbcTemplate);
-		return "reward";
-	}
 	
 	@RequestMapping("/rewardrecord")
 	public String rewardRecord(Model model) {
@@ -46,7 +40,7 @@ public class RewardController {
 	}
 	
 	@RequestMapping(value="/setReward",method=RequestMethod.POST)
-	public String setReward(String pid ,String money,Model model,HttpServletRequest request, HttpServletResponse response){
+	public void setReward(String pid ,String money,Model model,HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
 		String itcode=(String) session.getAttribute("itcode");
 		System.out.println(itcode+pid+money);
@@ -55,16 +49,16 @@ public class RewardController {
 		try {
 			PrintWriter out = response.getWriter();
 			if(RewardRecordDAO.Reward(itcode,id,amount,jdbcTemplate)) {
-				out.println("1");
-				return "1";
+				ProgramMenu program = ProgramMenuDAO.getProgramByPid(id, jdbcTemplate);
+				out.println(program.getReward());
 			}
-			out.println("0");
+			else
+				out.println("0");
 		} catch (IOException e) {
 				// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "0";
-
+		
 	}
 }
 

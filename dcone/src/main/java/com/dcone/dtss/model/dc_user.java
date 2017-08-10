@@ -4,16 +4,17 @@ public class dc_user {
 	int uid;
 	String itcode;
 	String username;
+	String password;
 	int locked;
 	public dc_user() {}
-	public dc_user(int uid, String itcode, String username, int locked) {
+	public dc_user(int uid, String itcode, String username, String password, int locked) {
 		super();
 		this.uid = uid;
 		this.itcode = itcode;
 		this.username = username;
+		this.password = password;
 		this.locked = locked;
 	}
-
 	public int getUid() {
 		return uid;
 	}
@@ -39,9 +40,15 @@ public class dc_user {
 	public void setLocked(int locked) {
 		this.locked = locked;
 	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	@Override
 	public String toString() {
-		return "dc_user [uid=" + uid + ", itcode=" + itcode + ", username=" + username + ", locked=" + locked + "]";
+		return "dc_user [uid=" + uid + ", itcode=" + itcode + ", username=" + username + ", password=" + password
+				+ ", locked=" + locked + "]";
 	}
-	
 }

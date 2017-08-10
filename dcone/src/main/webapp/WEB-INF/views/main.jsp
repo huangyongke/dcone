@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <frameset cols="25%,*">
 	<frame src="menu.html">
-	<frame src="target" name="mainframe">
+	<frame src="program" name="mainframe">
 </frameset>
 </head>
 <body>

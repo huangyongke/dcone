@@ -9,7 +9,7 @@
 function check() {
 	var is=true
 	var itcode=document.form1.itcode.value
-	var name=document.form1.name.value
+	var username=document.form1.username.value
 	var password=document.form1.password.value
 	var repassword=document.form1.repassword.value
 	if(itcode==""){
@@ -19,13 +19,13 @@ function check() {
 	else{
 		document.getElementById("itcode").innerHTML=""
 	}
-	if(name=="")
+	if(username=="")
 		{
-		document.getElementById("name").innerHTML="姓名不能为空"
+		document.getElementById("username").innerHTML="姓名不能为空"
 		is=false
 		}
 	else
-		document.getElementById("name").innerHTML=""
+		document.getElementById("username").innerHTML=""
 	if(password=="")
 		{
 		document.getElementById("password").innerHTML="密码不能为空"
@@ -93,7 +93,7 @@ function checkname(){
 	if(check()){
 	var httprequest=initAjax();
 	var itcode=document.form1.itcode.value
-	var name=document.form1.name.value;
+	var username=document.form1.username.value;
 	var password=document.form1.password.value;
 	var imagecheck=document.form1.imagecheck.value
 	httprequest.open("post", "sign", true);
@@ -103,24 +103,28 @@ function checkname(){
 				var h=httprequest.responseText;
 				if(h==0)
 					{
-					document.getElementById("info").innerHTML="注册失败！用户名已存在";
-					response.addHeader("refresh", "2;url=register.html");
+					document.getElementById("info").innerHTML="注册失败！用户名和员工号不匹配;";
 					}
 				else if(h==1)
 					{
-					document.getElementById("info").innerHTML="注册成功!前去<a href='login.jsp'>登录</a>";
-					response.addHeader("refresh", "2;url=login.jsp");
+					document.getElementById("info").innerHTML="注册成功!前去<a href='login'>登录</a>";
 					//window.location.href="register.jsp";
 					}
 				else if(h==2)
 					{
-					document.getElementById("info").innerHTML="注册失败！验证码错误";
+					document.getElementById("info").innerHTML="注册失败！";
 					}
+				else if(h==3){
+				document.getElementById("info").innerHTML="注册失败！该账户已经设置密码";
+				}
+				else if(h==4){
+				document.getElementById("info").innerHTML="注册失败！验证码错误";
+				}
 			}
 		}
 	};
 	httprequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
-	var pr="itcode="+itcode+"&name="+name+"&password="+password+"&imagecheck="+imagecheck;
+	var pr="itcode="+itcode+"&username="+username+"&password="+password+"&imagecheck="+imagecheck;
 	httprequest.send(pr);
 	}
 } 
@@ -133,6 +137,7 @@ function checkname(){
 <body>
 <form action="" name="form1" method="get" onsubmit="">
 <table style="position:absolute;left: 35%;top: 10%;background-image: url('background.gif');" cellspacing="10">
+<tr><td colspan="3"><div id="info" style="color: red;"></div></td></tr>
 <caption style="font-size: large;">注册</caption>
 <tr>
 	<td colspan="3"><div id="info" style="color: red;"></div></td>
@@ -144,8 +149,8 @@ function checkname(){
 </tr>
 <tr>
 	<td>姓名：</td>
-	<td><input type="text" name="name" onblur="check()" style="width: 100%"></td>
-	<td><div id="name" style="color: red;">姓名不能为空</div></td>
+	<td><input type="text" name="username" onblur="check()" style="width: 100%"></td>
+	<td><div id="username" style="color: red;">姓名不能为空</div></td>
 </tr>
 <tr>
 	<td>密码：</td>
