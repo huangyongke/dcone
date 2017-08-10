@@ -30,7 +30,7 @@ function changed() {
 <tr><td></td><td align="center" colspan="2">登录页面</td></tr>
 <tr><td>员工号:</td><td colspan="2"><input name="itcode" id="itcode"></td></tr>
 <tr><td>姓名:</td><td colspan="2"><input  name="username" id="username"></td></tr>
-<tr><td>验证码:</td><td colspan="2"><input name="imagecheck" id="imagecheck"></td><td><img name="image" id="image" alt="" src="/checkimage" onclick="changed()"></td></tr>
+<tr><td>验证码:</td><td colspan="2"><input name="imagecheck" id="imagecheck"></td><td><img name="image" id="image" alt="" src="checkimage" onclick="changed()"></td></tr>
 <tr><td></td><td><input type="submit" value="登录" onclick="checkname()"></td><td><input type="button" value="注册" onclick="register()"></tr>
 </table>
 </form>

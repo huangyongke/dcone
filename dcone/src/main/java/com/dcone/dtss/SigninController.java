@@ -53,9 +53,14 @@ public class SigninController {
 			int result = Integer.parseInt(imagecheck);
 			if(answer== result) {
 				session.setAttribute("itcode", itcode);
-				return "menu";
+				return "main";
 			}
 		}
 		return "filed";
 	}
+	@RequestMapping("/target")
+	public String target() {
+		return "target";
+	}
+	
 }

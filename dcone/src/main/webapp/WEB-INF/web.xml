@@ -22,6 +22,21 @@
     <servlet-name>default</servlet-name>
     <url-pattern>*.jpg</url-pattern>
   </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.html</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <description></description>
+    <display-name>CheckImage</display-name>
+    <servlet-name>CheckImage</servlet-name>
+    <servlet-class>servlet.CheckImage</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CheckImage</servlet-name>
+    <url-pattern>/CheckImage</url-pattern>
+    <url-pattern>/checkimage</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>appServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -35,15 +50,5 @@
     <servlet-name>appServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>CheckImage</display-name>
-    <servlet-name>CheckImage</servlet-name>
-    <servlet-class>servlet.CheckImage</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CheckImage</servlet-name>
-    <url-pattern>/CheckImage</url-pattern>
-    <url-pattern>/checkimage</url-pattern>
-  </servlet-mapping>
+ 
 </web-app>

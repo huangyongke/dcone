@@ -160,7 +160,7 @@ function checkname(){
 <tr>
 	<td>验证码:</td>
 	<td><input name="imagecheck" id="imagecheck" style="width: 100%"></td>
-	<td><img name="image" id="image" alt="" src="/checkimage"  onclick="changed()"></td>
+	<td><img name="image" id="image" alt="" src="checkimage"  onclick="changed()"></td>
 </tr>
 
 <tr><td colspan="3" align="center"><input type="button" value="注册" onclick="checkname()"></td></tr>
