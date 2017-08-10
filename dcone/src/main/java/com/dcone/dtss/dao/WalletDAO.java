@@ -93,5 +93,15 @@ public class WalletDAO {
 		return false;
 	}
 	
-	
+	public static boolean wallet_subtract(int wid,int amount,JdbcTemplate jdbcTemplate) {
+		int money = getWalletByWid(wid, jdbcTemplate).getAmount();
+		if(money>=amount) {
+			int i = jdbcTemplate.update("update dc_wallet set amount = amount - ? where wid=?",new Object[] {amount,wid});
+			if(i>0) 
+				return true;
+			return false;
+		}
+		else 
+			return false;
+	}
 }

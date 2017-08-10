@@ -33,7 +33,7 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		logger.info(formattedDate);
-		return "home";
+		return "login";
 	}
 	
 }

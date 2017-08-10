@@ -42,4 +42,28 @@ public class LuckyNumberRecordDAO {
 		List<LuckyNumberRecord> luckNumerRecords = jdbcTemplate.query("select * from lucky_money_record",LuckyNumberRecord_mapper);
 		return luckNumerRecords;
 	}
+	
+	/**
+	 * 获取某一用户红包雨记录
+	 * @param wid   用户钱包ID
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return   该用户红包雨记录LuckyNumberRecord对象列表
+	 */
+	public static List<LuckyNumberRecord> getRecordsByWid(int wid,JdbcTemplate jdbcTemplate) {
+		RowMapper<LuckyNumberRecord> LuckyNumberRecord_mapper = new BeanPropertyRowMapper<LuckyNumberRecord>(LuckyNumberRecord.class);
+		List<LuckyNumberRecord> luckNumerRecords = jdbcTemplate.query("select * from lucky_money_record where wid=?",LuckyNumberRecord_mapper,wid);
+		return luckNumerRecords;
+	}
+	
+	/**
+	 * 某一轮红包雨记录
+	 * @param round   红包雨的轮数
+	 * @param jdbcTemplate    Spring JdbcTemplate 对象
+	 * @return    该轮红包雨记录LuckyNumberRecord对象列表
+	 */
+	public static List<LuckyNumberRecord> getRecordsByRound(int round,JdbcTemplate jdbcTemplate) {
+		RowMapper<LuckyNumberRecord> LuckyNumberRecord_mapper = new BeanPropertyRowMapper<LuckyNumberRecord>(LuckyNumberRecord.class);
+		List<LuckyNumberRecord> luckNumerRecords = jdbcTemplate.query("select * from lucky_money_record where round=?",LuckyNumberRecord_mapper,round);
+		return luckNumerRecords;
+	}
 }
