@@ -58,8 +58,11 @@ public class UserDAO {
 		if(checkUserInfo(itcode, username, jdbcTemplate))
 			if(!checkPassword(itcode, jdbcTemplate)) {
 				int i = jdbcTemplate.update("update dc_user set password = ? where itcode=?",new Object[] {password,itcode});
-				if(i>0)
+				if(i>0) {
+					dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
+					jdbcTemplate.update("insert into dc_message values(?,null);",user.getUid());
 					return 1;
+				}
 				else
 					return 2;
 			} else
