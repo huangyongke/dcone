@@ -205,4 +205,32 @@ public class UserDAO {
 		dc_user user=getUserByItcode(itcode, jdbcTemplate);
 		return islockByUid(user.getUid(), jdbcTemplate);
 	}
+	
+	/**
+	 * 判断用户是否是管理员
+	 * @param uid   用户ID
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return    true:用户是管理员;false:用户不是管理员
+	 */
+	public static boolean isadminByUid(int uid,JdbcTemplate jdbcTemplate) {
+		int i = jdbcTemplate.queryForInt("select locked from dc_user where uid= ?",uid);
+		if(i==2) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	
+	/**
+	 * 通过用户员工号判断用户是否是管理员
+	 * @param itcode    用户员工号
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return   true:用户是管理员;false:用户不是管理员
+	 */
+	public static boolean isadminByItcode(String itcode,JdbcTemplate jdbcTemplate) {
+		dc_user user=getUserByItcode(itcode, jdbcTemplate);
+		return isadminByUid(user.getUid(), jdbcTemplate);
+	}
 }

@@ -189,14 +189,11 @@ public class TradeDAO {
 	 * @param jdbcTemplate  Spring JdbcTemplate 对象
 	 * @return  1:充值成功; -1:用户不存在; 0:其他原因
 	 */
-	public static boolean balance_add(String itcode,String username, int amount,String memo ,Locale locale, JdbcTemplate jdbcTemplate) {
-		if(UserDAO.checkUserInfo(itcode, username, jdbcTemplate)) {
-			System.out.println("用户信息正确");
-			dc_wallet wallet = WalletDAO.getWalletByItcode(itcode, jdbcTemplate);
-			if(createTrade(wallet.getWid(), amount, memo, jdbcTemplate)){
-				if(WalletDAO.wallet_add(wallet.getWid(), amount, jdbcTemplate)) {
-					return true;
-				}
+	public static boolean balance_add(String itcode,int amount,String memo ,Locale locale, JdbcTemplate jdbcTemplate) {
+		dc_wallet wallet = WalletDAO.getWalletByItcode(itcode, jdbcTemplate);
+		if(createTrade(wallet.getWid(), amount, memo, jdbcTemplate)){
+			if(WalletDAO.wallet_add(wallet.getWid(), amount, jdbcTemplate)) {
+				return true;
 			}
 		}
 		return false;

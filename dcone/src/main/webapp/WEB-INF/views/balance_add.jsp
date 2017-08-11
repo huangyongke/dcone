@@ -9,10 +9,7 @@
 <body>
 <form name="form1" action="balance_adding">
 <table>
-<tr><td>ITCode</td><td><input name="itcode"></td></tr>
-<tr><td>姓名:</td><td><input name="username"></td></tr>
-<tr><td>充值金额:</td><td><input name="amount"></td></tr>
-<tr><td><input type="submit" value="充值"></td><td></td></tr>
+<tr><td>充值金额:</td><td><input name="amount"></td><td><input type="submit" value="充值"></td><td></td></tr>
 </table>
 </form>
 

@@ -11,7 +11,7 @@
 这个页面显示充值结果!
 <hr>
 <c:choose>
-	<c:when test="${result=='充值成功'}"><div><c:out value="${result},您成功充值${amount},您的账户余额为${money}"></c:out><a href="balance_get">历史记录</a></div></c:when>
+	<c:when test="${result=='充值成功'}"><div><c:out value="${result},您成功充值${amount},您的账户余额为${money}"></c:out><a href="walletinfo">返回</a></div></c:when>
 	<c:otherwise>${result}</c:otherwise>
 </c:choose>
 </body>

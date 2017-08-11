@@ -51,7 +51,6 @@ public class SigninController {
 	}
 	@RequestMapping("/signin")
 	public void signin(String itcode,String password,String imagecheck,HttpSession session,HttpServletResponse response ,Model model) {
-		
 		try {
 			PrintWriter out = response.getWriter();
 			int answer = ((Integer)session.getAttribute("answer")).intValue();
@@ -81,5 +80,13 @@ public class SigninController {
 	public String main() {
 		return "main";
 	}
-	
+	@RequestMapping("/menu")
+	public String menu(HttpSession session) {
+		String itcode = (String)session.getAttribute("itcode");
+		if(!UserDAO.isadminByItcode(itcode, jdbcTemplate))
+			return "menu";
+		else
+			return "adminmenu";
+	}
+
 }

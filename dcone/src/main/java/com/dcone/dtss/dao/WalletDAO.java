@@ -45,6 +45,30 @@ public class WalletDAO {
 	}
 	
 	/**
+	 * 判断用户是否已经激活钱包账户
+	 * @param uid   用户id
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return   true:用户已激活钱包账户;false:用户没有激活钱包账户
+	 */
+	public static boolean isexistByUid(int uid,JdbcTemplate jdbcTemplate) {
+		int i = jdbcTemplate.queryForInt("select count(*) from dc_wallet where uid =?",uid);
+		if(i>0)
+			return true;
+		return false;
+	}
+	
+	/**
+	 * 判断用户是否已经激活钱包账户
+	 * @param itcode   用户员工号
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return   true:用户已激活钱包账户;false:用户没有激活钱包账户
+	 */
+	public static boolean isexistByItcode(String itcode,JdbcTemplate jdbcTemplate) {
+		dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
+		return isexistByUid(user.getUid(), jdbcTemplate);
+	}
+	
+	/**
 	 * 通过用户id激活钱包
 	 * @param uid   用户id
 	 * @param jdbcTemplate    Spring JdbcTemplate 对象
@@ -61,7 +85,7 @@ public class WalletDAO {
 	 * 通过用户员工号激活钱包
 	 * @param itcode   用户员工号
 	 * @param jdbcTemplate   Spring JdbcTemplate 对象
-	 * @return   Spring JdbcTemplate 对象
+	 * @return   true:激活成功;false:激活失败
 	 */
 	public static boolean initWallet(String itcode,JdbcTemplate jdbcTemplate) {
 		dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);

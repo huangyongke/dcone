@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -28,8 +29,11 @@ function check() {
 <body>
 <form name="from1" action="balance_getting" onsubmit="return check()">
 <table>
-<tr><td>请选择日期:</td><td><input name="date" onblur="check()"></td><td><div id="date" style="color: red;"></div></td></tr>
-<tr><td></td><td><input type="submit" value="查找"></td></tr>
+<tr><td>请选择日期:</td><td><input name="date" onblur="check()"></td><td><input type="submit" value="查找"><td><div id="date" style="color: red;"></div></td></tr>
+<tr><td>交易号</td><td>交易金额</td><td align="center">交易时间</td></tr>
+<c:forEach items="${trades }" var="t">
+<tr><td>${t.tid}</td><td>${t.volume}</td><td>${t.tradetime}</td></tr>
+</c:forEach>
 </table>
 </form>
 </body>

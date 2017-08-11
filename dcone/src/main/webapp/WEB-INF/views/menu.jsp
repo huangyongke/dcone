@@ -5,11 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<frameset cols="25%,*">
-	<frame src="menu">
-	<frame src="program" name="mainframe">
-</frameset>
 </head>
 <body>
+<a href="program" target="mainframe">节目打赏</a><br>
+<a href="../wechat/frame.jsp" target="mainframe">聊天室</a><br>
+<a href="" target="mainframe">抢红包</a><br>
+<a href="walletinfo" target="mainframe">红包信息</a><br>
 </body>
 </html>

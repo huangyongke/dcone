@@ -56,8 +56,7 @@ function checkname(){
 			if(httprequest.status == 200) {
 				if(httprequest.responseText==1)
 					{
-					send()
-					
+					window.location.href="main";
 					}
 				else if(httprequest.responseText==2){
 					
