@@ -58,7 +58,7 @@ public class MessageDAO {
 		Date date = new Date();
 		String nowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
 		Timestamp datetime = Timestamp.valueOf(nowTime);
-		int i = jdbcTemplate.update("insert into dc_message values(?,?,?)", new Object[]{uid,datetime,message});
+		int i = jdbcTemplate.update("insert into dc_message values(null,?,?,?)", new Object[]{uid,datetime,message});
 		if(i>0)
 			return true;
 		return false;

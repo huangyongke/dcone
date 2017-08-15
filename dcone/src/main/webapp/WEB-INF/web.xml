@@ -7,6 +7,9 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  <listener>
+    <listener-class>Listen.OnLineCount</listener-class>
+  </listener>
   <servlet-mapping>
     <servlet-name>default</servlet-name>
     <url-pattern>/css/*</url-pattern>
@@ -26,7 +29,7 @@
     <servlet-name>default</servlet-name>
     <url-pattern>*.html</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
     <description></description>
     <display-name>CheckImage</display-name>
     <servlet-name>CheckImage</servlet-name>
@@ -50,5 +53,18 @@
     <servlet-name>appServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
- 
-</web-app>
+  <servlet>
+    <description></description>
+    <display-name>Images</display-name>
+    <servlet-name>Images</servlet-name>
+    <servlet-class>servlet.Images</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Images</servlet-name>
+    <url-pattern>/Images</url-pattern>
+    <url-pattern>/images</url-pattern>
+  </servlet-mapping>
+  <!-- <listener>
+    <listener-class>Listen.OnLine</listener-class>
+  </listener> -->
+  </web-app>

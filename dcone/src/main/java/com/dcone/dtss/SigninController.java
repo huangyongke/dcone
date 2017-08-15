@@ -3,7 +3,9 @@ package com.dcone.dtss;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,8 +15,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dcone.dtss.dao.UserDAO;
+import com.dcone.dtss.model.dc_user;
 
 @Controller
 public class SigninController {
@@ -57,7 +61,9 @@ public class SigninController {
 			int result = Integer.parseInt(imagecheck);
 			if(answer== result) {
 				if(UserDAO.checkUser(itcode, password, jdbcTemplate)) {
+					dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
 					session.setAttribute("itcode", itcode);
+					session.setAttribute("username", user.getUsername());
 					out.println("1");
 				}
 				else {
@@ -75,7 +81,40 @@ public class SigninController {
 		}
 		
 	}
-	
+	@RequestMapping("/signout1")
+	public void signout(HttpSession session,HttpServletRequest request,HttpServletResponse response) {
+		PrintWriter out;
+		try {
+			System.out.println("用户");
+			out = response.getWriter();
+			ServletContext application = session.getServletContext();
+			String itcode = (String)session.getAttribute("itcode");
+			String username = (String)session.getAttribute("username");
+			System.out.println(itcode+username);
+			if(application.getAttribute("onlineuser")==null)
+	    	{
+	    		ArrayList<String> user=new ArrayList<String>();
+	    		application.setAttribute("onlineuser", user);
+	    		session.removeAttribute("username");
+	    		out.print("1");
+	    		System.out.println("移除用户");
+	    	}
+	    	else
+	    	{
+	    		@SuppressWarnings("unchecked")
+				ArrayList<String> user=(ArrayList<String>) application.getAttribute("onlineuser");
+	    		user.remove(username);
+	    		System.out.println("移除用户："+username);
+	    		application.setAttribute("onlineuser", user);
+	    		session.removeAttribute("username");
+	    		out.print("1");
+	    	}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	@RequestMapping("/main")
 	public String main() {
 		return "main";

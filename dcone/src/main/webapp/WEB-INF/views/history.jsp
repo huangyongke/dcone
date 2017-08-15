@@ -11,10 +11,8 @@ function check() {
 	var date=document.from1.date.value
 	var patern = new RegExp("^(?:(?!0000)[0-9]{4}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-8])|(?:0[13-9]|1[0-2])-(?:29|30)|(?:0[13578]|1[02])-31)|(?:[0-9]{2}(?:0[48]|[2468][048]|[13579][26])|(?:0[48]|[2468][048]|[13579][26])00)-02-29)$")
 	var is=true
-	if(date==""){
-		document.getElementById("date").innerHTML="日期不能为空"
-		is=false
-	}
+	if(date=="")
+		return true	
 	else if(!patern.exec(date)){
 		document.getElementById("date").innerHTML="日期格式不正确"	
 		is = false

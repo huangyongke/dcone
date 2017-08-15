@@ -62,12 +62,19 @@ public class BalanceController {
 	}
 	@RequestMapping(value="/balance_getting",method=RequestMethod.GET)
 	public String balancegetting(String date,HttpSession session ,Model model) {
+		if(date!="") {
 		String itcode=(String)session.getAttribute("itcode");
 		String start = date +" 00:00:00";
 		String end = date + " 23:59:59";
 		List<dc_trade> trades=TradeDAO.getTradesByItcode(itcode, start, end, jdbcTemplate);
 		model.addAttribute("trades",trades);
-		return "balance_get_result";
+		}
+		else {
+			String itcode=(String)session.getAttribute("itcode");
+			List<dc_trade> trades=TradeDAO.getTradesByItcode(itcode, jdbcTemplate);
+			model.addAttribute("trades", trades);
+		}
+		return "history";
 	}
 	
 	

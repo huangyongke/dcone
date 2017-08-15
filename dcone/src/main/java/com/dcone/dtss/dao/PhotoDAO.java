@@ -16,8 +16,8 @@ public class PhotoDAO {
 	 * @param jdbcTemplate	  Spring JdbcTemplate 对象
 	 * @return   true:创建头像成功;false:创建头像失败
 	 */
-	public static boolean createPhotoByUid(int uid,Byte[] image,JdbcTemplate jdbcTemplate) {
-		int i = jdbcTemplate.update("update dc_photo set image=? where uid=?",new Object[] {uid,image});
+	public static boolean createPhotoByUid(int uid,byte[] image,JdbcTemplate jdbcTemplate) {
+		int i = jdbcTemplate.update("update dc_photo set image=? where uid=?",new Object[] {image,uid});
 		if(i>0)
 			return true;
 		return false;
@@ -30,7 +30,7 @@ public class PhotoDAO {
 	 * @param jdbcTemplate   Spring JdbcTemplate 对象
 	 * @return    true:创建头像成功;false:创建头像失败
 	 */
-	public static boolean createPhotoByItcode(String itcode,Byte[] image,JdbcTemplate jdbcTemplate) {
+	public static boolean createPhotoByItcode(String itcode,byte[] image,JdbcTemplate jdbcTemplate) {
 		dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
 		return createPhotoByUid(user.getUid(), image, jdbcTemplate);
 	}
@@ -41,7 +41,7 @@ public class PhotoDAO {
 	 * @param jdbcTemplate    Spring JdbcTemplate 对象
 	 * @return   该用户的头像
 	 */
-	public static Byte[] getPhotoByUid(int uid,JdbcTemplate jdbcTemplate) {
+	public static byte[] getPhotoByUid(int uid,JdbcTemplate jdbcTemplate) {
 		RowMapper<dc_photo> user_mapper = new BeanPropertyRowMapper<dc_photo>(dc_photo.class);
 		dc_photo image = jdbcTemplate.queryForObject("select * from dc_photo where uid=?", user_mapper,uid);
 		return image.getImage();
@@ -54,7 +54,7 @@ public class PhotoDAO {
 	 * @param jdbcTemplate    Spring JdbcTemplate 对象
 	 * @return   该用户的头像
 	 */
-	public static Byte[] getPhotoByItcode(String itcode,JdbcTemplate jdbcTemplate) {
+	public static byte[] getPhotoByItcode(String itcode,JdbcTemplate jdbcTemplate) {
 		dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
 		return getPhotoByUid(user.getUid(), jdbcTemplate);
 	}

@@ -5,6 +5,73 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>注册</title>
+<style>
+body {
+	background-image: url(img/luanchbackground.jpg);
+	background-size: cover;
+}
+.outter{
+	
+	position: relative;
+	top:75px;
+	left: 500px;
+}
+.inn1{
+	width:235px;
+	height:38px;
+	border-radius:10px;
+	margin-top:3px;
+	margin-bottom:3px;
+	/*background-color:transparent;*/
+	opacity:0.6;
+	border:1.5px solid #ccc;
+	transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.inn2{
+	width:110px;
+	height:38px;
+	border-radius:10px;
+	margin-top:20px;
+	margin-bottom:10px;
+	/*background-color:transparent;*/
+	opacity:0.6;
+	border:1.5px solid #ccc;
+	transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.inn3{
+	width:80px;
+	height:30px;
+	border-radius:10px;
+	margin-top:20px;
+	margin-bottom:10px;
+	background-color:gray;
+	opacity:0.6;
+	border:1.5px solid #ccc;
+	transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+input:focus{
+	border-color:#66AFE9 !important;
+	outline:0;
+	-webkit-box-shadow:insert 0 ipx 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,223,0.6);
+	-moz-box-shadow:insert 0 ipx 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,223,0.6);
+	box-shadow:insert 0 ipx 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,223,0.6);
+}
+::-webkit-input-placeholder{
+	text-indent: 20px;
+	font-size: 16px;
+	text-align: center;
+}
+::-moz-input-placeholder{
+	text-indent: 20px;
+	font-size: 16px;
+	text-align: center;
+}
+::-ms-input-placeholder{
+	text-indent: 20px;
+	font-size: 16px;
+	text-align: center;
+}
+</style>
 <script type="text/javascript">
 function check() {
 	var is=true
@@ -13,45 +80,33 @@ function check() {
 	var password=document.form1.password.value
 	var repassword=document.form1.repassword.value
 	if(itcode==""){
-		document.getElementById("itcode").innerHTML="员工号不能为空"
-		is=false
-	}
-	else{
-		document.getElementById("itcode").innerHTML=""
+		alert("员工号不能为空");
+		return false
 	}
 	if(username=="")
 		{
-		document.getElementById("username").innerHTML="姓名不能为空"
-		is=false
+		alert("姓名不能为空")
+		return false
 		}
-	else
-		document.getElementById("username").innerHTML=""
 	if(password=="")
 		{
-		document.getElementById("password").innerHTML="密码不能为空"
-		is=false
+		alert("密码不能为空")
+		return false
 		}
 	/* else if(password.length()<6)
 		{
 		document.getElementById("password").innerHTML="密码不能小于6位数"
 			is=false
 		}  */
-	else
-		document.getElementById("password").innerHTML=""
 	if(repassword==""){
-		document.getElementById("repassword").innerHTML="密码不能为空"
-		is=false
+		alert("密码不能为空")
+		return false
 	}
 	else if(password!=repassword){
-		document.getElementById("repassword").innerHTML="确认密码与密码不符合"
-		is=false
-	}
-	else 
-		document.getElementById("repassword").innerHTML=""
-	if(!is)
+		alert("确认密码与密码不符合")
 		return false
-	else
-		return true
+	}
+	return true
 }
 
  function initAjax(){
@@ -104,21 +159,26 @@ function checkname(){
 				if(h==0)
 					{
 					document.getElementById("info").innerHTML="注册失败！用户名和员工号不匹配;";
+					changed()
 					}
 				else if(h==1)
 					{
 					document.getElementById("info").innerHTML="注册成功!前去<a href='login'>登录</a>";
+					changed()
 					//window.location.href="register.jsp";
 					}
 				else if(h==2)
 					{
 					document.getElementById("info").innerHTML="注册失败！";
+					changed()
 					}
 				else if(h==3){
-				document.getElementById("info").innerHTML="注册失败！该账户已经设置密码";
+				document.getElementById("info").innerHTML="注册失败！该账户已经设置密码,前去<a href='login'>登录</a>";
+				changed()
 				}
 				else if(h==4){
 				document.getElementById("info").innerHTML="注册失败！验证码错误";
+				changed()
 				}
 			}
 		}
@@ -127,6 +187,7 @@ function checkname(){
 	var pr="itcode="+itcode+"&username="+username+"&password="+password+"&imagecheck="+imagecheck;
 	httprequest.send(pr);
 	}
+	
 } 
 </script>
 <script type="text/javascript">
@@ -136,39 +197,26 @@ function checkname(){
 
 <body>
 <form action="" name="form1" method="get" onsubmit="">
-<table style="position:absolute;left: 35%;top: 10%;background-image: url('background.gif');" cellspacing="10">
-<tr><td colspan="3"><div id="info" style="color: red;"></div></td></tr>
+<table style="position:absolute;left: 35%;top: 10%;">
+<tr><td colspan="2"><div id="info" style="color: red;"></div></td></tr>
 <caption style="font-size: large;">注册</caption>
 <tr>
-	<td colspan="3"><div id="info" style="color: red;"></div></td>
+	<td colspan="2" ><input type="text" name="itcode"  style="width: 100%" placeholder="请输入用户名" class="inn1"></td>
 </tr>
 <tr>
-	<td>员工号：</td>
-	<td><input type="text" name="itcode" onblur="check()" style="width: 100%"></td>
-	<td><div id="itcode" style="color: red;">员工号不能为空</div></td>
+	<td colspan="2" ><input type="text" name="username" style="width: 100%" placeholder="请输入姓名" class="inn1"></td>
 </tr>
 <tr>
-	<td>姓名：</td>
-	<td><input type="text" name="username" onblur="check()" style="width: 100%"></td>
-	<td><div id="username" style="color: red;">姓名不能为空</div></td>
+	<td colspan="2" ><input type="password" name="password" style="width: 100%" placeholder="请输入密码" class="inn1"></td>
 </tr>
 <tr>
-	<td>密码：</td>
-	<td><input type="password" name="password"  onblur="check()" style="width: 100%"></td>
-	<td><div id="password" style="color: red;">密码不能为空</div></td>
+	<td colspan="2" ><input type="password" name="repassword" style="width: 100%" placeholder="确认密码" class="inn1"></td>
 </tr>
 <tr>
-	<td>确认密码：</td>
-	<td><input type="password" name="repassword" style="width: 100%" onblur="check()"></td>
-	<td><div id="repassword" style="color: red;">密码不能为空</div></td>
-</tr>
-<tr>
-	<td>验证码:</td>
-	<td><input name="imagecheck" id="imagecheck" style="width: 100%"></td>
+	<td><input name="imagecheck" id="imagecheck" style="width: 100%" placeholder="请输入验证码" class="inn2"></td>
 	<td><img name="image" id="image" alt="" src="checkimage"  onclick="changed()"></td>
 </tr>
-
-<tr><td colspan="3" align="center"><input type="button" value="注册" onclick="checkname()"></td></tr>
+<tr><td colspan="2" align="center"><input type="button" value="注册" onclick="checkname()" class="inn3"></td></tr>
 </table>
 </form>
 </body>

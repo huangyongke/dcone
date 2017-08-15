@@ -5,9 +5,9 @@ import java.util.Arrays;
 public class dc_photo {
 
 	int uid;
-	Byte[] image;
+	byte[] image;
 	public dc_photo() {}
-	public dc_photo(int uid, Byte[] image) {
+	public dc_photo(int uid, byte[] image) {
 		super();
 		this.uid = uid;
 		this.image = image;
@@ -18,10 +18,10 @@ public class dc_photo {
 	public void setUid(int uid) {
 		this.uid = uid;
 	}
-	public Byte[] getImage() {
+	public byte[] getImage() {
 		return image;
 	}
-	public void setImage(Byte[] image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 	@Override

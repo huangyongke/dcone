@@ -5,6 +5,73 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>登录</title>
+
+<style type="text/css">
+body {
+	background-image: url(img/luanchbackground.jpg);
+	background-size: cover;
+}
+.outter{
+	position: absolute;
+	top:12%;
+	left: 40%;
+}
+.inn1{
+	width:235px;
+	height:38px;
+	border-radius:10px;
+	margin-top:20px;
+	margin-bottom:10px;
+	/*background-color:transparent;*/
+	opacity:0.6;
+	border:1.5px solid #ccc;
+	transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.inn2{
+	width:110px;
+	height:38px;
+	border-radius:10px;
+	margin-top:20px;
+	margin-bottom:10px;
+	/*background-color:transparent;*/
+	opacity:0.6;
+	border:1.5px solid #ccc;
+	transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.inn3{
+	width:80px;
+	height:30px;
+	border-radius:10px;
+	margin-top:20px;
+	margin-bottom:10px;
+	background-color:gray;
+	opacity:0.6;
+	border:1.5px solid #ccc;
+	transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+input:focus{
+	border-color:#66AFE9 !important;
+	outline:0;
+	-webkit-box-shadow:insert 0 ipx 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,223,0.6);
+	-moz-box-shadow:insert 0 ipx 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,223,0.6);
+	box-shadow:insert 0 ipx 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,223,0.6);
+}
+::-webkit-input-placeholder{
+	text-indent: 20px;
+	font-size: 16px;
+	text-align: center;
+}
+::-moz-input-placeholder{
+	text-indent: 20px;
+	font-size: 16px;
+	text-align: center;
+}
+::-ms-input-placeholder{
+	text-indent: 20px;
+	font-size: 16px;
+	text-align: center;
+}
+</style>
 <script type="text/javascript">
 function check(){
 	var password=document.form1.password.value
@@ -56,6 +123,7 @@ function checkname(){
 			if(httprequest.status == 200) {
 				if(httprequest.responseText==1)
 					{
+					send()
 					window.location.href="main";
 					}
 				else if(httprequest.responseText==2){
@@ -85,12 +153,12 @@ function send(){
 	if(check()){
 	var httprequest=initAjax();
 	var itcode=document.getElementById("itcode").value;
-	httprequest.open("post", "/wechat/login", true);
+	httprequest.open("post", "/wechat/login1", true);
 	httprequest.onreadystatechange = function(){
 		if(httprequest.readyState==4)
 			{
 			if(httprequest.status == 200) {
-				window.location.href="main";				
+		
 			}
 			}
 		
@@ -105,16 +173,17 @@ function send(){
 
 </head>
 <body>
-
 <form action="" name="form1" method="post">
-<table>
-<tr><td colspan="3"><div id="info" style="color: red;"></div></td></tr>
-<tr><td></td><td align="center" colspan="2">登录页面</td></tr>
-<tr><td>员工号:</td><td colspan="2"><input name="itcode" id="itcode"></td></tr>
-<tr><td>密码:</td><td colspan="2"><input  name="password" id="password"></td></tr>
-<tr><td>验证码:</td><td colspan="2"><input name="imagecheck" id="imagecheck"></td><td><img name="image" id="image" alt="" src="checkimage" onclick="changed()"></td></tr>
-<tr><td></td><td><input type="button" value="登录" onclick="checkname()"></td><td><input type="button" value="注册" onclick="register()"></tr>
+<div class=outter >
+<table >
+<tr><td colspan="2"><div id="info" style="color: red;"></div></td></tr>
+<tr><td align="center" colspan="2"><img src="img/36ad55dd352e493c3ed8a53f314fb21f.png" width="100px" height="100px" style="opacity:0.8"></td></tr>
+<tr><td colspan="2"><input name="itcode" id="itcode" placeholder="请输入员工号" class=inn1></td></tr>
+<tr><td colspan="2"><input  name="password" id="password" placeholder="请输入密码" class=inn1></td></tr>
+<tr><td><input name="imagecheck" id="imagecheck" placeholder="请输入验证码" class=inn2></td><td align="center" valign="middle"><img name="image" id="image" alt="" src="checkimage" onclick="changed()"></td></tr>
+<tr><td align="center" valign="middle"><input type="button" value="登录" onclick="checkname()" class="inn3"></td><td align="center" valign="middle"><input type="button" value="注册" onclick="register()" class="inn3"></tr>
 </table>
+</div>
 </form>
 </body>
 <script type="text/javascript">

@@ -4,13 +4,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>聊天室</title>
 </head>
+<frameset cols="25%,75%">
+	<frameset rows="20%,*">
+		<frame src="back" />
+		<frame src="frame_a" />
+	</frameset>
+  
+  <frameset rows="75%,25%">
+  	<frame src="/wechat/frame_b.jsp" /> 
+  	<frame src="frame_c" />
+</frameset>
+</frameset>
 <body>
-<a href="program" target="mainframe">节目打赏</a><br>
-<a href="frame" target="mainframe">聊天室</a><br>
-<a href="" target="mainframe">抢红包</a><br>
-<a href="walletinfo" target="mainframe">红包信息</a><br>
-<a href="admin" target="mainframe">红包雨</a>
+
 </body>
 </html>

@@ -35,24 +35,23 @@ function initAjax(){
 	   }
 	return xmlhttp;
 }
-function back(){
+function back1(){
 	var httprequest=initAjax();
-	httprequest.open("post", "back", true);
+	httprequest.open("post", "signout1", true);
 	httprequest.onreadystatechange = function(){
 		if(httprequest.readyState==4){
 			if(httprequest.status == 200) {
 				if(httprequest.responseText==1)
 					{
-						window.parent.location.href="frame.jsp"; 
+						window.parent.parent.location.href="login"; 
 					}
 					
 			}
 		}
 		
 	};
-	//httprequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
-	var a
-	httprequest.send(a);
+	httprequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+	httprequest.send(null);
 }
 
 </script>
@@ -63,8 +62,8 @@ function back(){
 %>
 <form action="file.html">
 <table>
-<tr><td rowspan="2"><img name="image" id="image" alt="" src="images"></td><td colspan="2" align="center"><div style="border: 1px;solid: #000;" id="username"><%=name %></div></td></tr>
-<tr><td><input type="submit" value="上传头像" ></td><td><input type="button" value="注销" onclick="back()"></td></tr>
+<tr><td rowspan="2"><img width="150px" height="100px" name="image" id="image" alt="" src="getPhoto"></td><td colspan="2" align="center"><div style="border: 1px;solid: #000;" id="username"><%=name %></div></td></tr>
+<tr><td><input type="submit" value="上传头像" ></td><td><input type="button" value="注销" onclick="back1()"></td></tr>
 </table>
 </form>
 </body>
