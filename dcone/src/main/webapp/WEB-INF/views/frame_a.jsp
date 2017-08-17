@@ -40,7 +40,6 @@ window.onbeforeunload=function(){
 <%
 	int counts=0;
 	if(application.getAttribute("onlinecount")!=null)
-		System.out.println("存在");
 		counts=((Integer)application.getAttribute("onlinecount")).intValue();
 	%>
 	<tr><td>在线人数：</td><td><%=counts %></td></tr>

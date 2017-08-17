@@ -99,7 +99,7 @@ public class ChatController {
 					if(items.get(j).getSize()<=65*1024){
 						byte[] buffer=items.get(j).get();
 						if(PhotoDAO.createPhotoByItcode(itcode, buffer, jdbcTemplate))
-							response.sendRedirect("back");
+							response.sendRedirect("account");
 						else
 						{
 							out.print("<a href='back'>·µ»Ø</a>");
@@ -124,33 +124,61 @@ public class ChatController {
 	}
 	
 	@RequestMapping("/account")
-	public static String account() {
+	public String account(HttpSession session,Model model) {
+		String itcode = (String)session.getAttribute("itcode");
+		dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
+		model.addAttribute("user", user);
 		return "account";
 	}
 	
+	@RequestMapping("/changepassword")
+	public void changepassword(String password,String newpassword,HttpSession session, HttpServletResponse response) {
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			String itcode = (String)session.getAttribute("itcode");
+			if(UserDAO.checkUser(itcode, password, jdbcTemplate)) {
+				if(UserDAO.changePasswordByItcode(itcode, newpassword, jdbcTemplate)) {
+					out.print("1");
+				}
+				else {
+					out.print("2");
+				}
+			}
+			else {
+				out.println("0");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	
 	@RequestMapping("/chatbox")
-	public static String chatbox() {
+	public String chatbox() {
 		return "chatbox";
 	}
 	@RequestMapping("/frame")
-	public static String frame() {
+	public String frame() {
 		return "frame";
 	}
 	@RequestMapping("/frame_a")
-	public static String frame_a() {
+	public String frame_a() {
 		return "frame_a";
 	}
 	
 	@RequestMapping("/frame_b")
-	public static String frame_b() {
+	public String frame_b() {
 		return "frame_b";
 	}
 	@RequestMapping("/frame_c")
-	public static String frame_c() {
+	public String frame_c() {
 		return "frame_c";
 	}
 	@RequestMapping("/back")
-	public static String back() {
+	public String back() {
 		return "back";
 	}
 }

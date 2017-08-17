@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<div style="position:absolute;left: 10%;right: 10%;">
+<div style="position:absolute;left: 10%;right: 10%;top:10%;">
 <div style="position:relative; width: 200px;height: 200px">
 <ul class="nav nav-pills nav-stacked">
 	<li><a href="wallets">钱包信息</a></li>

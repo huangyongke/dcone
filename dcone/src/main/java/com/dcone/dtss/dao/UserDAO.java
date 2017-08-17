@@ -292,4 +292,11 @@ public class UserDAO {
 		return checkinsideByUid(user.getUid(), jdbcTemplate);
 	}
 	
+	public static boolean changePasswordByItcode(String itcode,String password,JdbcTemplate jdbcTemplate) {
+		int i = jdbcTemplate.update("update dc_user set password = ? where itcode=?",new Object[] {password,itcode});
+		if(i>0)
+			return true;
+		return false;
+	}
+	
 }
