@@ -27,7 +27,6 @@ import com.dcone.dtss.dao.LuckyNumberRecordDAO;
 import com.dcone.dtss.dao.TradeDAO;
 import com.dcone.dtss.dao.UserDAO;
 import com.dcone.dtss.dao.WalletDAO;
-import com.dcone.dtss.form.WalletForm;
 import com.dcone.dtss.model.dc_trade;
 import com.dcone.dtss.model.dc_wallet;
 
@@ -156,6 +155,7 @@ public class BalanceController {
 					}
 				}
 				else {
+					DropMoneyDAO.grabmoneystop(rounds, jdbcTemplate);
 					out.println("0");
 				}
 			} else {

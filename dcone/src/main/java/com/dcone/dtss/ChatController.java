@@ -27,26 +27,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.dcone.dtss.dao.GetMessageDAO;
 import com.dcone.dtss.dao.MessageDAO;
 import com.dcone.dtss.dao.PhotoDAO;
 import com.dcone.dtss.dao.UserDAO;
+import com.dcone.dtss.model.Message;
 import com.dcone.dtss.model.dc_massage;
 import com.dcone.dtss.model.dc_photo;
 import com.dcone.dtss.model.dc_user;
-
 
 @Controller
 public class ChatController {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	@RequestMapping(value="/setMessage")
-	public String setMessage(String text ,HttpServletRequest request, HttpServletResponse response){
+	public void setMessage(String text ,HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
 		String itcode=(String) session.getAttribute("itcode");
 		if(text!=null) {
 			MessageDAO.createMessageByItcode(itcode,text,jdbcTemplate);
 		}
-		return "frame_c";
 	}
 	@RequestMapping(value="getMessage")
 	public String getMessage(Model model) {
@@ -64,21 +64,30 @@ public class ChatController {
 	        	BufferedImage img;
 				try {
 					img = ImageIO.read(buffin);
-					/*Image image = img.getScaledInstance(150, 80, Image.SCALE_DEFAULT);
-					BufferedImage i=new BufferedImage(150, 80, BufferedImage.TYPE_INT_RGB);*/
-		        	//Graphics g=i.getGraphics();
-		        	//Color c=Color.WHITE;
-		        	/*g.drawRect(1,1,150, 80);
-		        	g.drawImage(image, 0, 0, null);
-		       	 	g.dispose();
-*/		        	ImageIO.write(img, "jpeg",response.getOutputStream());
-		        	//response.getOutputStream().write(buffer, 0, buffer.length);
+		        	ImageIO.write(img, "jpeg",response.getOutputStream());
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} 
 	}
+	
+	@RequestMapping(value="photo")
+	public void getPhotoByItcode(String itcode, HttpSession session, HttpServletResponse response){
+		 byte[] buffer=PhotoDAO.getPhotoByItcode(itcode,jdbcTemplate);
+	        if(buffer != null){
+	        	InputStream buffin = new ByteArrayInputStream(buffer);
+	        	BufferedImage img;
+				try {
+					img = ImageIO.read(buffin);
+		        	ImageIO.write(img, "jpeg",response.getOutputStream());
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} 
+	}
+	
 	@RequestMapping(value="/setpicture",method=RequestMethod.POST)
 	public void setPhoto(  HttpServletRequest request, HttpServletResponse response) {
 		 DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -157,9 +166,13 @@ public class ChatController {
 
 	
 	@RequestMapping("/chatbox")
-	public String chatbox() {
+	public String chatbox(Model model) {
+		List<Message> messages = GetMessageDAO.getAllMessage(jdbcTemplate);
+		model.addAttribute("messages", messages);
 		return "chatbox";
 	}
+	
+		
 	@RequestMapping("/frame")
 	public String frame() {
 		return "frame";
@@ -170,7 +183,9 @@ public class ChatController {
 	}
 	
 	@RequestMapping("/frame_b")
-	public String frame_b() {
+	public String frame_b(Model model) {
+		List<Message> messages = GetMessageDAO.getAllMessage(jdbcTemplate);
+		model.addAttribute("messages", messages);
 		return "frame_b";
 	}
 	@RequestMapping("/frame_c")

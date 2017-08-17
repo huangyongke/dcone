@@ -9,6 +9,8 @@ import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 
+import com.dcone.dtss.model.dc_user;
+
 /**
  * Application Lifecycle Listener implementation class OnLineCount
  *
@@ -48,18 +50,18 @@ public class OnLineCount implements HttpSessionListener, HttpSessionAttributeLis
 				i=0;
 			application.setAttribute("onlinecount",i);
 		}
-    	String username=(String) session.getAttribute("username");
+    	dc_user user=(dc_user) session.getAttribute("username");
     	if(application.getAttribute("onlineuser")==null)
     	{
-    		ArrayList<String> user=new ArrayList<String>();
-    		application.setAttribute("onlineuser", user);
+    		ArrayList<dc_user> users=new ArrayList<dc_user>();
+    		application.setAttribute("onlineuser", users);
     	}
     	else
     	{
     		@SuppressWarnings("unchecked")
-			ArrayList<String> user=(ArrayList<String>) application.getAttribute("onlineuser");
-    		user.remove(username);
-    		application.setAttribute("onlineuser", user);
+			ArrayList<dc_user> users=(ArrayList<dc_user>) application.getAttribute("onlineuser");
+    		users.remove(user);
+    		application.setAttribute("onlineuser", users);
     	}
     }
 
@@ -69,21 +71,21 @@ public class OnLineCount implements HttpSessionListener, HttpSessionAttributeLis
     public void attributeAdded(HttpSessionBindingEvent arg0)  { 
          // TODO Auto-generated method stub
     	HttpSession session=arg0.getSession();
-    	if((String)session.getAttribute("username")!=null) {
-    	String name = (String)session.getAttribute("username");
+    	if((String)session.getAttribute("user")!=null) {
+    	dc_user user = (dc_user)session.getAttribute("user");
     	ServletContext application=session.getServletContext();
     	if(application.getAttribute("onlineuser")==null)
     	{
-    		ArrayList<String> user=new ArrayList<String>();
-    		user.add(name);
-    		application.setAttribute("onlineuser", user);
+    		ArrayList<dc_user> users=new ArrayList<dc_user>();
+    		users.add(user);
+    		application.setAttribute("onlineuser", users);
     	}
     	else
     	{
     		@SuppressWarnings("unchecked")
-			ArrayList<String> user=(ArrayList<String>) application.getAttribute("onlineuser");
-    		user.add(name);
-    		application.setAttribute("onlineuser", user);
+			ArrayList<dc_user> users=(ArrayList<dc_user>) application.getAttribute("onlineuser");
+    		users.add(user);
+    		application.setAttribute("onlineuser", users);
     	}
     	if(application.getAttribute("onlinecount") == null) {
 			int i = 0;

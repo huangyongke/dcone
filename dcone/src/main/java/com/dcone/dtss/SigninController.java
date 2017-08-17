@@ -64,6 +64,7 @@ public class SigninController {
 					dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
 					session.setAttribute("itcode", itcode);
 					session.setAttribute("username", user.getUsername());
+					session.setAttribute("user", user);
 					if(UserDAO.isadminByItcode(itcode, jdbcTemplate))
 						out.println("3");
 					else
