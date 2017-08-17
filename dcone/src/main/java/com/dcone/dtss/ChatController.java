@@ -123,6 +123,11 @@ public class ChatController {
 			}
 	}
 	
+	@RequestMapping("/account")
+	public static String account() {
+		return "account";
+	}
+	
 	@RequestMapping("/chatbox")
 	public static String chatbox() {
 		return "chatbox";

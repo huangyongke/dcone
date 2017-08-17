@@ -124,7 +124,12 @@ function checkname(){
 				if(httprequest.responseText==1)
 					{
 					send()
-					window.location.href="main";
+					window.location.href="index.html";
+					}
+				if(httprequest.responseText==3)
+					{
+						send()
+						window.location.href="index4.html";
 					}
 				else if(httprequest.responseText==2){
 					

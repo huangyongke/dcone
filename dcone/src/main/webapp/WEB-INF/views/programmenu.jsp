@@ -5,7 +5,16 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="css/bootstrap.min.css">  
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 <title>Insert title here</title>
+<style type="text/css">
+th,tr,td{
+	
+}
+
+</style>
 </head>
 <body>
 
@@ -53,6 +62,7 @@ function submit1(a,b){
 				}
 				else  {
 					alert("打赏成功")
+					//$("#"+b).html=httprequest.responseText
 					document.getElementById(b).innerHTML=httprequest.responseText
 				}
 			}
@@ -68,10 +78,16 @@ function submit1(a,b){
 
 </script>
 <form action="" method="get" id="fram1" name="fram1">
-<table>
+<table class="table table-bordered">
 <tr><td align="center">节目名称</td><td align="center">表演者</td><td align="center">表演时间</td><td align="center">部门</td><td align="center">总打赏金额</td><td align="center">打赏</td></tr>
 <c:forEach items="${menu }" var="program">
-<tr><td>${program.program}</td><td>${program.actor }</td><td>${program.showtime }</td><td align="center">${program.department }</td><td align="center"><div id="${program.sequence }">${program.reward}</div></td><td><input id="${program.pid }"></td><td><input type="button" value="打赏" onclick="submit1(${program.pid},${program.sequence })"></td></tr>
+<tr><td>${program.program}</td><td>${program.actor }</td><td>${program.showtime }</td>
+	<td align="center">${program.department }</td><td align="center"><div id="${program.sequence }">${program.reward}</div></td>
+	<td style="width: 25%;"><div class="input-group" >
+			<input id="${program.pid }" class="form-control" placeholder="输入打赏金额">
+				<span class="input-group-btn">
+				<button class="btn btn-default" type="button" onclick="submit1(${program.pid},${program.sequence})">打赏</button> 
+				</span></div></td></tr>
 </c:forEach>
 
 </table>

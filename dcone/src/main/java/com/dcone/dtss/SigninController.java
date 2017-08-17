@@ -40,7 +40,7 @@ public class SigninController {
 			out = response.getWriter();
 			if(image.equals(imagecheck)){
 				int i = UserDAO.setPassword(itcode, username, password, jdbcTemplate);
-				out.println(i);
+					out.println(i);
 			}else
 				out.println("4");
 
@@ -64,7 +64,10 @@ public class SigninController {
 					dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
 					session.setAttribute("itcode", itcode);
 					session.setAttribute("username", user.getUsername());
-					out.println("1");
+					if(UserDAO.isadminByItcode(itcode, jdbcTemplate))
+						out.println("3");
+					else
+						out.println("1");
 				}
 				else {
 					out.println("0");
@@ -114,18 +117,6 @@ public class SigninController {
 			e.printStackTrace();
 		}
 		
-	}
-	@RequestMapping("/main")
-	public String main() {
-		return "main";
-	}
-	@RequestMapping("/menu")
-	public String menu(HttpSession session) {
-		String itcode = (String)session.getAttribute("itcode");
-		if(!UserDAO.isadminByItcode(itcode, jdbcTemplate))
-			return "menu";
-		else
-			return "adminmenu";
 	}
 
 }

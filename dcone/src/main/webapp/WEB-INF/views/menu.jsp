@@ -7,9 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<a href="program" target="mainframe">节目打赏</a><br>
+<a href="programmenu" target="mainframe">节目打赏</a><br>
 <a href="frame" target="mainframe">聊天室</a><br>
-<a href="" target="mainframe">抢红包</a><br>
+<a href="grab" target="mainframe">抢红包</a><br>
 <a href="walletinfo" target="mainframe">红包信息</a><br>
 </body>
 </html>

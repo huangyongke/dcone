@@ -5,12 +5,14 @@ public class LuckyNumber {
 	int lid;
 	int round;
 	int total;
+	int status;
 	public LuckyNumber() {}
-	public LuckyNumber(int lid, int round, int total) {
+	public LuckyNumber(int lid, int round, int total, int status) {
 		super();
 		this.lid = lid;
 		this.round = round;
 		this.total = total;
+		this.status = status;
 	}
 	public int getLid() {
 		return lid;
@@ -29,6 +31,16 @@ public class LuckyNumber {
 	}
 	public void setTotal(int total) {
 		this.total = total;
+	}
+	public int getStatus() {
+		return status;
+	}
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	@Override
+	public String toString() {
+		return "LuckyNumber [lid=" + lid + ", round=" + round + ", total=" + total + ", status=" + status + "]";
 	}
 	
 }

@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import com.dcone.dtss.dao.LuckyNumberDAO;
 import com.dcone.dtss.dao.LuckyNumberRecordDAO;
 import com.dcone.dtss.dao.TradeDAO;
+import com.dcone.dtss.dao.UserDAO;
 import com.dcone.dtss.dao.WalletDAO;
 import com.dcone.dtss.model.dc_wallet;
 
@@ -48,11 +49,20 @@ public class LuckyNumberThread extends Thread{
 					int total = LuckyNumberDAO.getTotalByRound(round, jdbcTemplate);
 					int money = 0;
 					if(total>0) {
-						if(total>5000) {
-							money = r.nextInt(5000);
+						if(UserDAO.checkinsideByUid(wallet.getUid(), jdbcTemplate)) {
+							if(total>3000) {
+								money = r.nextInt(3000);
+							}
+							else 
+								money = total;
 						}
-						else 
-							money = total;
+						else {
+							if(total>2000) {
+								money = r.nextInt(2000);
+							}
+							else 
+								money = total;
+						}
 						boolean i = LuckyNumberDAO.luckyRain(round, money,jdbcTemplate);
 						boolean j = LuckyNumberRecordDAO.newLuckyNumberRecord(wallet.getWid(), money, round, jdbcTemplate);
 						boolean m = WalletDAO.wallet_add(wallet.getWid(), money, jdbcTemplate);
@@ -71,6 +81,7 @@ public class LuckyNumberThread extends Thread{
 				}
 			}
 		}
+		LuckyNumberDAO.luckyRainstop(round, jdbcTemplate);
 	}
 	
 	

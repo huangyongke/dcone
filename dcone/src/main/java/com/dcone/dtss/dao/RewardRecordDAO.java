@@ -45,12 +45,14 @@ public class RewardRecordDAO {
 	
 	/**
 	 * 获取所有节目打赏记录
+	 * @param 节目名称 
 	 * @param jdbcTemplate   Spring JdbcTemplate
-	 * @return   所有节目打赏的RewardRecord对象
+	 * @return   该节目打赏的RewardRecord对象
 	 */
 	public static List<RewardRecord> getRewardRecordByProgram(String program,JdbcTemplate jdbcTemplate){
-		ProgramMenu p = ProgramMenuDAO.getProgramByProgram(program, jdbcTemplate);
-		return getProgramByPid(p.getPid(), jdbcTemplate);
+		RowMapper<RewardRecord> RewardRecord_mapper = new BeanPropertyRowMapper<RewardRecord>(RewardRecord.class);
+		List<RewardRecord> menu = jdbcTemplate.query("select * from program_menu where program=?",RewardRecord_mapper,program);
+		return menu;
 	}
 	
 	/**
@@ -90,8 +92,8 @@ public class RewardRecordDAO {
 		dc_wallet wallet = WalletDAO.getWalletByItcode(itcode, jdbcTemplate);
 		if(TradeDAO.createTrade(wallet.getWid(), -amount, "打赏", jdbcTemplate))
 			if(ProgramMenuDAO.programReward(pid, amount, jdbcTemplate))
-				if(createRewardRecord(wallet.getWid(), pid,amount, jdbcTemplate))
-					if(WalletDAO.wallet_add(wallet.getWid(), -amount, jdbcTemplate))
+				if(createRewardRecord(wallet.getWid(), pid,amount, jdbcTemplate)) 
+					if(WalletDAO.wallet_add(wallet.getWid(), -amount, jdbcTemplate)) 
 						return true;
 		return false;
 	}

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -19,7 +20,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.dcone.dtss.dao.DropMoneyDAO;
+import com.dcone.dtss.dao.DropMoneyRecordDAO;
+import com.dcone.dtss.dao.LuckyNumberDAO;
+import com.dcone.dtss.dao.LuckyNumberRecordDAO;
 import com.dcone.dtss.dao.TradeDAO;
+import com.dcone.dtss.dao.UserDAO;
 import com.dcone.dtss.dao.WalletDAO;
 import com.dcone.dtss.form.WalletForm;
 import com.dcone.dtss.model.dc_trade;
@@ -46,7 +52,8 @@ public class BalanceController {
 			model.addAttribute("amount", amounts/100);
 			result = "充值成功";
 			int money=WalletDAO.getWalletByItcode(itcode, jdbcTemplate).getAmount();
-			model.addAttribute("money", money/100);
+			float i = (float)money/100;
+			model.addAttribute("money", i);
 		} else {
 			result = "充值失败!";
 		}
@@ -84,7 +91,7 @@ public class BalanceController {
 		if(WalletDAO.isexistByItcode(itcode, jdbcTemplate)) {
 			dc_wallet wallet = WalletDAO.getWalletByItcode(itcode, jdbcTemplate);
 			int amount = wallet.getAmount();
-			float amounts = amount/100;
+			float amounts = (float)amount/100;
 			model.addAttribute("amount", amounts);
 			return "luckyinfo";
 		}
@@ -107,5 +114,61 @@ public class BalanceController {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	@RequestMapping("/grabmoney")
+	public void grabmoney(HttpSession session ,HttpServletResponse response) {
+		String itcode = (String)session.getAttribute("itcode");
+		PrintWriter out;
+		try {
+			out = response.getWriter();
+			if(DropMoneyDAO.getStatus(jdbcTemplate)) {
+				int rounds = DropMoneyDAO.getRound(jdbcTemplate);
+				dc_wallet wallet = WalletDAO.getWalletByItcode(itcode, jdbcTemplate);
+				Random r = new Random();
+				int total = DropMoneyDAO.getTotalByRound(rounds, jdbcTemplate);
+				int money = 0;
+				if(total>0) {
+					if(UserDAO.checkinsideByUid(wallet.getUid(), jdbcTemplate)) {
+						if(total>5000) {
+							money = r.nextInt(5000);
+						}
+						else 
+							money = total;
+					}
+					else {
+						if(total>3000) {
+							money = r.nextInt(3000);
+						}
+						else 
+							money = total;
+					}
+					boolean i = DropMoneyDAO.grabmoney(rounds, money,jdbcTemplate);
+					boolean j = DropMoneyRecordDAO.newgrapmoneyRecord(wallet.getWid(), money, rounds, jdbcTemplate);
+					boolean m = WalletDAO.wallet_add(wallet.getWid(), money, jdbcTemplate);
+					boolean n = TradeDAO.createTrade(wallet.getWid(), money, "抢红包", jdbcTemplate);
+					if(i &j & m & n) {
+						float amount = (float)money/100;
+						out.println(amount);
+					}
+					else {
+						out.print("2");
+					}
+				}
+				else {
+					out.println("0");
+				}
+			} else {
+				out.print("3");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("/grab")
+	public String grab() {
+		return "grab";
 	}
 }

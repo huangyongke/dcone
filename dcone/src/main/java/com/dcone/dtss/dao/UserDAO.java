@@ -38,6 +38,12 @@ public class UserDAO {
 		return false;
 	}
 	
+	/**
+	 * 判断用户是否已经注册
+	 * @param itcode   用户员工号
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return    true:用户已经注册；false:用户没有注册
+	 */
 	public static boolean checkPassword(String itcode,JdbcTemplate jdbcTemplate) {
 		RowMapper<dc_user> user_mapper = new BeanPropertyRowMapper<dc_user>(dc_user.class);
 		dc_user user = jdbcTemplate.queryForObject("select * from dc_user where itcode=? ",user_mapper,itcode);
@@ -91,9 +97,30 @@ public class UserDAO {
 	 */
 	public static dc_user getUserByItcode(String itcode, JdbcTemplate jdbcTemplate) {
 		RowMapper<dc_user> user_mapper = new BeanPropertyRowMapper<dc_user>(dc_user.class);
+		int i = jdbcTemplate.queryForInt("select count(*) from dc_user where itcode = ?",itcode);
+		if(i>0) {
 		dc_user user = jdbcTemplate.queryForObject("select * from dc_user where itcode = ?", user_mapper,itcode);
-		
 		return user;
+		} else
+			return null;
+	}
+	
+	/**
+	 * 通过用户员工号获取用户对象
+	 * @param itcode   用户的员工号
+	 * @param username   用户姓名
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return   指定itcode 用户的dc_user对象
+	 */
+	public static dc_user getUserByItcodeUsername(String itcode,String username, JdbcTemplate jdbcTemplate) {
+		RowMapper<dc_user> user_mapper = new BeanPropertyRowMapper<dc_user>(dc_user.class);
+		int i = jdbcTemplate.queryForInt("select count(*) from dc_user where itcode = ? and username=?",new Object[] {itcode,username});
+		if(i>0) {
+		dc_user user = jdbcTemplate.queryForObject("select * from dc_user where itcode = ? and username=?", user_mapper,new Object[] {itcode,username});
+		return user;
+		}
+		else 
+			return null;
 	}
 	
 	/**
@@ -104,9 +131,13 @@ public class UserDAO {
 	 */
 	public static List<dc_user> getUsersByusername(String username, JdbcTemplate jdbcTemplate) {
 		RowMapper<dc_user> user_mapper = new BeanPropertyRowMapper<dc_user>(dc_user.class);
+		int i = jdbcTemplate.queryForInt("select count(*) from dc_user where username = ?",username);
+		if(i>0) {
 		List<dc_user> users = jdbcTemplate.query("select * from dc_user where username = ?", user_mapper,username);
-		
 		return users;
+		}
+		else 
+			return null;
 	}
 	
 	/**
@@ -127,8 +158,8 @@ public class UserDAO {
 	 * @param jdbcTemplate   Spring JdbcTemplate 对象
 	 * @return   true:创建用户成功; false:创建用户失败
 	 */
-	public static boolean createuser(String itcode,String username,String password,JdbcTemplate jdbcTemplate) {
-		int i=jdbcTemplate.update("insert into dc_user values(null,?,?,?,0)", new Object[]{itcode,username,password});
+	public static boolean createuser(String itcode,String username,String password,int inside,JdbcTemplate jdbcTemplate) {
+		int i=jdbcTemplate.update("insert into dc_user values(null,?,?,?,0，0)", new Object[]{itcode,username,password,inside});
 		if(i>0)
 			return true;
 		return false;
@@ -141,7 +172,7 @@ public class UserDAO {
 	 * @return   true:用户账户锁住成功; false:用户账户锁住失败
 	 */
 	public static boolean lockUserByUid(int uid,JdbcTemplate jdbcTemplate) {
-		int i=jdbcTemplate.update("update wallet set locked = 1 where uid=?",uid);
+		int i=jdbcTemplate.update("update dc_user set locked = 1 where uid=?",uid);
 		if(i>0)
 			return true;
 		return false;
@@ -165,7 +196,7 @@ public class UserDAO {
 	 * @return   true:用户账户解锁成功; false:用户账户解锁失败
 	 */
 	public static boolean unlockUserByUid(int uid,JdbcTemplate jdbcTemplate) {
-		int i=jdbcTemplate.update("update wallet set locked = 0 where uid=?",uid);
+		int i=jdbcTemplate.update("update dc_user set locked = 0 where uid=?",uid);
 		if(i>0)
 			return true;
 		return false;
@@ -233,4 +264,32 @@ public class UserDAO {
 		dc_user user=getUserByItcode(itcode, jdbcTemplate);
 		return isadminByUid(user.getUid(), jdbcTemplate);
 	}
+	
+	/**
+	 * 判断用户是否是场内用户
+	 * @param uid   用户ID
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return    true:用户是场内用户;false:用户是场外用户
+	 */
+	public static boolean checkinsideByUid(int uid,JdbcTemplate jdbcTemplate) {
+		int i = jdbcTemplate.queryForInt("select inside from dc_user where uid= ?",uid);
+		if(i==1) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	/**
+	 * 通过用户员工号判断用户是否是场内用户
+	 * @param itcode    用户员工号
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return   true:用户是场内用户;false:用户是场外用户
+	 */
+	public static boolean checkinsideByItcode(String itcode,JdbcTemplate jdbcTemplate) {
+		dc_user user=getUserByItcode(itcode, jdbcTemplate);
+		return checkinsideByUid(user.getUid(), jdbcTemplate);
+	}
+	
 }
