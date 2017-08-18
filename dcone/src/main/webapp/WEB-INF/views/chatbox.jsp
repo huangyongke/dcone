@@ -81,7 +81,6 @@ setInterval('startrefresh1()',3000);
 		});
 	}); 
 
-
 </script>
 
 

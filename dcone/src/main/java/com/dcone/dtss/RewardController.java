@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dcone.dtss.dao.ProgramMenuDAO;
 import com.dcone.dtss.dao.RewardRecordDAO;
+import com.dcone.dtss.model.Program;
 import com.dcone.dtss.model.ProgramMenu;
 import com.dcone.dtss.model.RewardRecord;
 
@@ -35,7 +36,8 @@ public class RewardController {
 	@RequestMapping("/programmenu")
 	public String getProgramMenu(Model model) {
 		List<ProgramMenu>  menu = ProgramMenuDAO.getALLProgram(jdbcTemplate);
-		model.addAttribute("menu", menu);
+		List<Program> programs = Program.getProgram(menu);
+		model.addAttribute("menu", programs);
 		return "programmenu";
 	}
 	

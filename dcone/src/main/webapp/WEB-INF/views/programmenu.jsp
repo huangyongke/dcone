@@ -77,6 +77,7 @@ function submit1(a,b){
 
 
 </script>
+<div style="position:absolute;left: 10%;right: 10%;top: 10%">
 <form action="" method="get" id="fram1" name="fram1">
 <table class="table table-bordered">
 <tr><td align="center">节目名称</td><td align="center">表演者</td><td align="center">表演时间</td><td align="center">部门</td><td align="center">总打赏金额</td><td align="center">打赏</td></tr>
@@ -92,5 +93,6 @@ function submit1(a,b){
 
 </table>
 </form>
+</div>
 </body>
 </html>

@@ -123,20 +123,22 @@ function checkname(){
 			if(httprequest.status == 200) {
 				if(httprequest.responseText==1)
 					{
-					send()
 					window.location.href="index.html";
+					changed()
 					}
 				if(httprequest.responseText==3)
 					{
-						send()
 						window.location.href="index4.html";
+						changed()
 					}
 				else if(httprequest.responseText==2){
 					
 					document.getElementById("info").innerHTML="登录失败！验证码错误";
+					changed()
 				}
 				else if(httprequest.responseText==0){
 					document.getElementById("info").innerHTML="登录失败！密码错误";
+					changed()
 				}
 				
 			}
@@ -152,26 +154,6 @@ function checkname(){
 function changed() {
 	document.getElementById("image").src="checkimage?"+Math.random();
 	
-}
-
-function send(){
-	if(check()){
-	var httprequest=initAjax();
-	var itcode=document.getElementById("itcode").value;
-	httprequest.open("post", "/wechat/login1", true);
-	httprequest.onreadystatechange = function(){
-		if(httprequest.readyState==4)
-			{
-			if(httprequest.status == 200) {
-		
-			}
-			}
-		
-	};
-	httprequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
-	var pr="itcode="+itcode;
-	httprequest.send(pr);
-	}
 }
 </script>
 

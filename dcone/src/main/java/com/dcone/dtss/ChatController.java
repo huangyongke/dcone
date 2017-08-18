@@ -140,6 +140,14 @@ public class ChatController {
 		return "account";
 	}
 	
+	@RequestMapping("/accountforuser")
+	public String accountforuser(HttpSession session,Model model) {
+		String itcode = (String)session.getAttribute("itcode");
+		dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
+		model.addAttribute("user", user);
+		return "accountforuser";
+	}
+	
 	@RequestMapping("/changepassword")
 	public void changepassword(String password,String newpassword,HttpSession session, HttpServletResponse response) {
 		PrintWriter out;

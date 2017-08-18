@@ -26,12 +26,20 @@ function send(a) {
 </script>
 </head>
 <body>
-<div style="position:absolute;left: 10%;right: 10%;">
+<div style="position:absolute;left: 10%;right: 10%;top: 10%">
 <div style="position:relative; width: 200px;height: 200px">
 <ul class="nav nav-pills nav-stacked">
 	<li><a href="account">个人账户</a></li>
 	<li class="active"><a href="accounts">用户账户</a></li>
-	<li><a href="#"></a></li>
+	<li><a href="wallets">钱包信息</a></li>
+	<li><a href="program">节目列表</a></li>
+	<li><a href="">新建节目</a></li>
+	<li><a href="luckymoneyrain">红包雨发放</a></li>
+	<li><a href="grabluckymoney">抢红包发放</a></li>
+	<li><a href="records">交易记录</a></li>
+	<li><a href="luckyrecords">红包雨记录</a></li>
+	<li><a href="grabluckyrecords">抢红包记录</a></li>
+	<li><a href="rewardrecords">打赏记录</a></li>
 </ul>
 </div>
 <div style="position: absolute;left: 200px;top: 0px;right: 0px;">

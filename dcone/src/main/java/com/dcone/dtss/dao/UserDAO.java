@@ -90,6 +90,18 @@ public class UserDAO {
 	}
 	
 	/**
+	 * 模糊查询通过用户id获取用户对象列表
+	 * @param uid	用户的id
+	 * @param jdbcTemplate	 Spring JdbcTemplate 对象
+	 * @return   指定 uid模糊查询 的用户dc_user对象列表
+	 */
+	public static List<dc_user> getDimUserByUid(int uid, JdbcTemplate jdbcTemplate) {
+		RowMapper<dc_user> user_mapper = new BeanPropertyRowMapper<dc_user>(dc_user.class);
+		List<dc_user> users = jdbcTemplate.query("select * from dc_user where uid like ?", user_mapper,"%"+uid+"%");
+		return users;
+	}
+	
+	/**
 	 * 通过用户员工号获取用户对象
 	 * @param itcode   用户的员工号
 	 * @param jdbcTemplate   Spring JdbcTemplate 对象
@@ -103,6 +115,18 @@ public class UserDAO {
 		return user;
 		} else
 			return null;
+	}
+	
+	/**
+	 * 模糊查询通过用户员工号获取用户对象
+	 * @param itcode   用户的员工号
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return   模糊查询指定itcode 用户的dc_user对象
+	 */
+	public static List<dc_user> getDimUserByItcode(String itcode, JdbcTemplate jdbcTemplate) {
+		RowMapper<dc_user> user_mapper = new BeanPropertyRowMapper<dc_user>(dc_user.class);
+		List<dc_user> users = jdbcTemplate.query("select * from dc_user where itcode like ?", user_mapper,"%"+itcode+"%");
+		return users;
 	}
 	
 	/**
@@ -124,6 +148,19 @@ public class UserDAO {
 	}
 	
 	/**
+	 * 模糊查询通过用户员工号获取用户对象
+	 * @param itcode   用户的员工号
+	 * @param username   用户姓名
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return   模糊查询指定itcode 用户的dc_user对象
+	 */
+	public static List<dc_user> getDimUserByItcodeUsername(String itcode,String username, JdbcTemplate jdbcTemplate) {
+		RowMapper<dc_user> user_mapper = new BeanPropertyRowMapper<dc_user>(dc_user.class);
+		List<dc_user> users = jdbcTemplate.query("select * from dc_user where itcode like ? and username like ?", user_mapper,new Object[] {"%"+itcode+"%","%"+username+"%"});
+		return users;
+	}
+	
+	/**
 	 * 通过用户姓名获取用户对象的列表
 	 * @param username	 用户的姓名
 	 * @param jdbcTemplate   Spring JdbcTemplate 对象
@@ -139,6 +176,19 @@ public class UserDAO {
 		else 
 			return null;
 	}
+	
+	/**
+	 * 模糊查询通过用户姓名获取用户对象的列表
+	 * @param username	 用户的姓名
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return   模糊查询指定 username 的用户dc_user对象列表
+	 */
+	public static List<dc_user> getDimUsersByusername(String username, JdbcTemplate jdbcTemplate) {
+		RowMapper<dc_user> user_mapper = new BeanPropertyRowMapper<dc_user>(dc_user.class);
+		List<dc_user> users = jdbcTemplate.query("select * from dc_user where username like ?", user_mapper,"%"+username+"%");
+		return users;
+	}
+
 	
 	/**
 	 * 获取所有用户对象列表

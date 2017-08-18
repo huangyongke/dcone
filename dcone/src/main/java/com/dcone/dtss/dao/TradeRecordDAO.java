@@ -66,13 +66,13 @@ public class TradeRecordDAO {
 
 	
 	/**
-	 * 获取指定员工号所有的交易的TradeRecords对象
+	 * 模糊查询获取指定员工号所有的交易的TradeRecords对象
 	 * @param itcode   用户员工号
 	 * @param jdbcTemplate   Spring JdbcTemplate对象
-	 * @return   指定用户所有的交易的TradeRecords对象列表
+	 * @return   模糊查询指定用户所有的交易的TradeRecords对象列表
 	 */
-	public static List<TradeRecords> getTradeRecordsByItcode(String itcode,JdbcTemplate jdbcTemplate) {
-		List record = jdbcTemplate.queryForList("select itcode,username,volume,tradetime,memo from dc_user natural join dc_wallet,dc_trade where dc_trade.wid=dc_wallet.wid and itcode=?;",itcode);
+	public static List<TradeRecords> getDimTradeRecordsByItcode(String itcode,JdbcTemplate jdbcTemplate) {
+		List record = jdbcTemplate.queryForList("select itcode,username,volume,tradetime,memo from dc_user natural join dc_wallet,dc_trade where dc_trade.wid=dc_wallet.wid and itcode like ?;","%"+itcode+"%");
 		Iterator it = record.iterator();   
 		List<TradeRecords> records = new ArrayList<TradeRecords>();
 		while(it.hasNext()) {
@@ -93,13 +93,13 @@ public class TradeRecordDAO {
 	}
 	
 	/**
-	 * 获取指定员工号某一类所有的交易的TradeRecords对象
+	 * 模糊查询获取指定员工号某一类所有的交易的TradeRecords对象
 	 * @param itcode   用户员工号
 	 * @param jdbcTemplate   Spring JdbcTemplate对象
-	 * @return   指定用户某一类所有的交易的TradeRecords对象列表
+	 * @return   模糊查询指定用户某一类所有的交易的TradeRecords对象列表
 	 */
-	public static List<TradeRecords> getTradeRecordsByItcode(String itcode,String variety,JdbcTemplate jdbcTemplate) {
-		List record = jdbcTemplate.queryForList("select itcode,username,volume,tradetime,memo from dc_user natural join dc_wallet,dc_trade where dc_trade.wid=dc_wallet.wid and itcode=? and memo=?;",new Object[] {itcode,variety});
+	public static List<TradeRecords> getDimTradeRecordsByItcode(String itcode,String variety,JdbcTemplate jdbcTemplate) {
+		List record = jdbcTemplate.queryForList("select itcode,username,volume,tradetime,memo from dc_user natural join dc_wallet,dc_trade where dc_trade.wid=dc_wallet.wid and itcode like ? and memo like ?;",new Object[] {"%"+itcode+"%","%"+variety+"%"});
 		Iterator it = record.iterator();   
 		List<TradeRecords> records = new ArrayList<TradeRecords>();
 		while(it.hasNext()) {
@@ -120,13 +120,13 @@ public class TradeRecordDAO {
 	}
 	
 	/**
-	 * 获取指定姓名所有的交易的TradeRecords对象
+	 * 模糊查询获取指定姓名所有的交易的TradeRecords对象
 	 * @param username   用户员姓名
 	 * @param jdbcTemplate   Spring JdbcTemplate对象
-	 * @return   指定用户所有的交易的TradeRecords对象列表
+	 * @return   模糊查询指定用户所有的交易的TradeRecords对象列表
 	 */
-	public static List<TradeRecords> getTradeRecordsByUsername(String username,JdbcTemplate jdbcTemplate) {
-		List record = jdbcTemplate.queryForList("select itcode,username,volume,tradetime,memo from dc_user natural join dc_wallet,dc_trade where dc_trade.wid=dc_wallet.wid and username=?;",username);
+	public static List<TradeRecords> getDimTradeRecordsByUsername(String username,JdbcTemplate jdbcTemplate) {
+		List record = jdbcTemplate.queryForList("select itcode,username,volume,tradetime,memo from dc_user natural join dc_wallet,dc_trade where dc_trade.wid=dc_wallet.wid and username like ?;","%"+username+"%");
 		Iterator it = record.iterator();   
 		List<TradeRecords> records = new ArrayList<TradeRecords>();
 		while(it.hasNext()) {
@@ -147,13 +147,13 @@ public class TradeRecordDAO {
 	}
 	
 	/**
-	 * 获取指定姓名某一类所有的交易的TradeRecords对象
+	 * 模糊查询获取指定姓名某一类所有的交易的TradeRecords对象
 	 * @param username   用户员姓名
 	 * @param jdbcTemplate   Spring JdbcTemplate对象
-	 * @return   指定用户某一类所有的交易的TradeRecords对象列表
+	 * @return   模糊查询指定用户某一类所有的交易的TradeRecords对象列表
 	 */
-	public static List<TradeRecords> getTradeRecordsByUsername(String username,String memo,JdbcTemplate jdbcTemplate) {
-		List record = jdbcTemplate.queryForList("select itcode,username,volume,tradetime,memo from dc_user natural join dc_wallet,dc_trade where dc_trade.wid=dc_wallet.wid and username=? and memo=?;",new Object[] {username,memo});
+	public static List<TradeRecords> getDimTradeRecordsByUsername(String username,String memo,JdbcTemplate jdbcTemplate) {
+		List record = jdbcTemplate.queryForList("select itcode,username,volume,tradetime,memo from dc_user natural join dc_wallet,dc_trade where dc_trade.wid=dc_wallet.wid and username like ? and memo=?;",new Object[] {"%"+username+"%",memo});
 		Iterator it = record.iterator();   
 		List<TradeRecords> records = new ArrayList<TradeRecords>();
 		while(it.hasNext()) {
@@ -174,14 +174,14 @@ public class TradeRecordDAO {
 	}
 	
 	/**
-	 * 获取指定员工号所有的交易的TradeRecords对象
+	 * 模糊查询获取指定员工号所有的交易的TradeRecords对象
 	 * @param itcode   用户员工号
 	 * @param username   用户姓名
 	 * @param jdbcTemplate   Spring JdbcTemplate对象
-	 * @return   指定用户所有的交易的TradeRecords对象列表
+	 * @return   模糊查询指定用户所有的交易的TradeRecords对象列表
 	 */
-	public static List<TradeRecords> getTradeRecordsByItcodeUsername(String itcode,String username,JdbcTemplate jdbcTemplate) {
-		List record = jdbcTemplate.queryForList("select itcode,username,volume,tradetime,memo from dc_user natural join dc_wallet,dc_trade where dc_trade.wid=dc_wallet.wid and itcode=? and username = ?;",new Object[] {itcode,username});
+	public static List<TradeRecords> getDimTradeRecordsByItcodeUsername(String itcode,String username,JdbcTemplate jdbcTemplate) {
+		List record = jdbcTemplate.queryForList("select itcode,username,volume,tradetime,memo from dc_user natural join dc_wallet,dc_trade where dc_trade.wid=dc_wallet.wid and itcode like ? and username like ?;",new Object[] {"%"+itcode+"%","%"+username+"%"});
 		Iterator it = record.iterator();   
 		List<TradeRecords> records = new ArrayList<TradeRecords>();
 		while(it.hasNext()) {
@@ -202,14 +202,14 @@ public class TradeRecordDAO {
 	}
 
 	/**
-	 * 获取指定员工号某一类所有的交易的TradeRecords对象
+	 * 模糊查询获取指定员工号某一类所有的交易的TradeRecords对象
 	 * @param itcode   用户员工号
 	 * @param username   用户姓名
 	 * @param jdbcTemplate   Spring JdbcTemplate对象
-	 * @return   指定用户某一类所有的交易的TradeRecords对象列表
+	 * @return   模糊查询指定用户某一类所有的交易的TradeRecords对象列表
 	 */
-	public static List<TradeRecords> getTradeRecordsByItcodeUsername(String itcode,String username,String memo,JdbcTemplate jdbcTemplate) {
-		List record = jdbcTemplate.queryForList("select itcode,username,volume,tradetime,memo from dc_user natural join dc_wallet,dc_trade where dc_trade.wid=dc_wallet.wid and itcode=? and username = ? and memo=?;",new Object[] {itcode,username,memo});
+	public static List<TradeRecords> getDimTradeRecordsByItcodeUsername(String itcode,String username,String memo,JdbcTemplate jdbcTemplate) {
+		List record = jdbcTemplate.queryForList("select itcode,username,volume,tradetime,memo from dc_user natural join dc_wallet,dc_trade where dc_trade.wid=dc_wallet.wid and itcode like ? and username like ? and memo=?;",new Object[] {"%"+itcode+"%","%"+username+"%",memo});
 		Iterator it = record.iterator();   
 		List<TradeRecords> records = new ArrayList<TradeRecords>();
 		while(it.hasNext()) {

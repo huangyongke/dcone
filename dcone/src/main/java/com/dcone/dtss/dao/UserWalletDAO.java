@@ -24,6 +24,18 @@ public class UserWalletDAO {
 	}
 	
 	/**
+	 * 模糊查询通过用户姓名获取钱包信息对象
+	 * @param username   用户姓名
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return   模糊查询指定用户的钱包信息dc_user_wallet对象
+	 */
+	public static List<dc_user_wallet> getDimWalletInfoByUsername(String username,JdbcTemplate jdbcTemplate) {
+		RowMapper<dc_user_wallet> user_wallet_mapper = new BeanPropertyRowMapper<dc_user_wallet>(dc_user_wallet.class);
+		List<dc_user_wallet> user_wallets = jdbcTemplate.query("select * from dc_user_wallet where username like ?",user_wallet_mapper ,"%"+username+"%");
+		return user_wallets;
+	}
+	
+	/**
 	 * 通过用户姓名获取钱包信息对象
 	 * @param username   用户姓名
 	 * @param jdbcTemplate   Spring JdbcTemplate 对象
@@ -57,6 +69,18 @@ public class UserWalletDAO {
 	}
 	
 	/**
+	 * 模糊查询通过用户员工号获取钱包信息对象
+	 * @param itcode   用户员工号
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return   模糊查询指定用户员工号的钱包信息dc_user_wallet对象
+	 */
+	public static List<dc_user_wallet> getDimWalletInfoByItcode(String itcode,JdbcTemplate jdbcTemplate){
+		RowMapper<dc_user_wallet> user_wallet_mapper = new BeanPropertyRowMapper<dc_user_wallet>(dc_user_wallet.class);
+		List<dc_user_wallet> user_wallets = jdbcTemplate.query("select * from dc_user_wallet where itcode like ?",user_wallet_mapper ,"%"+itcode+"%");
+		return user_wallets;
+	}
+	
+	/**
 	 * 通过用户员工号获取钱包信息对象
 	 * @param itcode   用户员工号
 	 * @param jdbcTemplate   Spring JdbcTemplate 对象
@@ -65,6 +89,18 @@ public class UserWalletDAO {
 	public static dc_user_wallet getWalletInfoByItcodeUsername(String itcode,String username,JdbcTemplate jdbcTemplate){
 		dc_user user = UserDAO.getUserByItcodeUsername(itcode, username, jdbcTemplate);
 		return getWalletInfoByUid(user.getUid(), jdbcTemplate);
+	}
+	
+	/**
+	 * 模糊查询通过用户员工号获取钱包信息对象
+	 * @param itcode   用户员工号
+	 * @param jdbcTemplate   Spring JdbcTemplate 对象
+	 * @return   模糊查询指定用户员工号的钱包信息dc_user_wallet对象
+	 */
+	public static List<dc_user_wallet> getDimWalletInfoByItcodeUsername(String itcode,String username,JdbcTemplate jdbcTemplate){
+		RowMapper<dc_user_wallet> user_wallet_mapper = new BeanPropertyRowMapper<dc_user_wallet>(dc_user_wallet.class);
+		List<dc_user_wallet> user_wallets = jdbcTemplate.query("select * from dc_user_wallet where itcode like ? and username like ?",user_wallet_mapper ,new Object[] {"%"+itcode+"%","%"+username+"%"});
+		return user_wallets;
 	}
 	
 	/**

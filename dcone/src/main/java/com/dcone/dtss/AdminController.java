@@ -73,22 +73,18 @@ public class AdminController {
 			List<dc_user> user = UserDAO.getAllUsers(jdbcTemplate);
 			model.addAttribute("accounts", user);
 		} else if(username!=""&&itcode=="") {
-			if(UserDAO.getUsersByusername(username, jdbcTemplate)!=null) {
-			List<dc_user> user = UserDAO.getUsersByusername(username, jdbcTemplate);
+			if(UserDAO.getDimUsersByusername(username, jdbcTemplate)!=null) {
+			List<dc_user> user = UserDAO.getDimUsersByusername(username, jdbcTemplate);
 			model.addAttribute("accounts", user);
 			}
 		} else if(username==""&&itcode!="") {
-			if(UserDAO.getUserByItcode(itcode, jdbcTemplate)!=null) {
-			dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
-			List<dc_user> users = new ArrayList<dc_user>();
-			users.add(user);
+			if(UserDAO.getDimUserByItcode(itcode, jdbcTemplate)!=null) {
+			List<dc_user> users = UserDAO.getDimUserByItcode(itcode, jdbcTemplate);
 			model.addAttribute("accounts", users);
 			}
 		} else if(username!=""&&itcode!="") {
-			if(UserDAO.getUserByItcodeUsername(itcode, username, jdbcTemplate)!=null) {
-			dc_user user = UserDAO.getUserByItcodeUsername(itcode, username, jdbcTemplate);
-			List<dc_user> users = new ArrayList<dc_user>();
-			users.add(user);
+			if(UserDAO.getDimUserByItcodeUsername(itcode, username, jdbcTemplate)!=null) {
+			List<dc_user> users = UserDAO.getDimUserByItcodeUsername(itcode, username, jdbcTemplate);
 			model.addAttribute("accounts", users);
 			}
 		}
@@ -105,22 +101,18 @@ public class AdminController {
 			List<dc_user_wallet> wallets = UserWalletDAO.getAllWalletInfoforUser(jdbcTemplate);
 			model.addAttribute("wallets",wallets);
 		} else if(username!=""&&itcode=="") {
-			if(UserDAO.getUsersByusername(username, jdbcTemplate)!=null) {
-				List<dc_user_wallet> wallets = UserWalletDAO.getWalletInfoByUsername(username, jdbcTemplate);
+			if(UserDAO.getDimUsersByusername(username, jdbcTemplate)!=null) {
+				List<dc_user_wallet> wallets = UserWalletDAO.getDimWalletInfoByUsername(username, jdbcTemplate);
 				model.addAttribute("wallets",wallets);
 			}
 		} else if(username==""&&itcode!="") {
-			if(UserDAO.getUserByItcode(itcode, jdbcTemplate)!=null) {
-				List<dc_user_wallet> wallets = new ArrayList<dc_user_wallet>();
-				dc_user_wallet wallet = UserWalletDAO.getWalletInfoByItcode(itcode, jdbcTemplate);
-				wallets.add(wallet);
+			if(UserDAO.getDimUserByItcode(itcode, jdbcTemplate)!=null) {
+				List<dc_user_wallet> wallets = UserWalletDAO.getDimWalletInfoByItcode(itcode, jdbcTemplate);
 				model.addAttribute("wallets",wallets);
 			}
 		} else if(username!=""&&itcode!="") {
-			if(UserDAO.getUserByItcodeUsername(itcode, username, jdbcTemplate)!=null) {
-				List<dc_user_wallet> wallets = new ArrayList<dc_user_wallet>();
-				dc_user_wallet wallet = UserWalletDAO.getWalletInfoByItcode(itcode, jdbcTemplate);
-				wallets.add(wallet);
+			if(UserDAO.getDimUserByItcodeUsername(itcode, username, jdbcTemplate)!=null) {
+				List<dc_user_wallet> wallets = UserWalletDAO.getDimWalletInfoByItcode(itcode, jdbcTemplate);
 				model.addAttribute("wallets",wallets);
 			}
 		}
@@ -137,13 +129,13 @@ public class AdminController {
 				List<TradeRecords> trades = TradeRecordDAO.getAllTradeRecords(jdbcTemplate);
 				model.addAttribute("trades",trades);
 			} else if(username!=""&&itcode=="") {
-				List<TradeRecords> trades = TradeRecordDAO.getTradeRecordsByUsername(username, jdbcTemplate);
+				List<TradeRecords> trades = TradeRecordDAO.getDimTradeRecordsByUsername(username, jdbcTemplate);
 				model.addAttribute("trades",trades);
 			} else if(username==""&&itcode!="") {
-				List<TradeRecords> trades = TradeRecordDAO.getTradeRecordsByItcode(itcode, jdbcTemplate);
+				List<TradeRecords> trades = TradeRecordDAO.getDimTradeRecordsByItcode(itcode, jdbcTemplate);
 				model.addAttribute("trades",trades);
 			} else if(username!=""&&itcode!="") {
-				List<TradeRecords> trades = TradeRecordDAO.getTradeRecordsByItcodeUsername(itcode, username, jdbcTemplate);
+				List<TradeRecords> trades = TradeRecordDAO.getDimTradeRecordsByItcodeUsername(itcode, username, jdbcTemplate);
 				model.addAttribute("trades",trades);
 			}
 		} else {
@@ -151,13 +143,13 @@ public class AdminController {
 				List<TradeRecords> trades = TradeRecordDAO.getAllTradeRecords(memo,jdbcTemplate);
 				model.addAttribute("trades",trades);
 			} else if(username!=""&&itcode=="") {
-				List<TradeRecords> trades = TradeRecordDAO.getTradeRecordsByUsername(username, memo,jdbcTemplate);
+				List<TradeRecords> trades = TradeRecordDAO.getDimTradeRecordsByUsername(username, memo,jdbcTemplate);
 				model.addAttribute("trades",trades);
 			} else if(username==""&&itcode!="") {
-				List<TradeRecords> trades = TradeRecordDAO.getTradeRecordsByItcode(itcode,memo, jdbcTemplate);
+				List<TradeRecords> trades = TradeRecordDAO.getDimTradeRecordsByItcode(itcode,memo, jdbcTemplate);
 				model.addAttribute("trades",trades);
 			} else if(username!=""&&itcode!="") {
-				List<TradeRecords> trades = TradeRecordDAO.getTradeRecordsByItcodeUsername(itcode, username,memo, jdbcTemplate);
+				List<TradeRecords> trades = TradeRecordDAO.getDimTradeRecordsByItcodeUsername(itcode, username,memo, jdbcTemplate);
 				model.addAttribute("trades",trades);
 			}
 		}
