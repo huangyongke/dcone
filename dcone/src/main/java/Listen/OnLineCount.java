@@ -71,7 +71,7 @@ public class OnLineCount implements HttpSessionListener, HttpSessionAttributeLis
     public void attributeAdded(HttpSessionBindingEvent arg0)  { 
          // TODO Auto-generated method stub
     	HttpSession session=arg0.getSession();
-    	if((String)session.getAttribute("user")!=null) {
+    	if((dc_user)session.getAttribute("user")!=null) {
     	dc_user user = (dc_user)session.getAttribute("user");
     	ServletContext application=session.getServletContext();
     	if(application.getAttribute("onlineuser")==null)

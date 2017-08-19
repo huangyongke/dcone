@@ -31,10 +31,12 @@ import com.dcone.dtss.dao.GetMessageDAO;
 import com.dcone.dtss.dao.MessageDAO;
 import com.dcone.dtss.dao.PhotoDAO;
 import com.dcone.dtss.dao.UserDAO;
+import com.dcone.dtss.dao.WalletDAO;
 import com.dcone.dtss.model.Message;
 import com.dcone.dtss.model.dc_massage;
 import com.dcone.dtss.model.dc_photo;
 import com.dcone.dtss.model.dc_user;
+import com.dcone.dtss.model.dc_wallet;
 
 @Controller
 public class ChatController {
@@ -136,6 +138,10 @@ public class ChatController {
 	public String account(HttpSession session,Model model) {
 		String itcode = (String)session.getAttribute("itcode");
 		dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
+		dc_wallet wallet = WalletDAO.getWalletByItcode(itcode, jdbcTemplate);
+		int money = wallet.getAmount();
+		float amounts = (float)money/100;
+		model.addAttribute("amount", amounts);
 		model.addAttribute("user", user);
 		return "account";
 	}
@@ -144,6 +150,10 @@ public class ChatController {
 	public String accountforuser(HttpSession session,Model model) {
 		String itcode = (String)session.getAttribute("itcode");
 		dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
+		dc_wallet wallet = WalletDAO.getWalletByItcode(itcode, jdbcTemplate);
+		int money = wallet.getAmount();
+		float amounts = (float)money/100;
+		model.addAttribute("amount", amounts);
 		model.addAttribute("user", user);
 		return "accountforuser";
 	}

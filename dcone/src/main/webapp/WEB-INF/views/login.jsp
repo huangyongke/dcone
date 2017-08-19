@@ -166,7 +166,7 @@ function changed() {
 <tr><td colspan="2"><div id="info" style="color: red;"></div></td></tr>
 <tr><td align="center" colspan="2"><img src="img/36ad55dd352e493c3ed8a53f314fb21f.png" width="100px" height="100px" style="opacity:0.8"></td></tr>
 <tr><td colspan="2"><input name="itcode" id="itcode" placeholder="请输入员工号" class=inn1></td></tr>
-<tr><td colspan="2"><input  name="password" id="password" placeholder="请输入密码" class=inn1></td></tr>
+<tr><td colspan="2"><input type="password" name="password" id="password" placeholder="请输入密码" class=inn1></td></tr>
 <tr><td><input name="imagecheck" id="imagecheck" placeholder="请输入验证码" class=inn2></td><td align="center" valign="middle"><img name="image" id="image" alt="" src="checkimage" onclick="changed()"></td></tr>
 <tr><td align="center" valign="middle"><input type="button" value="登录" onclick="checkname()" class="inn3"></td><td align="center" valign="middle"><input type="button" value="注册" onclick="register()" class="inn3"></tr>
 </table>

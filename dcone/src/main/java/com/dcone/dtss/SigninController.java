@@ -94,23 +94,24 @@ public class SigninController {
 			ServletContext application = session.getServletContext();
 			String itcode = (String)session.getAttribute("itcode");
 			String username = (String)session.getAttribute("username");
+			dc_user user = (dc_user)session.getAttribute("user");
 			System.out.println(itcode+username);
 			if(application.getAttribute("onlineuser")==null)
 	    	{
-	    		ArrayList<String> user=new ArrayList<String>();
-	    		application.setAttribute("onlineuser", user);
-	    		session.removeAttribute("username");
+	    		ArrayList<dc_user> users=new ArrayList<dc_user>();
+	    		application.setAttribute("onlineuser", users);
+	    		session.removeAttribute("user");
 	    		out.print("1");
 	    		System.out.println("移除用户");
 	    	}
 	    	else
 	    	{
 	    		@SuppressWarnings("unchecked")
-				ArrayList<String> user=(ArrayList<String>) application.getAttribute("onlineuser");
-	    		user.remove(username);
+				ArrayList<dc_user> users=(ArrayList<dc_user>) application.getAttribute("onlineuser");
+	    		users.remove(user);
 	    		System.out.println("移除用户："+username);
-	    		application.setAttribute("onlineuser", user);
-	    		session.removeAttribute("username");
+	    		application.setAttribute("onlineuser", users);
+	    		session.removeAttribute("user");
 	    		out.print("1");
 	    	}
 		} catch (IOException e) {

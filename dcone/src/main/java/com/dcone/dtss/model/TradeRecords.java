@@ -1,5 +1,8 @@
 package com.dcone.dtss.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TradeRecords {
 
 	String itcode;
@@ -60,4 +63,18 @@ public class TradeRecords {
 				+ tradetime + ", memo=" + memo + ", round=" + round + "]";
 	}
 	
+	public static List<TradeRecords>  getwalletinfo(List<dc_user_wallet> wallets){
+		List<TradeRecords> trades = new ArrayList<TradeRecords>();
+		for(dc_user_wallet wallet : wallets) {
+			TradeRecords trade = new TradeRecords();
+			trade.setItcode(wallet.getItcode());
+			trade.setUsername(wallet.getUsername());
+			int amount = wallet.getAmount();
+			float money = (float)amount/100;
+			trade.setAmount(money);
+			trades.add(trade);
+		}
+		
+		return trades;
+	}
 }

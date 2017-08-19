@@ -464,7 +464,7 @@ public class TradeRecordDAO {
 	 * @return    所有的打赏交易的TradeRecords对象列表
 	 */
 	public static List<TradeRecords> getAllRewardRecords(JdbcTemplate jdbcTemplate) {
-		List record = jdbcTemplate.queryForList("select itcode,username,amount,tradetime from dc_user natural join dc_wallet,reward_trade where reward_trade.wid=dc_wallet.wid;");
+		List record = jdbcTemplate.queryForList("select itcode,username,amonut,tradetime from dc_user natural join dc_wallet,reward_trade where reward_trade.wid=dc_wallet.wid;");
 		Iterator it = record.iterator();   
 		List<TradeRecords> records = new ArrayList<TradeRecords>();
 		while(it.hasNext()) {
@@ -472,7 +472,7 @@ public class TradeRecordDAO {
 			TradeRecords r=new TradeRecords();
 			r.setItcode((String) recordMap.get("itcode"));
 			r.setUsername((String) recordMap.get("username"));
-			int money = ((Integer) recordMap.get("amount")).intValue();
+			int money = ((Integer) recordMap.get("amonut")).intValue();
 			float amount = (float)money/100;
 			r.setAmount(amount);
 			Timestamp time = (Timestamp) recordMap.get("tradetime");
@@ -490,7 +490,7 @@ public class TradeRecordDAO {
 	 * @return    所有的打赏交易的TradeRecords对象列表
 	 */
 	public static List<TradeRecords> getRewardRecordsByItcode(String itcode,JdbcTemplate jdbcTemplate) {
-		List record = jdbcTemplate.queryForList("select itcode,username,amount,tradetime from dc_user natural join dc_wallet,reward_trade where reward_trade.wid=dc_wallet.wid and itcode=?;",itcode);
+		List record = jdbcTemplate.queryForList("select itcode,username,amonut,tradetime from dc_user natural join dc_wallet,reward_trade where reward_trade.wid=dc_wallet.wid and itcode=?;",itcode);
 		Iterator it = record.iterator();   
 		List<TradeRecords> records = new ArrayList<TradeRecords>();
 		while(it.hasNext()) {
@@ -498,7 +498,7 @@ public class TradeRecordDAO {
 			TradeRecords r=new TradeRecords();
 			r.setItcode((String) recordMap.get("itcode"));
 			r.setUsername((String) recordMap.get("username"));
-			int money = ((Integer) recordMap.get("amount")).intValue();
+			int money = ((Integer) recordMap.get("amonut")).intValue();
 			float amount = (float)money/100;
 			r.setAmount(amount);
 			Timestamp time = (Timestamp) recordMap.get("tradetime");
@@ -516,7 +516,7 @@ public class TradeRecordDAO {
 	 * @return    所有的打赏交易的TradeRecords对象列表
 	 */
 	public static List<TradeRecords> getRewardRecordsByusername(String username,JdbcTemplate jdbcTemplate) {
-		List record = jdbcTemplate.queryForList("select itcode,username,amount,tradetime from dc_user natural join dc_wallet,reward_trade where reward_trade.wid=dc_wallet.wid and username=?;",username);
+		List record = jdbcTemplate.queryForList("select itcode,username,amonut,tradetime from dc_user natural join dc_wallet,reward_trade where reward_trade.wid=dc_wallet.wid and username=?;",username);
 		Iterator it = record.iterator();   
 		List<TradeRecords> records = new ArrayList<TradeRecords>();
 		while(it.hasNext()) {
@@ -524,7 +524,7 @@ public class TradeRecordDAO {
 			TradeRecords r=new TradeRecords();
 			r.setItcode((String) recordMap.get("itcode"));
 			r.setUsername((String) recordMap.get("username"));
-			int money = ((Integer) recordMap.get("amount")).intValue();
+			int money = ((Integer) recordMap.get("amonut")).intValue();
 			float amount = (float)money/100;
 			r.setAmount(amount);
 			Timestamp time = (Timestamp) recordMap.get("tradetime");
@@ -541,7 +541,7 @@ public class TradeRecordDAO {
 	 * @return    所有的打赏交易的TradeRecords对象列表
 	 */
 	public static List<TradeRecords> getRewardRecordsByItcodeUsername(String itcode,String username,JdbcTemplate jdbcTemplate) {
-		List record = jdbcTemplate.queryForList("select itcode,username,amount,tradetime from dc_user natural join dc_wallet,reward_trade where reward_trade.wid=dc_wallet.wid and itcode=? and username =?;",new Object[] {itcode,username});
+		List record = jdbcTemplate.queryForList("select itcode,username,amonut,tradetime from dc_user natural join dc_wallet,reward_trade where reward_trade.wid=dc_wallet.wid and itcode=? and username =?;",new Object[] {itcode,username});
 		Iterator it = record.iterator();   
 		List<TradeRecords> records = new ArrayList<TradeRecords>();
 		while(it.hasNext()) {
@@ -549,7 +549,7 @@ public class TradeRecordDAO {
 			TradeRecords r=new TradeRecords();
 			r.setItcode((String) recordMap.get("itcode"));
 			r.setUsername((String) recordMap.get("username"));
-			int money = ((Integer) recordMap.get("amount")).intValue();
+			int money = ((Integer) recordMap.get("amonut")).intValue();
 			float amount = (float)money/100;
 			r.setAmount(amount);
 			Timestamp time = (Timestamp) recordMap.get("tradetime");
@@ -779,4 +779,5 @@ public class TradeRecordDAO {
 		}
 		return records;
 	}
+
 }

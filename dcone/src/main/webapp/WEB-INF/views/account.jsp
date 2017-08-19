@@ -37,7 +37,23 @@
 	box-shadow:0 0 40px #333; 
 	display: none;
 }
-#closed { 
+.div2 {
+	position: absolute;
+	width:300px; 
+	height:200px;
+	left: 55%;
+	top: 50%;
+	text-align:center; 
+	margin:-200px auto 0 -250px; 
+	background:#fafafa; 
+	z-index:999; 
+	border:2px solid #eee; 
+	border-radius:5px; 
+	box-shadow:0 0 40px #333; 
+	display: none;
+}
+
+.closed { 
 	width:20px; 
 	height:20px; 
 	text-align:center; 
@@ -65,7 +81,16 @@ function check() {
 	}
 		return true;
 }
-
+function checkmoney(){
+	var money = $("#amount").val();
+	if(money=="")
+		{
+		$("#info2").html("输入不能为空");
+		return false
+		}
+	else
+		return true;
+}
 function checkimage() {
 	if($("#image").val()!=null){
 		return true
@@ -73,11 +98,13 @@ function checkimage() {
 	return false
 }
 	$(document).ready(function(){
-		$("#closed").click(function(){
+		$(".closed").click(function(){
 			$("#password").val("");
 			$("#newpassword").val("");
 			$("#renewpassword").val("");
+			$("#amount").val();
 			$("#div1").hide()
+			$("#div2").hide()
 			$("#layout").hide()
 		});
 		$("#change").click(function(){
@@ -85,6 +112,10 @@ function checkimage() {
 			$("#layout").show()
 			$(this).disabled
 		});
+		$("#addmoney").click(function(){
+			$("#div2").show();
+			$("#layout").show();
+		})
 		$("#sub").click(function(){
 			if(check()){
 			$.post("changepassword",{
@@ -105,6 +136,20 @@ function checkimage() {
 			});
 			}
 		});
+		$("#submit").click(function(){
+			if(checkmoney()){
+				$.post("balance_adding",{
+					amount:$("#amount").val()
+				},function(data,status){
+					if(data!=0){
+						alert("您成功充值"+data+"元");
+					}
+					$("#amount").val("");
+					$("#div2").hide()
+					$("#layout").hide()
+				})
+			}
+		})
 		$("#changeimage").click(function(){
 			if($("#image").val() != '') 
 				$("#subimg").submit();
@@ -115,7 +160,7 @@ function checkimage() {
 <body>
 <div id="layout"></div>
 <div id="div1" class="div1">
-	<div id="closed">X</div>
+	<div class="closed">X</div>
 	<form class="form-horizontal" role="form">
 	<div id="info" style="color: red;"></div>
 	<div class="form-group" >
@@ -143,7 +188,25 @@ function checkimage() {
   	</div>
   	</form>
 </div>
+<div id="div2" class="div2">
+	<div class="closed">X</div>
+	<div id="info2" style="color: red;"></div>
+	<form>
+		<div class="form-group" >
+    	<label for="amount" style="position:absolute;top: 30px;left: 80px;">您的充值金额为</label></td>
+    	<div class="col-sm-10" style="top: 20px;">
+      		<input type="text" class="form-control" style="position:absolute; left: 20px;top: 20px;" id="amount" placeholder="请输入充值金额">
+    	</div>
+    	</div>
+    	<div class="form-group">
+    	<div class="col-sm-offset-2 col-sm-10" style="top: 90px;left:-40px;">
+      		<button id="submit" type="button" class="btn btn-default">充值</button>
+    	</div>
+  	</div>
+	</form>
 
+
+</div>
 
 <div style="position:absolute;left: 10%;right: 10%;top: 10%">
 <div style="position:relative; width: 200px;height: 200px">
@@ -185,6 +248,14 @@ function checkimage() {
   			<button id="changeimage" style=" position:static; left: 40px" type="button" class="btn btn-primary">更换头像</button>
 		</p>
 		</form>
+	</div>
+	<div >
+		<label class="col-sm-2 control-label" style="width: 100px;">您的账户余额为：</label>
+    	<div class="col-sm-10">
+      	<p class="form-control-static">${amount }</p>
+    	</div>
+  		<button id="addmoney" type="button" class="btn btn-primary">充值</button>
+		
 	</div>
 </div>
 	

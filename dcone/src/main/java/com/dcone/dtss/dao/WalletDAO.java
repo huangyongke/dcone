@@ -111,6 +111,7 @@ public class WalletDAO {
 	 * @return   true:钱包充值成功; false:钱包充值失败
 	 */
 	public static boolean wallet_add(int wid,int amount,JdbcTemplate jdbcTemplate) {
+		System.out.println(amount);
 		int i = jdbcTemplate.update("update dc_wallet set amount = amount + ? where wid=?",new Object[] {amount,wid});
 		if(i>0) 
 			return true;

@@ -50,7 +50,6 @@ public class RewardController {
 		int amount = (int) (amounts*100);
 		try {
 			PrintWriter out = response.getWriter();
-			System.out.println("0");
 			if(RewardRecordDAO.Reward(itcode,id,amount,jdbcTemplate)) {
 				ProgramMenu program = ProgramMenuDAO.getProgramByPid(id, jdbcTemplate);
 				int i = program.getReward();

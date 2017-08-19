@@ -10,8 +10,24 @@
 	<script src="js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
-th,tr,td{
-	
+body{
+	background-image: url("img/space.jpg");
+	background-size: cover;
+}
+.outter{
+	position:absolute;
+	left:20%;
+	right:20%;
+	top:8%;
+	height:90%;
+	background-image: url("img/programmenu.jpg");
+}
+.inner{
+	border-right:1px solid #F00;border-bottom:1px solid #F00;
+	margin:0 auto; 
+}
+td.inner{
+	border-left:1px solid #F00;border-top:1px solid #F00;
 }
 
 </style>
@@ -77,7 +93,8 @@ function submit1(a,b){
 
 
 </script>
-<div style="position:absolute;left: 10%;right: 10%;top: 10%">
+<div class="outter">
+<div style="position: absolute;top: 25%">
 <form action="" method="get" id="fram1" name="fram1">
 <table class="table table-bordered">
 <tr><td align="center">节目名称</td><td align="center">表演者</td><td align="center">表演时间</td><td align="center">部门</td><td align="center">总打赏金额</td><td align="center">打赏</td></tr>
@@ -93,6 +110,7 @@ function submit1(a,b){
 
 </table>
 </form>
+</div>
 </div>
 </body>
 </html>

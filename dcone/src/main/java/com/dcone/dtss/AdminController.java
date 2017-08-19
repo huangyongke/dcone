@@ -51,9 +51,14 @@ public class AdminController {
 	
 	@RequestMapping("/luckymoneyrain")
 	public String luckymoneyrain() {
-		//判断用户是否登录
-		//登录成功后显示admin页面
+
 		return "luckymoneyrain";
+	}
+	
+	@RequestMapping("/lucky_on")
+	public String lucky_on() {
+
+		return "lucky_on";
 	}
 	
 	@RequestMapping("/grabluckymoney")
@@ -95,24 +100,29 @@ public class AdminController {
 	@RequestMapping("/wallets")
 	public String wallets(String itcode,String username,Model model) {
 		if(username==null&&itcode==null) {
-			List<dc_user_wallet> wallets = UserWalletDAO.getAllWalletInfoforUser(jdbcTemplate);
+			List<dc_user_wallet> wallet = UserWalletDAO.getAllWalletInfoforUser(jdbcTemplate);
+			List<TradeRecords> wallets = TradeRecords.getwalletinfo(wallet);
 			model.addAttribute("wallets",wallets);
 		} else if(username==""&&itcode=="") {
-			List<dc_user_wallet> wallets = UserWalletDAO.getAllWalletInfoforUser(jdbcTemplate);
+			List<dc_user_wallet> wallet = UserWalletDAO.getAllWalletInfoforUser(jdbcTemplate);
+			List<TradeRecords> wallets = TradeRecords.getwalletinfo(wallet);
 			model.addAttribute("wallets",wallets);
 		} else if(username!=""&&itcode=="") {
 			if(UserDAO.getDimUsersByusername(username, jdbcTemplate)!=null) {
-				List<dc_user_wallet> wallets = UserWalletDAO.getDimWalletInfoByUsername(username, jdbcTemplate);
+				List<dc_user_wallet> wallet = UserWalletDAO.getDimWalletInfoByUsername(username, jdbcTemplate);
+				List<TradeRecords> wallets = TradeRecords.getwalletinfo(wallet);
 				model.addAttribute("wallets",wallets);
 			}
 		} else if(username==""&&itcode!="") {
 			if(UserDAO.getDimUserByItcode(itcode, jdbcTemplate)!=null) {
-				List<dc_user_wallet> wallets = UserWalletDAO.getDimWalletInfoByItcode(itcode, jdbcTemplate);
+				List<dc_user_wallet> wallet = UserWalletDAO.getDimWalletInfoByItcode(itcode, jdbcTemplate);
+				List<TradeRecords> wallets = TradeRecords.getwalletinfo(wallet);
 				model.addAttribute("wallets",wallets);
 			}
 		} else if(username!=""&&itcode!="") {
 			if(UserDAO.getDimUserByItcodeUsername(itcode, username, jdbcTemplate)!=null) {
-				List<dc_user_wallet> wallets = UserWalletDAO.getDimWalletInfoByItcode(itcode, jdbcTemplate);
+				List<dc_user_wallet> wallet = UserWalletDAO.getDimWalletInfoByItcode(itcode, jdbcTemplate);
+				List<TradeRecords> wallets = TradeRecords.getwalletinfo(wallet);
 				model.addAttribute("wallets",wallets);
 			}
 		}

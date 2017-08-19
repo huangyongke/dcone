@@ -7,8 +7,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+.div1{
+background-image: url("img/outputbox.jpg");
+background-size: cover;
+font-size: 15px;
+}
+
+</style>
 </head>
 <body >
+<div id="div1">
 <table>
 <c:forEach items="${messages }" var="message">
 <% 
@@ -21,8 +30,6 @@
 		</table></div></td></tr>
 </c:forEach>
 </table>
-<script type="text/javascript">
-
-</script>
+</div>
 </body>
 </html>

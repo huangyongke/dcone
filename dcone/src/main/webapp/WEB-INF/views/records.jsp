@@ -39,6 +39,7 @@
 				</span></div></td>
 	<td><select class="form-control" name="memo"> <option>所有</option> 
       <option>充值</option> 
+      <option>打赏</option>
       <option>红包雨</option> 
       <option>抢红包</option> 
     </select></td>

@@ -42,22 +42,24 @@ public class BalanceController {
 		return "balance_add";
 	}
 	@RequestMapping(value="/balance_adding")
-	public String balanceAdding(String amount,Locale locale,  Model model,HttpSession session) {
+	public void balanceAdding(String amount,HttpServletResponse response,HttpSession session) {
 		double amount1 = Double.parseDouble(amount);
 		int amounts =(int) (amount1*100);
-		String result="";
-		String itcode = (String)session.getAttribute("itcode");
-		if(TradeDAO.balance_add(itcode, amounts,"充值", locale, jdbcTemplate)) {
-			model.addAttribute("amount", amounts/100);
-			result = "充值成功";
-			int money=WalletDAO.getWalletByItcode(itcode, jdbcTemplate).getAmount();
-			float i = (float)money/100;
-			model.addAttribute("money", i);
-		} else {
-			result = "充值失败!";
+		try {
+			PrintWriter out = response.getWriter();
+			String itcode = (String)session.getAttribute("itcode");
+			if(TradeDAO.balance_add(itcode, amounts,"充值", jdbcTemplate)) {
+				int money=WalletDAO.getWalletByItcode(itcode, jdbcTemplate).getAmount();
+				float i = (float)money/100;
+				out.println(amount);
+			} else {
+				out.println("0");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		model.addAttribute("result",result);
-		return "balance_add_result";
+		
 	}
 	@RequestMapping(value="/balance_get",method=RequestMethod.GET)
 	public String balanceget(HttpSession session ,Model model) {

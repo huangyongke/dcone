@@ -93,7 +93,7 @@ public class RewardRecordDAO {
 		if(TradeDAO.createTrade(wallet.getWid(), -amount, "¥Ú…Õ", jdbcTemplate))
 			if(ProgramMenuDAO.programReward(pid, amount, jdbcTemplate))
 				if(createRewardRecord(wallet.getWid(), pid,amount, jdbcTemplate)) 
-					if(WalletDAO.wallet_add(wallet.getWid(), -amount, jdbcTemplate)) 
+					if(WalletDAO.wallet_subtract(wallet.getWid(), amount, jdbcTemplate)) 
 						return true;
 		return false;
 	}

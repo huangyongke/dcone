@@ -14,8 +14,23 @@ textarea
 {
 width:100%;
 height:100%;
+background-image: url("img/inputbox.jpg");
+background-size: cover;
+font-size: 15px;
+}
+.div1{
+background-image: url("img/outputbox.jpg");
+background-size: cover;
+font-size: 15px;
+}
+
+.div2{
+background-image: url("img/userlistbackground.jpg");
+background-size: cover;
+font-size: 15px;
 }
 </style>
+
 
 <script type="text/javascript">
 function check(){
@@ -91,41 +106,11 @@ setInterval('startrefresh1()',3000);
 %>
 <div style="position: absolute;left: 15%;top: 10%;reight:15%;">
 
-<div id="div2" style="float:left;width: 300px;height: 500px;">
-<%-- <table border="1" width="200" cellpadding="10" style="float:center;">
-<%
-	int counts=0;
-	if(application.getAttribute("onlinecount")!=null)
-		counts=((Integer)application.getAttribute("onlinecount")).intValue();
-	%>
-	<tr><td>在线人数：</td><td><%=counts %></td></tr>
-		<%	
-	if(application.getAttribute("onlineuser")!=null)
-	{
-	ArrayList<dc_user> users=(ArrayList<dc_user>)application.getAttribute("onlineuser");
-	for(dc_user user:users)
-	{	
-%>
-	<tr><td><%  out.print(user.getUsername()); %></td></tr>
-<%
-	}
-	}
-%>
-</table>
- --%></div>
-<div id="div1" style="float: left; width:610px; height: 400px;overflow: auto;">
-<%-- <table>
-<c:forEach items="${messages }" var="message">
-<% 
-	String itcode=(String)session.getAttribute("itcode");
-	String username =(String)session.getAttribute("username");
-%>
-	<tr><td><div><table>
-		<tr><td rowspan="2"><img width="40px" height="30px" alt="" src="photo?itcode=${message.itcode }"></td><td>${message.username }&nbsp;&nbsp;&nbsp;</td><td>${message.talktime }</td></tr>
-		<tr><td></td><td>$message.message</td></tr>
-		</table></div></td></tr>
-</c:forEach>
-</table> --%>
+<div style="float:left;width: 300px;height: 500px;" class="div2">
+	<div id="div2" style="position:absolute;left: 40px;top: 30px;height: 400px;"></div>
+</div>
+<div id="div1" style="float: left; width:610px; height: 400px;overflow: auto;" class="div1">
+
 </div>
 <div style="float: left; width:600px;">
 <form action="setMessage" name="form1" onsubmit="return check()">
