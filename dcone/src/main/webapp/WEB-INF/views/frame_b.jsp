@@ -18,16 +18,28 @@ font-size: 15px;
 </head>
 <body >
 <div id="div1">
-<table>
+<table style="width: 100%;">
 <c:forEach items="${messages }" var="message">
 <% 
 	String itcode=(String)session.getAttribute("itcode");
 	String username =(String)session.getAttribute("username");
 %>
-	<tr><td><div><table>
+	<c:choose>
+		<c:when test="${message.itcode == itcode}">
+		<tr><td><div align="right"><table>
+		<tr><td align="right">${message.talktime }</td><td>&nbsp;&nbsp;&nbsp;${message.username }</td><td rowspan="2"><img width="40px" height="30px" alt="" src="photo?itcode=${message.itcode }"></td></tr>
+		<tr><td align="right">${message.message}</td><td></td></tr>
+		</table></div></td></tr>
+		</c:when>
+		
+		<c:otherwise>
+		<tr><td><div><table>
 		<tr><td rowspan="2"><img width="40px" height="30px" alt="" src="photo?itcode=${message.itcode }"></td><td>${message.username }&nbsp;&nbsp;&nbsp;</td><td>${message.talktime }</td></tr>
 		<tr><td></td><td>${message.message}</td></tr>
 		</table></div></td></tr>
+		</c:otherwise>
+	</c:choose>
+	
 </c:forEach>
 </table>
 </div>
