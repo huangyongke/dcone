@@ -83,6 +83,7 @@ setInterval('startrefresh1()',1000);
 
 
 	$(document).ready(function(){ 
+		$("#div3").width($("#div1").offsetWidth())
 		$("#div1").load("frame_b");
 		$("#div2").load("frame_a");
 		$("textarea").keydown(function(e){ 
@@ -105,12 +106,12 @@ setInterval('startrefresh1()',1000);
 			}
 		});
 	}); 
-
 </script>
 
 
 </head>
 <body>
+
 <%
 	dc_user user  = (dc_user)session.getAttribute("user");
 	String name= user.getUsername();
@@ -123,13 +124,12 @@ setInterval('startrefresh1()',1000);
 <div id="div1" style="float: left; width:610px; height: 400px;overflow: auto;" class="div1">
 
 </div>
-<div style="float: left; width:600px;">
+<div id="div3" style="float: left; width:600px;">
 <form action="setMessage" name="form1" onsubmit="return check()">
-<textarea rows="5" cols="120" id="text" name="text"></textarea>
+<textarea rows="5" id="text" name="text" style="position:relative; width: 100%"></textarea>
 <input id="sub" type="button" value="发送">
 </form>
 </div>
-
 </div>
 </body>
 </html>

@@ -43,7 +43,7 @@ public class ChatController {
 			string="";
 		}else{
 			try{
-				string=string.replaceAll("","&nbsp;");
+				string=string.replaceAll(" ","&nbsp;");
 		        string=string.replaceAll("\n","<br>");
 		       }catch(Exception e){  
 		    	   e.printStackTrace(System.err);
