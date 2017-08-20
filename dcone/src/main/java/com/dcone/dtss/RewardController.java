@@ -20,6 +20,7 @@ import com.dcone.dtss.dao.RewardRecordDAO;
 import com.dcone.dtss.model.Program;
 import com.dcone.dtss.model.ProgramMenu;
 import com.dcone.dtss.model.RewardRecord;
+import com.dcone.dtss.model.dc_user;
 
 @Controller
 public class RewardController {
@@ -44,13 +45,13 @@ public class RewardController {
 	@RequestMapping(value="/setReward")
 	public void setReward(String pid ,String money,Model model,HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
-		String itcode=(String) session.getAttribute("itcode");
+		dc_user user  = (dc_user)session.getAttribute("user");
 		int id = Integer.parseInt(pid);
 		double amounts = Double.parseDouble(money);
 		int amount = (int) (amounts*100);
 		try {
 			PrintWriter out = response.getWriter();
-			if(RewardRecordDAO.Reward(itcode,id,amount,jdbcTemplate)) {
+			if(RewardRecordDAO.Reward(user.getItcode(),id,amount,jdbcTemplate)) {
 				ProgramMenu program = ProgramMenuDAO.getProgramByPid(id, jdbcTemplate);
 				int i = program.getReward();
 				float j = (float)i/100;

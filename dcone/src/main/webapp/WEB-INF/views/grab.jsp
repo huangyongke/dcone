@@ -43,6 +43,7 @@ background-position: 80% 25%;
 	-webkit-box-shadow:insert 0 ipx 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,223,0.6);
 	-moz-box-shadow:insert 0 ipx 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,223,0.6);
 	box-shadow:insert 0 ipx 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,223,0.6);
+	display: none;
 }
 .outter3{
 	border:2px solid;
@@ -59,6 +60,7 @@ background-position: 80% 25%;
 	-webkit-box-shadow:insert 0 ipx 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,223,0.6);
 	-moz-box-shadow:insert 0 ipx 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,223,0.6);
 	box-shadow:insert 0 ipx 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,223,0.6);
+	display: none;
 }
 .inner1{
 	display:none;
@@ -73,26 +75,26 @@ background-position: 80% 25%;
 <script>
 $(document).ready(function(){
 	$("#grab").click(function(){
-		$('div').removeClass('outter1');
-		$('div').addClass('outter2');
+		$("#grab").hide();
+		$("#wait").show();
 		setTimeout( function(){
 			$.post("grabmoney",{
 				round:"1"
 			},
 			function(data,status){
 					if(data==0){
-						$('div').removeClass('outter2');
-						$('div').addClass('outter1');
+						$("#wait").hide();
+						$("#grab").show();
 						alert("红包已经抢完")
 					} else if(data==3){
-						$('div').removeClass('outter2');
-						$('div').addClass('outter1');
+						$("#wait").hide();
+						$("#grab").show();
 						alert("抢红包还未开始")
 					}
 					else{
 						$('#span1').html(data+"元");
-						$('div').removeClass('outter2');
-						$('div').addClass('outter3');
+						$("#wait").hide();
+						$("#get").show();
 						$('span').removeClass('inner1');
 						$('span').addClass('inner2');
 						
@@ -104,9 +106,10 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<div class="outter1" id="grab">
+<div class="outter1" id="grab"></div>
+<div class="outter2" id="wait"></div>
+<div class="outter3" id="get">
 <span id="span1" class="inner1">0</span>
 </div>
-
 </body>
 </html>

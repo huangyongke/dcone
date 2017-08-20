@@ -25,91 +25,91 @@ public class ProgramMenuDAO {
 	
 	
 	/**
-	 * 根据节目名称获取节目
+	 * 模糊查询根据节目名称获取节目
 	 * @param program   节目名称
 	 * @param jdbcTemplate   Spring JdbcTemplate jdbcTemplate
-	 * @return   该节目ProgramMenu对象
+	 * @return   模糊查询该节目ProgramMenu对象
 	 */
-	public static List<ProgramMenu> getProgramByProgram(String program,JdbcTemplate jdbcTemplate) {
+	public static List<ProgramMenu> getDimProgramByProgram(String program,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> p = jdbcTemplate.query("select * from program_menu where program=?",programMenu_mapper,program);
+		List<ProgramMenu> p = jdbcTemplate.query("select * from program_menu where program like ?",programMenu_mapper,"%"+program+"%");
 		return p;
 	}
 	
 	/**
-	 * 根据节目部门获取所有节目
+	 * 模糊查询根据节目部门获取所有节目
 	 * @param department   节目部门
 	 * @param jdbcTemplate   Spring JdbcTemplate jdbcTemplate
-	 * @return   该部门所有的节目对象
+	 * @return   模糊查询该部门所有的节目对象
 	 */
-	public static List<ProgramMenu> getProgramByDepartment(String department,JdbcTemplate jdbcTemplate) {
+	public static List<ProgramMenu> getDimProgramByDepartment(String department,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> program = jdbcTemplate.query("select * from program_menu where department=?",programMenu_mapper,department);
+		List<ProgramMenu> program = jdbcTemplate.query("select * from program_menu where department like ?",programMenu_mapper,"%"+department+"%");
 		return program;
 	}
 	
 	/**
-	 * 根据节目表演者获取所有节目
+	 * 模糊查询根据节目表演者获取所有节目
 	 * @param  actor   节目表演者
 	 * @param jdbcTemplate   Spring JdbcTemplate jdbcTemplate
-	 * @return   该表演者所有的节目对象
+	 * @return   模糊查询该表演者所有的节目对象
 	 */
-	public static List<ProgramMenu> getProgramByActor(String actor,JdbcTemplate jdbcTemplate) {
+	public static List<ProgramMenu> getDimProgramByActor(String actor,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> program = jdbcTemplate.query("select * from program_menu where actor=?",programMenu_mapper,actor);
+		List<ProgramMenu> program = jdbcTemplate.query("select * from program_menu where actor=?",programMenu_mapper,"%"+actor+"%");
 		return program;
 	}
 	
 	/**
-	 * 获取所有节目
+	 * 模糊查询获取所有节目
 	 * @param  program   节目名称
 	 * @param  actor   节目表演者
 	 * @param jdbcTemplate   Spring JdbcTemplate jdbcTemplate
-	 * @return   该表演者所有的节目对象
+	 * @return   模糊查询该表演者所有的节目对象
 	 */
-	public static List<ProgramMenu> getProgramByProgramactor(String program,String actor,JdbcTemplate jdbcTemplate) {
+	public static List<ProgramMenu> getDimProgramByProgramactor(String program,String actor,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where program=? and actor=?",programMenu_mapper,new Object[] {program,actor});
+		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where program like ? and actor like ?",programMenu_mapper,new Object[] {"%"+program+"%","%"+actor+"%"});
 		return programs;
 	}
 	
 	/**
-	 * 根据获取所有节目
+	 * 模糊查询根据获取所有节目
 	 * @param  program   节目名称
 	 * @param  department   节目部门
 	 * @param jdbcTemplate   Spring JdbcTemplate jdbcTemplate
-	 * @return   该表演者所有的节目对象
+	 * @return   模糊查询该表演者所有的节目对象
 	 */
-	public static List<ProgramMenu> getProgramByProgramDepartment(String program,String department,JdbcTemplate jdbcTemplate) {
+	public static List<ProgramMenu> getDimProgramByProgramDepartment(String program,String department,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where program=? and department=?",programMenu_mapper,new Object[] {program,department});
+		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where program kike ? and department like ?",programMenu_mapper,new Object[] {"%"+program+"%","%"+department+"%"});
 		return programs;
 	}
 	
 	/**
-	 * 根据节目表演者获取所有节目
+	 * 模糊查询根据节目表演者获取所有节目
 	 * @param  department   节目部门
 	 * @param  actor   节目表演者
 	 * @param jdbcTemplate   Spring JdbcTemplate jdbcTemplate
-	 * @return   该表演者所有的节目对象
+	 * @return   模糊查询该表演者所有的节目对象
 	 */
-	public static List<ProgramMenu> getProgramByDepartmentactor(String department,String actor,JdbcTemplate jdbcTemplate) {
+	public static List<ProgramMenu> getDimProgramByDepartmentactor(String department,String actor,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where department=? and actor=?",programMenu_mapper,new Object[] {department,actor});
+		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where department like ? and actor like ?",programMenu_mapper,new Object[] {"%"+department+"%","%"+actor+"%"});
 		return programs;
 	}
 	
 	/**
-	 * 获取所有节目
+	 * 模糊查询获取所有节目
 	 * @param  program   节目名称
 	 * @param  actor   节目表演者
 	 * @param  department   节目部门
 	 * @param jdbcTemplate   Spring JdbcTemplate jdbcTemplate
-	 * @return   该表演者所有的节目对象
+	 * @return   模糊查询该表演者所有的节目对象
 	 */
-	public static List<ProgramMenu> getProgramByProgramactorDepartment(String program,String actor,String department,JdbcTemplate jdbcTemplate) {
+	public static List<ProgramMenu> getDimProgramByProgramactorDepartment(String program,String actor,String department,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where program=? and actor=? and department=?",programMenu_mapper,new Object[] {program,actor,department});
+		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where program like ? and actor like ? and department like ?",programMenu_mapper,new Object[] {"%"+program+"%","%"+actor+"%","%"+department+"%"});
 		return programs;
 	}
 	

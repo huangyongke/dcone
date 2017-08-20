@@ -5,11 +5,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="css/bootstrap.min.css">  
 	<script src="js/jquery-3.2.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
+
 body{
 	background-image: url("img/space.jpg");
 	background-size: cover;
@@ -30,10 +32,56 @@ td.inner{
 	border-left:1px solid #F00;border-top:1px solid #F00;
 }
 
-</style>
-</head>
-<body>
+.out{
+	position:absolute;
+	left:30%;
+	top:46%;
+	background-color: #666666;
+	width: 300px;
+	text-align: center;
+	font-size:large;
+	display: none;
+}
+.layout { 
+	background:#000; 
+	position:absolute; 
+	top:0; 
+	left:0; 
+	width:100%; 
+	height:100%; 
+	opacity:0.5; 
+	filter:alpha(opacity=50); 
+	cursor:pointer;
+	display: none;
+}
 
+.closed { 
+	width:20px; 
+	height:20px; 
+	text-align:center; 
+	background:#800000; 
+	color:#fff; 
+	position:absolute; 
+	top:-10px; 
+	right:-10px; 
+	cursor:pointer; 
+}
+.div1 {
+	position: absolute;
+	width:400px; 
+	height:250px;
+	left: 55%;
+	top: 60%;
+	text-align:center; 
+	margin:-200px auto 0 -250px; 
+	background:#fafafa; 
+	z-index:999; 
+	border:2px solid #eee; 
+	border-radius:5px; 
+	box-shadow:0 0 40px #333; 
+	display: none;
+}
+</style>
 <script type="text/javascript">
 function initAjax(){
 	var xmlhttp;
@@ -74,11 +122,16 @@ function submit1(a,b){
 		if(httprequest.readyState==4){
 			if(httprequest.status == 200) {
 				if(httprequest.responseText==0){
-					alert("打赏失败,余额不足")
+					$(".layout").show();
+					$(".div1").show();
+					$(".btn-default").attr("disabled","disabled");
 				}
 				else  {
-					alert("打赏成功")
-					//$("#"+b).html=httprequest.responseText
+					$("#out").html("你成功打赏"+money+"元");
+					$("#out").show();
+					setTimeout(function(){
+						$("#out").hide();
+					}, 3000);
 					document.getElementById(b).innerHTML=httprequest.responseText
 				}
 			}
@@ -91,9 +144,37 @@ function submit1(a,b){
 	}
 }
 
-
+	$(document).ready(function(){
+		$("#yes").click(function(){
+			window.location.href="walletforuser";
+		});
+		$("#no").click(function(){
+			$(".layout").hide();
+			$(".div1").hide();
+			$(".btn-default").removeAttr("disabled");
+		});
+		$(".closed").click(function(){
+			$(".layout").hide();
+			$(".div1").hide();
+			$(".btn-default").removeAttr("disabled");
+		});
+	});
 </script>
+
+</head>
+<body>
+<div class="layout">
+</div>
+<div class="div1">
+<div class="closed">X</div>
+	<span style="font-size: x-large;position:relative;left:100px; top: 50px">你的账户余额不足！</span>
+	<span style="font-size: x-large;position:relative;left:-100px; top: 100px">是否前去充值？</span>
+	<button type="button" id="yes" class="btn-primary" style="position:absolute; left:120px; bottom: 50px; padding: 5px; width: 40px">是</button>
+	<button class="btn" id="no" style=" position:absolute; left:230px; bottom: 50px;">否</button>
+</div>
 <div class="outter">
+<div class="out" id="out">您成功打赏</div>
+
 <div style="position: absolute;top: 25%">
 <form action="" method="get" id="fram1" name="fram1">
 <table class="table table-bordered">

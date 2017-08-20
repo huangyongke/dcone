@@ -5,8 +5,6 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -170,29 +168,29 @@ public class AdminController {
 			List<TradeRecords> trades = TradeRecordDAO.getAllluckymaoneyRecords(jdbcTemplate);
 			model.addAttribute("trades",trades);		
 		} else if(itcode != "" && username=="" && round =="") {
-			List<TradeRecords> trades = TradeRecordDAO.getluckymaoneyRecordsbyitcode(itcode, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimluckymaoneyRecordsbyitcode(itcode, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		} else if(itcode == "" && username!="" && round =="") {
-			List<TradeRecords> trades = TradeRecordDAO.getluckymaoneyRecordsbyuseranme(username, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimluckymaoneyRecordsbyuseranme(username, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		} else if(itcode == "" && username=="" && round !="") {
 			int i = Integer.parseInt(round);
-			List<TradeRecords> trades = TradeRecordDAO.getluckymaoneyRecordsbyround(i, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimluckymaoneyRecordsbyround(i, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		} else if(itcode != "" && username!="" && round =="") {
-			List<TradeRecords> trades = TradeRecordDAO.getluckymaoneyRecordsbyitcodeusername(itcode, username, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimluckymaoneyRecordsbyitcodeusername(itcode, username, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		} else if(itcode == "" && username!="" && round !="") {
 			int i = Integer.parseInt(round);
-			List<TradeRecords> trades = TradeRecordDAO.getluckymaoneyRecordsbyusernameround(username, i, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimluckymaoneyRecordsbyusernameround(username, i, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		} else if(itcode != "" && username=="" && round !="") {
 			int i = Integer.parseInt(round);
-			List<TradeRecords> trades = TradeRecordDAO.getluckymaoneyRecordsbyitcoderound(itcode, i, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimluckymaoneyRecordsbyitcoderound(itcode, i, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		} else if(itcode != "" && username!="" && round !="") {
 			int i = Integer.parseInt(round);
-			List<TradeRecords> trades = TradeRecordDAO.getluckymaoneyRecordsbyitcodeusernameround(itcode, username, i, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimluckymaoneyRecordsbyitcodeusernameround(itcode, username, i, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		}
 		return "luckymoneyrecord";
@@ -209,31 +207,31 @@ public class AdminController {
 			List<Program> programs = Program.getProgram(menu);
 			model.addAttribute("programs", programs);
 		} else if(program != "" && actor=="" && department =="") {
-			List<ProgramMenu> menu = ProgramMenuDAO.getProgramByProgram(program, jdbcTemplate);
+			List<ProgramMenu> menu = ProgramMenuDAO.getDimProgramByProgram(program, jdbcTemplate);
 			List<Program> programs = Program.getProgram(menu);
 			model.addAttribute("programs", programs);
 		} else if(program == "" && actor!="" && department =="") {
-			List<ProgramMenu> menu = ProgramMenuDAO.getProgramByActor(actor, jdbcTemplate);
+			List<ProgramMenu> menu = ProgramMenuDAO.getDimProgramByActor(actor, jdbcTemplate);
 			List<Program> programs = Program.getProgram(menu);
 			model.addAttribute("programs", programs);
 		} else if(program == "" && actor=="" && department !="") {
-			List<ProgramMenu> menu = ProgramMenuDAO.getProgramByDepartment(department, jdbcTemplate);
+			List<ProgramMenu> menu = ProgramMenuDAO.getDimProgramByDepartment(department, jdbcTemplate);
 			List<Program> programs = Program.getProgram(menu);
 			model.addAttribute("programs", programs);
 		} else if(program != "" && actor!="" && department =="") {
-			List<ProgramMenu> menu = ProgramMenuDAO.getProgramByProgramactor(program, actor, jdbcTemplate);
+			List<ProgramMenu> menu = ProgramMenuDAO.getDimProgramByProgramactor(program, actor, jdbcTemplate);
 			List<Program> programs = Program.getProgram(menu);
 			model.addAttribute("programs", programs);
 		} else if(program == "" && actor!="" && department !="") {
-			List<ProgramMenu> menu = ProgramMenuDAO.getProgramByDepartmentactor(department, actor, jdbcTemplate);
+			List<ProgramMenu> menu = ProgramMenuDAO.getDimProgramByDepartmentactor(department, actor, jdbcTemplate);
 			List<Program> programs = Program.getProgram(menu);
 			model.addAttribute("programs", programs);
 		} else if(program != "" && actor=="" && department !="") {
-			List<ProgramMenu> menu = ProgramMenuDAO.getProgramByProgramDepartment(program, department, jdbcTemplate);
+			List<ProgramMenu> menu = ProgramMenuDAO.getDimProgramByProgramDepartment(program, department, jdbcTemplate);
 			List<Program> programs = Program.getProgram(menu);
 			model.addAttribute("programs", programs);
 		} else if(program != "" && actor!="" && department !="") {
-			List<ProgramMenu> menu = ProgramMenuDAO.getProgramByProgramactorDepartment(program, actor, department, jdbcTemplate);
+			List<ProgramMenu> menu = ProgramMenuDAO.getDimProgramByProgramactorDepartment(program, actor, department, jdbcTemplate);
 			List<Program> programs = Program.getProgram(menu);
 			model.addAttribute("programs", programs);
 		}
@@ -249,13 +247,13 @@ public class AdminController {
 			List<TradeRecords> records = TradeRecordDAO.getAllRewardRecords(jdbcTemplate);
 			model.addAttribute("records", records);
 		} else if(username!=""&&itcode=="") {
-			List<TradeRecords> records = TradeRecordDAO.getRewardRecordsByusername(username, jdbcTemplate);
+			List<TradeRecords> records = TradeRecordDAO.getDimRewardRecordsByusername(username, jdbcTemplate);
 			model.addAttribute("records",records);
 		} else if(username==""&&itcode!="") {
-			List<TradeRecords> records = TradeRecordDAO.getRewardRecordsByItcode(itcode, jdbcTemplate);
+			List<TradeRecords> records = TradeRecordDAO.getDimRewardRecordsByItcode(itcode, jdbcTemplate);
 			model.addAttribute("records",records);
 		} else if(username!=""&&itcode!="") {
-			List<TradeRecords> records = TradeRecordDAO.getRewardRecordsByItcodeUsername(itcode, username, jdbcTemplate);
+			List<TradeRecords> records = TradeRecordDAO.getDimRewardRecordsByItcodeUsername(itcode, username, jdbcTemplate);
 			model.addAttribute("records",records);
 		}
 		return "rewardrecord";
@@ -270,29 +268,29 @@ public class AdminController {
 			List<TradeRecords> trades = TradeRecordDAO.getAllGrabluckyRecords(jdbcTemplate);
 			model.addAttribute("trades",trades);		
 		} else if(itcode != "" && username=="" && round =="") {
-			List<TradeRecords> trades = TradeRecordDAO.getGrabluckyRecordsByItcode(itcode, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimGrabluckyRecordsByItcode(itcode, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		} else if(itcode == "" && username!="" && round =="") {
-			List<TradeRecords> trades = TradeRecordDAO.getGrabluckyRecordsByUsername(username, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimGrabluckyRecordsByUsername(username, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		} else if(itcode == "" && username=="" && round !="") {
 			int i = Integer.parseInt(round);
-			List<TradeRecords> trades = TradeRecordDAO.getGrabluckyRecordsByRound(i, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimGrabluckyRecordsByRound(i, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		} else if(itcode != "" && username!="" && round =="") {
-			List<TradeRecords> trades = TradeRecordDAO.getGrabluckyRecordsByItcodeUsername(itcode, username, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimGrabluckyRecordsByItcodeUsername(itcode, username, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		} else if(itcode == "" && username!="" && round !="") {
 			int i = Integer.parseInt(round);
-			List<TradeRecords> trades = TradeRecordDAO.getGrabluckyRecordsByUsernameRound(username, i, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimGrabluckyRecordsByUsernameRound(username, i, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		} else if(itcode != "" && username=="" && round !="") {
 			int i = Integer.parseInt(round);
-			List<TradeRecords> trades = TradeRecordDAO.getGrabluckyRecordsByItcodeRound(itcode, i, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimGrabluckyRecordsByItcodeRound(itcode, i, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		} else if(itcode != "" && username!="" && round !="") {
 			int i = Integer.parseInt(round);
-			List<TradeRecords> trades = TradeRecordDAO.getGrabluckyRecordsByItcodeUsernameRound(itcode, username, i, jdbcTemplate);
+			List<TradeRecords> trades = TradeRecordDAO.getDimGrabluckyRecordsByItcodeUsernameRound(itcode, username, i, jdbcTemplate);
 			model.addAttribute("trades",trades);
 		}
 		return "grabluckymoney";
@@ -307,13 +305,13 @@ public class AdminController {
 			List<TradeRecords> records = TradeRecordDAO.getAllRewardRecords(jdbcTemplate);
 			model.addAttribute("records", records);
 		} else if(username!=""&&itcode=="") {
-			List<TradeRecords> records = TradeRecordDAO.getRewardRecordsByusername(username, jdbcTemplate);
+			List<TradeRecords> records = TradeRecordDAO.getDimRewardRecordsByusername(username, jdbcTemplate);
 			model.addAttribute("records",records);
 		} else if(username==""&&itcode!="") {
-			List<TradeRecords> records = TradeRecordDAO.getRewardRecordsByItcode(itcode, jdbcTemplate);
+			List<TradeRecords> records = TradeRecordDAO.getDimRewardRecordsByItcode(itcode, jdbcTemplate);
 			model.addAttribute("records",records);
 		} else if(username!=""&&itcode!="") {
-			List<TradeRecords> records = TradeRecordDAO.getRewardRecordsByItcodeUsername(itcode, username, jdbcTemplate);
+			List<TradeRecords> records = TradeRecordDAO.getDimRewardRecordsByItcodeUsername(itcode, username, jdbcTemplate);
 			model.addAttribute("records",records);
 		}
 		return "rewardrecord";
@@ -349,7 +347,7 @@ public class AdminController {
 	}
 
 	@RequestMapping("/grabstart") 
-	public void grabstart(String round,HttpSession session, HttpServletResponse response) {
+	public void grabstart(String round, HttpServletResponse response) {
 		PrintWriter out;
 		try {
 			out = response.getWriter();

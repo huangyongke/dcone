@@ -138,16 +138,21 @@ function checkimage() {
     </div>
   	<div class="form-group">
     	<div class="col-sm-offset-2 col-sm-10" style="left: -60px">
-      		<button id="sub" type="button" class="btn btn-default">修改密码</button>
+      		<button id="sub" type="button" class="btn btn-info">修改密码</button>
     	</div>
   	</div>
   	</form>
 </div>
 
-
-
-
-<div style="position:absolute;left: 10%;right: 10%;top: 10%">
+<div style="position:absolute;left: 10%;right: 10%;top:10%;">
+<div style="position:relative; width: 200px;height: 200px">
+<ul class="nav nav-pills nav-stacked">
+	<li class="active"><a href="accountforuser">个人账户</a></li>
+	<li><a href="walletforuser">钱包信息</a></li>
+	<li><a href="recordsforuser">交易记录</a></li>
+</ul>
+</div>
+<div style="position: absolute;left: 200px;top: 0px;right: 0px;">
 <div style="position: absolute;left: 200px;top: 0px;right: 0px;width: 800px;height: 100%">
 	<div class="form-group">
     	<label class="col-sm-2 control-label">账号：</label>
@@ -173,6 +178,7 @@ function checkimage() {
 		</p>
 		</form>
 	</div>
+</div>
 </div>
 </div>
 </body>

@@ -43,8 +43,12 @@ public class PhotoDAO {
 	 */
 	public static byte[] getPhotoByUid(int uid,JdbcTemplate jdbcTemplate) {
 		RowMapper<dc_photo> user_mapper = new BeanPropertyRowMapper<dc_photo>(dc_photo.class);
-		dc_photo image = jdbcTemplate.queryForObject("select * from dc_photo where uid=?", user_mapper,uid);
-		return image.getImage();
+		int i = jdbcTemplate.queryForInt("select count(*) from dc_photo where uid=?",uid);
+		if(i>0) {
+			dc_photo image = jdbcTemplate.queryForObject("select * from dc_photo where uid=?", user_mapper,uid);
+			return image.getImage();
+		}
+		return null;
 	}
 	
 	

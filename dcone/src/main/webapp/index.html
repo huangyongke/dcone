@@ -17,7 +17,7 @@
 	<!--[if IE]>
 		<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
 	<![endif]-->
-	<script type="text/javascript">
+<script type="text/javascript">
 	$(document).ready(function(){
 	  $("#back").click(function(){
 	    $.post("signout1",{
@@ -27,7 +27,7 @@
 	    }); 
 		});
 	});
-	</script>
+</script>
 <style type="text/css">
 body.dm-demo4 {
   background-image:url("img/space.jpg");
@@ -40,11 +40,29 @@ body.dm-demo4 .overlay {
 body.dm-demo4 .nav {
 	margin-top:100px;
 }
+body.dm-demo4 .nav-el {
+	border-radius: 30px;
+}
+.backbutton{
+	width:100%;
+	height:5%;
+	border: 2px solid;
+	background-color: #4B0082;
+}
+button.ie{
+	background-image:url("img/backclose.jpg");
+	background-size:cover;
+	width:3%;
+	height:30px;
+	margin-left: 97%;
+	margin-top: 0%;
+	margin-bottom: 0%
+}
 </style>
 </head>
 <body class="dm-demo4">
-	<div>
-	<button id="back">退出</button>
+	<div class="backbutton">
+	<button id="back" class="ie">&nbsp;</button>
 	</div>
 	<div class="htmleaf-container" >
 		<header class="htmleaf-header" style="position: absolute;left: 10px">
@@ -60,7 +78,7 @@ body.dm-demo4 .nav {
 
         <!-- Overlay (hidden by default)-->
         <section class="overlay" id="ov-topleft">
-        	<iframe style="width: 100%;height: 100%" src="chatbox">
+        	<iframe style="width: 100%;height: 100%;" src="chatbox">
            
            
            </iframe>

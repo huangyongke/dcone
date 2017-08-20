@@ -15,8 +15,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
 import com.dcone.dtss.dao.UserDAO;
 import com.dcone.dtss.model.dc_user;
 
@@ -62,8 +60,6 @@ public class SigninController {
 			if(answer== result) {
 				if(UserDAO.checkUser(itcode, password, jdbcTemplate)) {
 					dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
-					session.setAttribute("itcode", itcode);
-					session.setAttribute("username", user.getUsername());
 					session.setAttribute("user", user);
 					if(UserDAO.isadminByItcode(itcode, jdbcTemplate))
 						out.println("3");
@@ -89,27 +85,21 @@ public class SigninController {
 	public void signout(HttpSession session,HttpServletRequest request,HttpServletResponse response) {
 		PrintWriter out;
 		try {
-			System.out.println("用户");
 			out = response.getWriter();
 			ServletContext application = session.getServletContext();
-			String itcode = (String)session.getAttribute("itcode");
-			String username = (String)session.getAttribute("username");
 			dc_user user = (dc_user)session.getAttribute("user");
-			System.out.println(itcode+username);
 			if(application.getAttribute("onlineuser")==null)
 	    	{
 	    		ArrayList<dc_user> users=new ArrayList<dc_user>();
 	    		application.setAttribute("onlineuser", users);
 	    		session.removeAttribute("user");
 	    		out.print("1");
-	    		System.out.println("移除用户");
 	    	}
 	    	else
 	    	{
 	    		@SuppressWarnings("unchecked")
 				ArrayList<dc_user> users=(ArrayList<dc_user>) application.getAttribute("onlineuser");
 	    		users.remove(user);
-	    		System.out.println("移除用户："+username);
 	    		application.setAttribute("onlineuser", users);
 	    		session.removeAttribute("user");
 	    		out.print("1");

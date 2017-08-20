@@ -1,4 +1,5 @@
 <%@page import="java.util.ArrayList"%>
+<%@page import="com.dcone.dtss.model.*" %>
 <%@page import="org.springframework.jdbc.core.JdbcTemplate"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -17,11 +18,18 @@ height:100%;
 background-image: url("img/inputbox.jpg");
 background-size: cover;
 font-size: 15px;
+font-weight:bold;
+padding-top:15px; 
+padding-left:10px; 
+padding-right:30px; 
 }
 .div1{
 background-image: url("img/outputbox.jpg");
 background-size: cover;
 font-size: 15px;
+font-weight:bold;
+padding-left:10px; 
+padding-right:30px; 
 }
 
 .div2{
@@ -70,8 +78,8 @@ function startrefresh2(){
         }
 	});
 }
-setInterval('startrefresh2()',3000);
-setInterval('startrefresh1()',3000);
+setInterval('startrefresh2()',1000);
+setInterval('startrefresh1()',1000);
 
 
 	$(document).ready(function(){ 
@@ -79,20 +87,22 @@ setInterval('startrefresh1()',3000);
 		$("#div2").load("frame_a");
 		$("textarea").keydown(function(e){ 
 		var curKey = e.which; 
-		/* if(curKey == 13 && e.ctrlkey){ 
+		if (e.ctrlKey && e.which ==13){ 
 			$(this).val($(this).val() + "\n");
 		}
-		else  */if(curKey == 13 && !e.ctrlkey){
-		$("#sub").click(); 
+		else  if(curKey == 13 && !e.ctrlKey){
+			$("#sub").click(); 
 		return false; 
 		} 
 		}); 
 		$("#sub").click(function(){
-			$.post("setMessage",{
-				text:$("#text").val()
-			},function(data,status){
-				$("#text").val('');
-			});
+			if($("#text").val()!=''){
+				$.post("setMessage",{
+					text:$("#text").val()
+				},function(data,status){
+					$("#text").val('');
+				});
+			}
 		});
 	}); 
 
@@ -102,7 +112,8 @@ setInterval('startrefresh1()',3000);
 </head>
 <body>
 <%
-	String name= (String)session.getAttribute("username");
+	dc_user user  = (dc_user)session.getAttribute("user");
+	String name= user.getUsername();
 %>
 <div style="position: absolute;left: 15%;top: 10%;reight:15%;">
 

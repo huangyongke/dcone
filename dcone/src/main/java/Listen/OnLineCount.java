@@ -50,7 +50,7 @@ public class OnLineCount implements HttpSessionListener, HttpSessionAttributeLis
 				i=0;
 			application.setAttribute("onlinecount",i);
 		}
-    	dc_user user=(dc_user) session.getAttribute("username");
+    	dc_user user=(dc_user) session.getAttribute("user");
     	if(application.getAttribute("onlineuser")==null)
     	{
     		ArrayList<dc_user> users=new ArrayList<dc_user>();

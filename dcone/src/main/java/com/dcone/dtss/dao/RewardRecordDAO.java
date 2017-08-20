@@ -33,8 +33,8 @@ public class RewardRecordDAO {
 	 * @param jdbcTemplate   Spring JdbcTemplate
 	 * @return   该部门所有节目打赏的RewardRecord对象
 	 */
-	public static List<RewardRecord> getRewardRecordByDepartment(String department,JdbcTemplate jdbcTemplate){
-		List<ProgramMenu> programs = ProgramMenuDAO.getProgramByDepartment(department, jdbcTemplate);
+	public static List<RewardRecord> getDimRewardRecordByDepartment(String department,JdbcTemplate jdbcTemplate){
+		List<ProgramMenu> programs = ProgramMenuDAO.getDimProgramByDepartment(department, jdbcTemplate);
 		List<RewardRecord> records = new ArrayList<RewardRecord>();
 		for(ProgramMenu temp : programs) {
 		List<RewardRecord> r = getProgramByPid(temp.getPid(), jdbcTemplate);

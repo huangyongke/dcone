@@ -1,7 +1,5 @@
 package com.dcone.dtss;
 
-import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -25,8 +23,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.dcone.dtss.dao.GetMessageDAO;
 import com.dcone.dtss.dao.MessageDAO;
 import com.dcone.dtss.dao.PhotoDAO;
@@ -34,7 +30,6 @@ import com.dcone.dtss.dao.UserDAO;
 import com.dcone.dtss.dao.WalletDAO;
 import com.dcone.dtss.model.Message;
 import com.dcone.dtss.model.dc_massage;
-import com.dcone.dtss.model.dc_photo;
 import com.dcone.dtss.model.dc_user;
 import com.dcone.dtss.model.dc_wallet;
 
@@ -42,12 +37,28 @@ import com.dcone.dtss.model.dc_wallet;
 public class ChatController {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+	
+	public String convertStr(String string){
+		if(string==null){
+			string="";
+		}else{
+			try{
+				string=string.replaceAll("","&nbsp;");
+		        string=string.replaceAll("\n","<br>");
+		       }catch(Exception e){  
+		    	   e.printStackTrace(System.err);
+		       }
+		}
+		return string;
+		}
+	
 	@RequestMapping(value="/setMessage")
 	public void setMessage(String text ,HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
-		String itcode=(String) session.getAttribute("itcode");
+		dc_user user  = (dc_user)session.getAttribute("user");
+		text = convertStr(text);
 		if(text!=null) {
-			MessageDAO.createMessageByItcode(itcode,text,jdbcTemplate);
+			MessageDAO.createMessageByItcode(user.getItcode(),text,jdbcTemplate);
 		}
 	}
 	@RequestMapping(value="getMessage")
@@ -59,8 +70,8 @@ public class ChatController {
 	@RequestMapping(value="getPhoto")
 	public void getPhoto(HttpServletRequest request, HttpServletResponse response){
 		HttpSession session = request.getSession();
-		String itcode=(String) session.getAttribute("itcode");
-		 byte[] buffer=PhotoDAO.getPhotoByItcode(itcode,jdbcTemplate);
+		dc_user user  = (dc_user)session.getAttribute("user");
+		 byte[] buffer=PhotoDAO.getPhotoByItcode(user.getItcode(),jdbcTemplate);
 	        if(buffer != null){
 	        	InputStream buffin = new ByteArrayInputStream(buffer);
 	        	BufferedImage img;
@@ -75,7 +86,7 @@ public class ChatController {
 	}
 	
 	@RequestMapping(value="photo")
-	public void getPhotoByItcode(String itcode, HttpSession session, HttpServletResponse response){
+	public void getPhotoByItcode(String itcode, HttpServletResponse response){
 		 byte[] buffer=PhotoDAO.getPhotoByItcode(itcode,jdbcTemplate);
 	        if(buffer != null){
 	        	InputStream buffin = new ByteArrayInputStream(buffer);
@@ -106,10 +117,10 @@ public class ChatController {
 				for(int j=0;j<i;j++)
 				{
 					HttpSession session = request.getSession();
-					String itcode=(String) session.getAttribute("itcode");
+					dc_user user  = (dc_user)session.getAttribute("user");
 					if(items.get(j).getSize()<=65*1024){
 						byte[] buffer=items.get(j).get();
-						if(PhotoDAO.createPhotoByItcode(itcode, buffer, jdbcTemplate))
+						if(PhotoDAO.createPhotoByItcode(user.getItcode(), buffer, jdbcTemplate))
 							response.sendRedirect("account");
 						else
 						{
@@ -136,9 +147,8 @@ public class ChatController {
 	
 	@RequestMapping("/account")
 	public String account(HttpSession session,Model model) {
-		String itcode = (String)session.getAttribute("itcode");
-		dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
-		dc_wallet wallet = WalletDAO.getWalletByItcode(itcode, jdbcTemplate);
+		dc_user user  = (dc_user)session.getAttribute("user");
+		dc_wallet wallet = WalletDAO.getWalletByItcode(user.getItcode(), jdbcTemplate);
 		int money = wallet.getAmount();
 		float amounts = (float)money/100;
 		model.addAttribute("amount", amounts);
@@ -146,26 +156,16 @@ public class ChatController {
 		return "account";
 	}
 	
-	@RequestMapping("/accountforuser")
-	public String accountforuser(HttpSession session,Model model) {
-		String itcode = (String)session.getAttribute("itcode");
-		dc_user user = UserDAO.getUserByItcode(itcode, jdbcTemplate);
-		dc_wallet wallet = WalletDAO.getWalletByItcode(itcode, jdbcTemplate);
-		int money = wallet.getAmount();
-		float amounts = (float)money/100;
-		model.addAttribute("amount", amounts);
-		model.addAttribute("user", user);
-		return "accountforuser";
-	}
+	
 	
 	@RequestMapping("/changepassword")
 	public void changepassword(String password,String newpassword,HttpSession session, HttpServletResponse response) {
 		PrintWriter out;
 		try {
 			out = response.getWriter();
-			String itcode = (String)session.getAttribute("itcode");
-			if(UserDAO.checkUser(itcode, password, jdbcTemplate)) {
-				if(UserDAO.changePasswordByItcode(itcode, newpassword, jdbcTemplate)) {
+			dc_user user  = (dc_user)session.getAttribute("user");
+			if(UserDAO.checkUser(user.getItcode(), password, jdbcTemplate)) {
+				if(UserDAO.changePasswordByItcode(user.getItcode(), newpassword, jdbcTemplate)) {
 					out.print("1");
 				}
 				else {
@@ -182,6 +182,16 @@ public class ChatController {
 		
 	}
 
+	/*@RequestMapping("/accountforuser")
+	public String accountforuser(HttpSession session,Model model) {
+		dc_user user  = (dc_user)session.getAttribute("user");
+		dc_wallet wallet = WalletDAO.getWalletByItcode(user.getItcode(), jdbcTemplate);
+		int money = wallet.getAmount();
+		float amounts = (float)money/100;
+		model.addAttribute("amount", amounts);
+		model.addAttribute("user", user);
+		return "accountforuser";
+	}*/
 	
 	@RequestMapping("/chatbox")
 	public String chatbox(Model model) {
@@ -190,11 +200,6 @@ public class ChatController {
 		return "chatbox";
 	}
 	
-		
-	@RequestMapping("/frame")
-	public String frame() {
-		return "frame";
-	}
 	@RequestMapping("/frame_a")
 	public String frame_a() {
 		return "frame_a";
@@ -206,12 +211,5 @@ public class ChatController {
 		model.addAttribute("messages", messages);
 		return "frame_b";
 	}
-	@RequestMapping("/frame_c")
-	public String frame_c() {
-		return "frame_c";
-	}
-	@RequestMapping("/back")
-	public String back() {
-		return "back";
-	}
+	
 }

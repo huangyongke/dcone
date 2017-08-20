@@ -13,13 +13,13 @@
 
 </head>
 <body>
-<table border="1" width="200" cellpadding="10" style="float:center;">
+<table border="1" width="200" style="float:center;">
 <%
 	int counts=0;
 	if(application.getAttribute("onlinecount")!=null)
 		counts=((Integer)application.getAttribute("onlinecount")).intValue();
 	%>
-	<tr><td>在线人数：</td><td><%=counts %></td></tr>
+	<tr height="50px"><td>在线人数：</td><td><%=counts %></td></tr>
 		<%	
 	if(application.getAttribute("onlineuser")!=null)
 	{
@@ -27,7 +27,7 @@
 	for(dc_user user:users)
 	{	
 %>
-	<tr><td><%  out.print(user.getUsername()); %></td></tr>
+	<tr><td><%  out.print(user.getUsername()); %></td><td><img width="60px" height="40px" alt="" src="photo?itcode=<%=user.getItcode() %>"></td></tr>
 <%
 	}
 	}

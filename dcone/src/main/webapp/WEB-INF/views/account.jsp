@@ -102,7 +102,7 @@ function checkimage() {
 			$("#password").val("");
 			$("#newpassword").val("");
 			$("#renewpassword").val("");
-			$("#amount").val();
+			$("#amount").val("");
 			$("#div1").hide()
 			$("#div2").hide()
 			$("#layout").hide()
@@ -183,7 +183,7 @@ function checkimage() {
     </div>
   	<div class="form-group">
     	<div class="col-sm-offset-2 col-sm-10" style="left: -60px">
-      		<button id="sub" type="button" class="btn btn-default">修改密码</button>
+      		<button id="sub" type="button" class="btn btn-info">修改密码</button>
     	</div>
   	</div>
   	</form>
@@ -200,7 +200,7 @@ function checkimage() {
     	</div>
     	<div class="form-group">
     	<div class="col-sm-offset-2 col-sm-10" style="top: 90px;left:-40px;">
-      		<button id="submit" type="button" class="btn btn-default">充值</button>
+      		<button id="submit" type="button" class="btn btn-info">充值</button>
     	</div>
   	</div>
 	</form>
