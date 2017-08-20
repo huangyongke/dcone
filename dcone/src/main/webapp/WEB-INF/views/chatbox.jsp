@@ -83,7 +83,7 @@ setInterval('startrefresh1()',1000);
 
 
 	$(document).ready(function(){ 
-		$("#div3").width($("#div1").offsetWidth())
+		//$("#div3").width($("#div1")[0].offsetWidth)
 		$("#div1").load("frame_b");
 		$("#div2").load("frame_a");
 		$("textarea").keydown(function(e){ 
@@ -124,7 +124,7 @@ setInterval('startrefresh1()',1000);
 <div id="div1" style="float: left; width:610px; height: 400px;overflow: auto;" class="div1">
 
 </div>
-<div id="div3" style="float: left; width:600px;">
+<div id="div3" style="float: left; width:610px; heigth:100px;">
 <form action="setMessage" name="form1" onsubmit="return check()">
 <textarea rows="5" id="text" name="text" style="position:relative; width: 100%"></textarea>
 <input id="sub" type="button" value="发送">
