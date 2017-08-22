@@ -68,7 +68,7 @@ public class LuckyNumberThread extends Thread{
 						boolean m = WalletDAO.wallet_add(wallet.getWid(), money, jdbcTemplate);
 						boolean n = TradeDAO.createTrade(wallet.getWid(), money, "红包雨", jdbcTemplate);
 						if(i &j & m & n) {
-							System.out.println("成功");
+							//System.out.println("成功");
 						}
 						else
 							System.out.println("失败");

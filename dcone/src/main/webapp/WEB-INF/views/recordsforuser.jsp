@@ -10,17 +10,38 @@
 	<script src="js/bootstrap.min.js"></script>
 	<script type="text/JavaScript" src="js/My97DatePicker/WdatePicker.js"></script> 
 <title>Insert title here</title>
+<style type="text/css">
+body{
+	background-image: url("img/space.jpg");
+	background-size: cover;
+}
+.user1{
+	position: absolute;
+	left: 200px;
+	top: 0px;
+	right: 0px;
+	width: 800px;
+	height: 100%;
+	float:left;
+	background-image: url("img/userback.jpg");
+	background-size: cover;
+	color:black;
+	font-weight: 700;
+	overflow: auto;
+}
+</style>
 </head>
 <body>
-<div style="position:absolute;left: 10%;right: 10%;top:10%;">
-<div style="position:relative; width: 200px;height: 200px">
+<div style="position:absolute; left: 10%;right: 10%;top:10%;height: 80%">
+<div style="position:relative;float:left; width: 200px;">
 <ul class="nav nav-pills nav-stacked">
 	<li><a href="accountforuser">个人账户</a></li>
 	<li><a href="walletforuser">钱包信息</a></li>
 	<li  class="active"><a href="recordsforuser">交易记录</a></li>
 </ul>
 </div>
-<div style="position: absolute;left: 200px;top: 0px;right: 0px;">
+<div class="user1">
+<div style="position: absolute;left: 0px;top: 0px;right: 0px;">
 <form action="" class="bs-example bs-example-form" role="form">
 
 <table class="table table-striped">
@@ -34,12 +55,13 @@
     </select></td>
     <td><button id="button2" class="btn btn-default" type="submit">查询</button></td>
 </tr>
-<tr><td align="center">员工号</td><td align="center">姓名</td><td align="center">交易金额(元)</td><td>交易时间</td><td>备注</td></tr>
+<tr style="color: white;"><td align="center">员工号</td><td align="center">姓名</td><td align="center">交易金额(元)</td><td>交易时间</td><td>备注</td></tr>
 <c:forEach items="${trades }" var="trade">
-<tr><td align="center">${trade.itcode }</td><td align="center">${trade.username }</td><td align="center">${trade.amount }</td><td>${trade.tradetime }</td><td>${trade.memo }</td></tr>
+<tr style="color: black;"><td align="center">${trade.itcode }</td><td align="center">${trade.username }</td><td align="center">${trade.amount }</td><td>${trade.tradetime }</td><td>${trade.memo }</td></tr>
 </c:forEach>
 </table>
 </form>
+</div>
 </div>
 </div>
 </body>

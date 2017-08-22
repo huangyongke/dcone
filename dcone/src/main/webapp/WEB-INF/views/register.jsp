@@ -4,6 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="css/bootstrap.min.css">  
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 <title>注册</title>
 <style>
 body {
@@ -71,6 +74,55 @@ input:focus{
 	font-size: 16px;
 	text-align: center;
 }
+#layout { 
+	background:#000; 
+	position:absolute; 
+	top:0; 
+	left:0; 
+	width:100%; 
+	height:100%; 
+	opacity:0.5; 
+	filter:alpha(opacity=50); 
+	cursor:pointer;
+	display: none;
+}
+#closed { 
+	width:20px; 
+	height:20px; 
+	text-align:center; 
+	background:#800000; 
+	color:#fff; 
+	position:absolute; 
+	top:-10px; 
+	right:-10px; 
+	cursor:pointer; 
+}
+.div1 {
+	position: absolute;
+	width:400px; 
+	height:250px;
+	left: 55%;
+	top: 50%;
+	text-align:center; 
+	margin:-200px auto 0 -250px; 
+	background:#fafafa; 
+	z-index:999; 
+	border:2px solid #eee; 
+	border-radius:5px; 
+	box-shadow:0 0 40px #333; 
+	display: none;
+}
+.out{
+	position:absolute;
+	left:39%;
+	top:15%;
+	background-color: #666666;
+	width: 300px;
+	text-align: center;
+	font-size:large;
+	display: none;
+}
+
 </style>
 <script type="text/javascript">
 function check() {
@@ -80,30 +132,45 @@ function check() {
 	var password=document.form1.password.value
 	var repassword=document.form1.repassword.value
 	if(itcode==""){
-		alert("员工号不能为空");
+		$(".out").html("员工号不能为空");
+		$(".out").show();
+		setTimeout(() => {
+			$(".out").hide();
+		}, 3000);
 		return false
 	}
 	if(username=="")
 		{
-		alert("姓名不能为空")
+		$(".out").html("姓名不能为空");
+		$(".out").show();
+		setTimeout(() => {
+			$(".out").hide();
+		}, 3000);
 		return false
 		}
 	if(password=="")
 		{
-		alert("密码不能为空")
+		$(".out").html("密码不能为空");
+		$(".out").show();
+		setTimeout(() => {
+			$(".out").hide();
+		}, 3000);
 		return false
 		}
-	/* else if(password.length()<6)
-		{
-		document.getElementById("password").innerHTML="密码不能小于6位数"
-			is=false
-		}  */
 	if(repassword==""){
-		alert("密码不能为空")
+		$(".out").html("密码不能为空");
+		$(".out").show();
+		setTimeout(() => {
+			$(".out").hide();
+		}, 3000);
 		return false
 	}
 	else if(password!=repassword){
-		alert("确认密码与密码不符合")
+		$(".out").html("确认密码与密码不符合");
+		$(".out").show();
+		setTimeout(() => {
+			$(".out").hide();
+		}, 3000);
 		return false
 	}
 	return true
@@ -142,6 +209,17 @@ function check() {
 		document.getElementById("image").src="checkimage?"+Math.random();
 		
 	}
+ 
+ 
+ 	$(document).ready(function(){
+ 		$("#closed").click(function(){
+			$("#div1").hide()
+			$("#layout").hide()
+		});
+ 		$("#sub").click(function(){
+ 			window.location.href="login";
+ 		})
+ 	});
  </script>
  <script type="text/javascript">
 function checkname(){
@@ -158,26 +236,45 @@ function checkname(){
 				var h=httprequest.responseText;
 				if(h==0)
 					{
+					$(".out").html("注册失败！用户名和员工号不匹配;");
+					$(".out").show();
+					setTimeout(() => {
+						$(".out").hide();
+					}, 3000);
 					document.getElementById("info").innerHTML="注册失败！用户名和员工号不匹配;";
 					changed()
 					}
 				else if(h==1)
 					{
-					document.getElementById("info").innerHTML="注册成功!前去<a href='login'>登录</a>";
+					$('#layout').show();
+					$('#div1').show();
 					changed()
-					//window.location.href="register.jsp";
 					}
 				else if(h==2)
 					{
+					$(".out").html("注册失败！");
+					$(".out").show();
+					setTimeout(() => {
+						$(".out").hide();
+					}, 3000);
 					document.getElementById("info").innerHTML="注册失败！";
 					changed()
 					}
 				else if(h==3){
-				document.getElementById("info").innerHTML="注册失败！该账户已经设置密码,前去<a href='login'>登录</a>";
+					$(".out").html("注册失败！该账户已经设置密码");
+					$(".out").show();
+					setTimeout(() => {
+						$(".out").hide();
+					}, 3000);
+				document.getElementById("info").innerHTML="<a href='login'>前去登录</a>";
 				changed()
 				}
 				else if(h==4){
-				document.getElementById("info").innerHTML="注册失败！验证码错误";
+					$(".out").html("注册失败！验证码错误");
+					$(".out").show();
+					setTimeout(() => {
+						$(".out").hide();
+					}, 3000);
 				changed()
 				}
 			}
@@ -196,12 +293,25 @@ function checkname(){
 </head>
 
 <body>
+<div class="out"></div>
+<div id="layout"></div>
+<div id="div1" class="div1">
+	<div id="closed">X</div>
+	<span style="position: absolute;top: 20%;left:35%;font-size:xx-large; ;">注册成功</span><br>
+	<p style="position: absolute;top: 40%;left:40%;font-size: large;">前去登录</p>
+   	<div class="form-group" style="position: absolute;left: 50%;top: 60%;">
+    	<div class="col-sm-offset-2 col-sm-10" style="left: -60px">
+      		<button id="sub" type="button" class="btn btn-info">登录</button>
+    	</div>
+  	</div>
+</div>
+
 <form action="" name="form1" method="get" onsubmit="">
-<table style="position:absolute;left: 35%;top: 10%;">
-<tr><td colspan="2"><div id="info" style="color: red;"></div></td></tr>
-<caption style="font-size: large;">注册</caption>
+<table style="position:absolute;left: 40%;top: 20%;">
+<caption style="font-size:xx-large;position:relative; left: 90px;">注册</caption>
+<tr><td colspan="2" align="center"><div id="info" style="color: red;"></div></td></tr>
 <tr>
-	<td colspan="2" ><input type="text" name="itcode"  style="width: 100%" placeholder="请输入用户名" class="inn1"></td>
+	<td colspan="2" ><input type="text" name="itcode"  style="width: 100%" placeholder="请输入用户账号" class="inn1"></td>
 </tr>
 <tr>
 	<td colspan="2" ><input type="text" name="username" style="width: 100%" placeholder="请输入姓名" class="inn1"></td>

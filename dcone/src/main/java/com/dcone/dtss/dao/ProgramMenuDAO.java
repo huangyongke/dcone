@@ -1,5 +1,6 @@
 package com.dcone.dtss.dao;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -32,7 +33,7 @@ public class ProgramMenuDAO {
 	 */
 	public static List<ProgramMenu> getDimProgramByProgram(String program,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> p = jdbcTemplate.query("select * from program_menu where program like ?",programMenu_mapper,"%"+program+"%");
+		List<ProgramMenu> p = jdbcTemplate.query("select * from program_menu where program like ?  order by showtime",programMenu_mapper,"%"+program+"%");
 		return p;
 	}
 	
@@ -44,7 +45,7 @@ public class ProgramMenuDAO {
 	 */
 	public static List<ProgramMenu> getDimProgramByDepartment(String department,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> program = jdbcTemplate.query("select * from program_menu where department like ?",programMenu_mapper,"%"+department+"%");
+		List<ProgramMenu> program = jdbcTemplate.query("select * from program_menu where department like ?  order by showtime",programMenu_mapper,"%"+department+"%");
 		return program;
 	}
 	
@@ -56,7 +57,7 @@ public class ProgramMenuDAO {
 	 */
 	public static List<ProgramMenu> getDimProgramByActor(String actor,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> program = jdbcTemplate.query("select * from program_menu where actor=?",programMenu_mapper,"%"+actor+"%");
+		List<ProgramMenu> program = jdbcTemplate.query("select * from program_menu where actor like ?  order by showtime",programMenu_mapper,"%"+actor+"%");
 		return program;
 	}
 	
@@ -69,7 +70,7 @@ public class ProgramMenuDAO {
 	 */
 	public static List<ProgramMenu> getDimProgramByProgramactor(String program,String actor,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where program like ? and actor like ?",programMenu_mapper,new Object[] {"%"+program+"%","%"+actor+"%"});
+		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where program like ? and actor like ?  order by showtime",programMenu_mapper,new Object[] {"%"+program+"%","%"+actor+"%"});
 		return programs;
 	}
 	
@@ -82,7 +83,7 @@ public class ProgramMenuDAO {
 	 */
 	public static List<ProgramMenu> getDimProgramByProgramDepartment(String program,String department,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where program kike ? and department like ?",programMenu_mapper,new Object[] {"%"+program+"%","%"+department+"%"});
+		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where program kike ? and department like ?  order by showtime",programMenu_mapper,new Object[] {"%"+program+"%","%"+department+"%"});
 		return programs;
 	}
 	
@@ -95,7 +96,7 @@ public class ProgramMenuDAO {
 	 */
 	public static List<ProgramMenu> getDimProgramByDepartmentactor(String department,String actor,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where department like ? and actor like ?",programMenu_mapper,new Object[] {"%"+department+"%","%"+actor+"%"});
+		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where department like ? and actor like ?  order by showtime",programMenu_mapper,new Object[] {"%"+department+"%","%"+actor+"%"});
 		return programs;
 	}
 	
@@ -109,7 +110,7 @@ public class ProgramMenuDAO {
 	 */
 	public static List<ProgramMenu> getDimProgramByProgramactorDepartment(String program,String actor,String department,JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where program like ? and actor like ? and department like ?",programMenu_mapper,new Object[] {"%"+program+"%","%"+actor+"%","%"+department+"%"});
+		List<ProgramMenu> programs = jdbcTemplate.query("select * from program_menu where program like ? and actor like ? and department like ?  order by showtime",programMenu_mapper,new Object[] {"%"+program+"%","%"+actor+"%","%"+department+"%"});
 		return programs;
 	}
 	
@@ -120,7 +121,7 @@ public class ProgramMenuDAO {
 	 */
 	public static List<ProgramMenu> getALLProgram(JdbcTemplate jdbcTemplate) {
 		RowMapper<ProgramMenu> programMenu_mapper = new BeanPropertyRowMapper<ProgramMenu>(ProgramMenu.class);
-		List<ProgramMenu> menu = jdbcTemplate.query("select * from program_menu",programMenu_mapper);
+		List<ProgramMenu> menu = jdbcTemplate.query("select * from program_menu order by showtime;",programMenu_mapper);
 		return menu;
 	}
 	
@@ -137,9 +138,30 @@ public class ProgramMenuDAO {
 		return false;
 	}
 	
-	public static boolean newProgram(String program,String actor,String department,String showtime,int sequence, JdbcTemplate jdbcTemplate) {
-		List<ProgramMenu> menu = getProgramsBySequence(jdbcTemplate);
-		
-		return false;
+	public static int newProgram(String program,String actor,String department,String showtime,String stoptime, JdbcTemplate jdbcTemplate) {
+		List<ProgramMenu> menu = getALLProgram(jdbcTemplate);
+		boolean is=true;
+		showtime=showtime+".0";
+		stoptime=stoptime+".0";
+		int start=0;
+		int stop=100;
+		for(ProgramMenu m:menu) {
+			if(m.getShowtime().compareTo(stoptime)>=0) {
+				stop = m.getSequence();
+			}else if(m.getStoptime().compareTo(showtime)<=0) {
+				start = m.getSequence();
+			} else {
+				is=false;
+				break;
+			}
+		}
+		if(is) {
+			int i = jdbcTemplate.update("insert into program_menu values(null,?,?,?,?,?,?,0)",new Object[] {program,actor,department,showtime,stoptime,(start+stop)/2});
+			if(i>0) {
+				return 1;
+			} else 
+				return 2;
+		}
+		return 0;
 	}
 }

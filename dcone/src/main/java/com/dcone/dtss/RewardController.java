@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.dcone.dtss.dao.ProgramMenuDAO;
 import com.dcone.dtss.dao.RewardRecordDAO;
+import com.dcone.dtss.dao.WalletDAO;
 import com.dcone.dtss.model.Program;
 import com.dcone.dtss.model.ProgramMenu;
 import com.dcone.dtss.model.RewardRecord;
@@ -51,14 +52,18 @@ public class RewardController {
 		int amount = (int) (amounts*100);
 		try {
 			PrintWriter out = response.getWriter();
-			if(RewardRecordDAO.Reward(user.getItcode(),id,amount,jdbcTemplate)) {
-				ProgramMenu program = ProgramMenuDAO.getProgramByPid(id, jdbcTemplate);
-				int i = program.getReward();
-				float j = (float)i/100;
-				out.println(j);
+			if(WalletDAO.isexistByItcode(user.getItcode(), jdbcTemplate)) {
+				if(RewardRecordDAO.Reward(user.getItcode(),id,amount,jdbcTemplate)) {
+					ProgramMenu program = ProgramMenuDAO.getProgramByPid(id, jdbcTemplate);
+					int i = program.getReward();
+					float j = (float)i/100;
+					out.println(j);
+				}
+				else
+					out.println("0");
+			}else {
+				out.println("1");
 			}
-			else
-				out.println("0");
 		} catch (IOException e) {
 				// TODO Auto-generated catch block
 			e.printStackTrace();

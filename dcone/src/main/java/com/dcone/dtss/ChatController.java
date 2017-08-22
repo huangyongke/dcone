@@ -120,15 +120,25 @@ public class ChatController {
 					dc_user user  = (dc_user)session.getAttribute("user");
 					if(items.get(j).getSize()<=65*1024){
 						byte[] buffer=items.get(j).get();
-						if(PhotoDAO.createPhotoByItcode(user.getItcode(), buffer, jdbcTemplate))
-							response.sendRedirect("account");
+						if(PhotoDAO.createPhotoByItcode(user.getItcode(), buffer, jdbcTemplate)) {
+							if(UserDAO.isadminByItcode(user.getItcode(), jdbcTemplate))
+								response.sendRedirect("account");
+							else
+								response.sendRedirect("accountforuser");
+						}
 						else
 						{
-							out.print("<a href='back'>·µ»Ø</a>");
-							//response.addHeader("refresh","3;back.jsp");
+							if(UserDAO.isadminByItcode(user.getItcode(), jdbcTemplate))
+								response.sendRedirect("account");
+							else
+								response.sendRedirect("accountforuser");
 						}
 					}else {
-						out.print("ÕÕÆ¬Ì«´óÉÏ´«Í¼ÏñÊ§°Ü<a href='back'>·µ»Ø</a>");
+						if(UserDAO.isadminByItcode(user.getItcode(), jdbcTemplate))
+							response.sendRedirect("account");
+						else
+							response.sendRedirect("accountforuser");
+						//out.print("ÕÕÆ¬Ì«´óÉÏ´«Í¼ÏñÊ§°Ü<a href='back'>·µ»Ø</a>");
 						//response.addHeader("refresh","3;back.jsp");
 					}
 				}		
@@ -181,17 +191,6 @@ public class ChatController {
 		}
 		
 	}
-
-	/*@RequestMapping("/accountforuser")
-	public String accountforuser(HttpSession session,Model model) {
-		dc_user user  = (dc_user)session.getAttribute("user");
-		dc_wallet wallet = WalletDAO.getWalletByItcode(user.getItcode(), jdbcTemplate);
-		int money = wallet.getAmount();
-		float amounts = (float)money/100;
-		model.addAttribute("amount", amounts);
-		model.addAttribute("user", user);
-		return "accountforuser";
-	}*/
 	
 	@RequestMapping("/chatbox")
 	public String chatbox(Model model) {

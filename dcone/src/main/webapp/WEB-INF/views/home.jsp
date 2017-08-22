@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-欢迎来到钱的世界,<a href="balance_add">充值</a>
+欢迎来到钱的世界,<a href="login">登录</a>
 <hr>
 现在服务器的时间是<c:out value="${serverTime }"></c:out>
 

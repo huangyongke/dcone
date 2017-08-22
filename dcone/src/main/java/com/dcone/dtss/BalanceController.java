@@ -32,10 +32,6 @@ public class BalanceController {
 	@Autowired
     JdbcTemplate jdbcTemplate;
 	
-	@RequestMapping(value="/balance_add", method=RequestMethod.GET)
-	public String balanceAdd() {
-		return "balance_add";
-	}
 	@RequestMapping(value="/balance_adding")
 	public void balanceAdding(String amount,HttpServletResponse response,HttpSession session) {
 		double amount1 = Double.parseDouble(amount);
@@ -46,7 +42,7 @@ public class BalanceController {
 			if(TradeDAO.balance_add(user.getItcode(), amounts,"≥‰÷µ", jdbcTemplate)) {
 				int money=WalletDAO.getWalletByItcode(user.getItcode(), jdbcTemplate).getAmount();
 				float i = (float)money/100;
-				out.println(amount);
+				out.println(i);
 			} else {
 				out.println("0");
 			}
@@ -56,30 +52,6 @@ public class BalanceController {
 		}
 		
 	}
-	@RequestMapping(value="/balance_get",method=RequestMethod.GET)
-	public String balanceget(HttpSession session ,Model model) {
-		dc_user user  = (dc_user)session.getAttribute("user");
-		List<dc_trade> trades=TradeDAO.getTradesByItcode(user.getItcode(), jdbcTemplate);
-		model.addAttribute("trades", trades);
-		return "history";
-	}
-	@RequestMapping(value="/balance_getting",method=RequestMethod.GET)
-	public String balancegetting(String date,HttpSession session ,Model model) {
-		if(date!="") {
-		dc_user user  = (dc_user)session.getAttribute("user");
-		String start = date +" 00:00:00";
-		String end = date + " 23:59:59";
-		List<dc_trade> trades=TradeDAO.getTradesByItcode(user.getItcode(), start, end, jdbcTemplate);
-		model.addAttribute("trades",trades);
-		}
-		else {
-			dc_user user  = (dc_user)session.getAttribute("user");
-			List<dc_trade> trades=TradeDAO.getTradesByItcode(user.getItcode(), jdbcTemplate);
-			model.addAttribute("trades", trades);
-		}
-		return "history";
-	}
-	
 	
 	@RequestMapping("/grabmoney")
 	public void grabmoney(HttpSession session ,HttpServletResponse response) {

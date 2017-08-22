@@ -10,6 +10,10 @@
 	<script src="js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
+body{
+	background-image: url("img/space.jpg");
+	background-size: cover;
+}
 #layout { 
 	background:#000; 
 	position:absolute; 
@@ -51,13 +55,26 @@
 }
 .out{
 	position:absolute;
-	left:40%;
-	top:46%;
+	left:30%;
+	top:20%;
 	background-color: #666666;
 	width: 300px;
 	text-align: center;
 	font-size:large;
 	display: none;
+}
+.user1{
+	position: absolute;
+	left: 200px;
+	top: 0px;
+	height:100%;
+	right: opx;
+	width:800px;
+	float:left;
+	background-image: url("img/userback.jpg");
+	background-size: cover;
+	color:white;
+	font-weight: 700;
 }
 
 </style>
@@ -68,8 +85,13 @@ function checkmoney(){
 		{
 		$("#info2").html("输入不能为空");
 		return false
-		}
-	else
+	} else if(money<=0){
+		$("#info2").html("充值金额必须大于0");
+		return false
+	}
+	else{
+		$("#info2").html("");
+	}
 		return true;
 }
 
@@ -78,18 +100,25 @@ function checkmoney(){
 			$("#amount").val("");
 			$("#div2").hide()
 			$("#layout").hide()
+			$("#info2").html("");
 		});
 		$("#addmoney").click(function(){
 			$("#div2").show();
 			$("#layout").show();
 		})
 		$("#submit").click(function(){
+			var amount=$("#amount").val();
 			if(checkmoney()){
 				$.post("balance_adding",{
-					amount:$("#amount").val()
+					amount:amount
 				},function(data,status){
 					if(data!=0){
-						alert("您成功充值"+data+"元");
+						$("#out").html("您成功充值"+amount+"元");
+						$("#out").show();
+						setTimeout( function(){
+							$("#out").hide();
+						}, 3000);
+						$("#money").val(data);
 					}
 					$("#amount").val("");
 					$("#div2").hide()
@@ -115,7 +144,7 @@ function checkmoney(){
 </head>
 <body>
 <div id="layout"></div>
-<div id="out" class="out"></div>
+
 <div id="div2" class="div2">
 	<div class="closed">X</div>
 	<div id="info2" style="color: red;"></div>
@@ -149,7 +178,7 @@ function checkmoney(){
     </div><!-- /.modal-dialog -->
 </div>
 
-<div style="position:absolute;left: 10%;right: 10%;top: 10%">
+<div style="position:absolute;left: 10%;right: 10%;top: 10%;height:80%">
 <div style="position:relative; width: 200px;height: 200px">
 <ul class="nav nav-pills nav-stacked">
 	<li><a href="accountforuser">个人账户</a></li>
@@ -168,12 +197,13 @@ $(function () {
 
 </script>
 </div>
-<div style="position: absolute;left: 200px;top: 0px;right: 0px;width: 800px;height: 100%">
-	<div >
-		<label class="col-sm-2 control-label" style="width: 100px;">您的账户余额为：</label>
-    	<div class="col-sm-10">
-      	<p class="form-control-static">${amount }</p>
-    	</div>
+<div class="user1">
+<div id="out" class="out">充值</div>
+	<table style="position: absolute;left: 10%;top: 25%;color: black;">
+	<caption style="font-size:xx-large;position:relative;color:black; left: 90px;">钱包信息</caption>
+	<tr><td>您的账户余额为：</td><td><input id="money" type="text" disabled="disabled" value="${amount }"></td></tr>
+	</table>
+    <div style="position: absolute; left: 25%;top: 45%; ">
   		<button id="addmoney" type="button" class="btn btn-primary">充值</button>
 	</div>
 </div>

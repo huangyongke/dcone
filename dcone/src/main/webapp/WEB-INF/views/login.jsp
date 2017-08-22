@@ -4,12 +4,25 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<link rel="stylesheet" href="css/bootstrap.min.css">  
+	<script src="js/jquery-3.2.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 <title>登录</title>
 
 <style type="text/css">
 body {
 	background-image: url(img/luanchbackground.jpg);
 	background-size: cover;
+}
+.out{
+	position:absolute;
+	left:38%;
+	top:5%;
+	background-color: #666666;
+	width: 300px;
+	text-align: center;
+	font-size:large;
+	display: none;
 }
 .outter{
 	position: absolute;
@@ -71,6 +84,7 @@ input:focus{
 	font-size: 16px;
 	text-align: center;
 }
+
 </style>
 <script type="text/javascript">
 function check(){
@@ -132,12 +146,19 @@ function checkname(){
 						changed()
 					}
 				else if(httprequest.responseText==2){
-					
-					document.getElementById("info").innerHTML="登录失败！验证码错误";
+					$(".out").html("登录失败！验证码错误");
+					$(".out").show();
+					setTimeout(() => {
+						$(".out").hide();
+					}, 3000);
 					changed()
 				}
 				else if(httprequest.responseText==0){
-					document.getElementById("info").innerHTML="登录失败！密码错误";
+					$(".out").html("登录失败！密码错误");
+					$(".out").show();
+					setTimeout(() => {
+						$(".out").hide();
+					}, 3000);
 					changed()
 				}
 				
@@ -160,6 +181,7 @@ function changed() {
 
 </head>
 <body>
+<div class="out">密码错误</div>
 <form action="" name="form1" method="post">
 <div class=outter >
 <table >

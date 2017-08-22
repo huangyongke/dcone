@@ -10,6 +10,25 @@
 	<script src="js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
+body{
+	background-image: url("img/space.jpg");
+	background-size: cover;
+}
+.user1{
+	position: absolute;
+	left: 200px;
+	top: 0px;
+	right: 0px;
+	width: 800px;
+	height: 100%;
+	float:left;
+	background-image: url("img/userback.jpg");
+	background-size: cover;
+	color:black;
+	font-weight: 700;
+	overflow: auto;
+}
+
 #layout { 
 	background:#000; 
 	position:absolute; 
@@ -64,6 +83,17 @@
 	right:-10px; 
 	cursor:pointer; 
 }
+.out{
+	position:absolute;
+	left:40%;
+	top:46%;
+	background-color: #666666;
+	width: 300px;
+	text-align: center;
+	font-size:large;
+	display: none;
+}
+
 </style>
 <script type="text/javascript">
 function check() {
@@ -87,8 +117,13 @@ function checkmoney(){
 		{
 		$("#info2").html("输入不能为空");
 		return false
+		}else if(money<=0){
+			$("#info2").html("充值金额必须大于0");
+			return false;
 		}
-	else
+	else{
+		$("#info2").html("");
+	}
 		return true;
 }
 function checkimage() {
@@ -106,6 +141,7 @@ function checkimage() {
 			$("#div1").hide()
 			$("#div2").hide()
 			$("#layout").hide()
+			$("#info2").html("");
 		});
 		$("#change").click(function(){
 			$("#div1").show()
@@ -123,8 +159,13 @@ function checkimage() {
 				newpassword: $("#newpassword").val(),
 				renewpassword: $("#renewpassword").val()
 			},function(data,status){
-				if(data==1)
-					alert("密码修改成功");
+				if(data==1){
+					$("#div3").html("密码修改成功");
+					$("#div3").show();
+					setTimeout(() => {
+						$("#div3").hide();
+					}, 3000);
+				}
 				else if(data==0){
 					alert("您的密码输入错误")	
 				}
@@ -142,7 +183,18 @@ function checkimage() {
 					amount:$("#amount").val()
 				},function(data,status){
 					if(data!=0){
-						alert("您成功充值"+data+"元");
+						$("#money").html(data);
+						$("#div3").html("您成功充值"+$("#amount").val()+"元");
+						$("#div3").show();
+						setTimeout(() => {
+							$("#div3").hide();
+						}, 3000);
+					} else{
+						$("#div3").html("充值失败");
+						$("#div3").show();
+						setTimeout(() => {
+							$("#div3").hide();
+						}, 3000);
 					}
 					$("#amount").val("");
 					$("#div2").hide()
@@ -159,6 +211,7 @@ function checkimage() {
 </head>
 <body>
 <div id="layout"></div>
+<div id="div3" class="out"></div>
 <div id="div1" class="div1">
 	<div class="closed">X</div>
 	<form class="form-horizontal" role="form">
@@ -208,14 +261,14 @@ function checkimage() {
 
 </div>
 
-<div style="position:absolute;left: 10%;right: 10%;top: 10%">
+<div style="position:absolute;left: 10%;right: 10%;top: 10%;height: 80%;">
 <div style="position:relative; width: 200px;height: 200px">
 <ul class="nav nav-pills nav-stacked">
 	<li  class="active"><a href="account">个人账户</a></li>
 	<li><a href="accounts">用户账户</a></li>
 	<li><a href="wallets">钱包信息</a></li>
 	<li><a href="program">节目列表</a></li>
-	<li><a href="">新建节目</a></li>
+	<li><a href="newprogram">录入节目</a></li>
 	<li><a href="luckymoneyrain">红包雨发放</a></li>
 	<li><a href="grabluckymoney">抢红包发放</a></li>
 	<li><a href="records">交易记录</a></li>
@@ -224,23 +277,18 @@ function checkimage() {
 	<li><a href="rewardrecords">打赏记录</a></li>
 </ul>
 </div>
-<div style="position: absolute;left: 200px;top: 0px;right: 0px;width: 800px;height: 100%">
-	<div class="form-group">
-    	<label class="col-sm-2 control-label">账号：</label>
-    	<div class="col-sm-10">
-      	<p class="form-control-static">${user.itcode }</p>
-    	</div>
-  	</div>
-  	<div class="form-group">
-    	<label class="col-sm-2 control-label">姓名：</label>
-    	<div class="col-sm-10">
-      	<p class="form-control-static">${user.username }</p>
-    	</div>
-  	</div>
-  	<p>
-  		<button id="change" type="button" class="btn btn-primary">更改密码</button>
-	</p>
-	<div style="position: absolute;top: 0px;right: 40px;width: 200px;">
+<div class="user1">
+	<div style="position: absolute;left: 10%;top: 20%;">
+	<table>
+		<caption style="font-size:xx-large;position:relative;color:black; left: 50px;">账户信息</caption>
+		<tr><td>账号：</td><td><input type="text" disabled="disabled" value="${user.itcode }"></td></tr>
+		<tr><td>姓名：</td><td><input type="text" disabled="disabled" value="${user.username }"></td></tr>
+		<tr><td>密码：</td><td><input type="password" disabled="disabled" value="000000"></td><td><button id="change" type="button" class="btn btn-primary">更改密码</button></td></tr>
+		<tr><td>余额：</td><td><input id="money" type="text" disabled="disabled" value="${amount }"></td><td><button id="addmoney" type="button" class="btn btn-primary">充值</button></td></tr>
+	</table>
+	</div>
+
+	<div style="position: absolute;top: 20%;left:60%;width: 200px;height: 180px;">
 		<img alt="" src="getPhoto">
 		<form id="subimg" action="setpicture" method="post" enctype="multipart/form-data" onsubmit="return checkimage()">
 		<p>
@@ -248,14 +296,6 @@ function checkimage() {
   			<button id="changeimage" style=" position:static; left: 40px" type="button" class="btn btn-primary">更换头像</button>
 		</p>
 		</form>
-	</div>
-	<div >
-		<label class="col-sm-2 control-label" style="width: 100px;">您的账户余额为：</label>
-    	<div class="col-sm-10">
-      	<p class="form-control-static">${amount }</p>
-    	</div>
-  		<button id="addmoney" type="button" class="btn btn-primary">充值</button>
-		
 	</div>
 </div>
 	

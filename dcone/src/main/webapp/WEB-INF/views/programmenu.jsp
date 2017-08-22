@@ -35,7 +35,7 @@ td.inner{
 .out{
 	position:absolute;
 	left:30%;
-	top:46%;
+	top:20%;
 	background-color: #666666;
 	width: 300px;
 	text-align: center;
@@ -117,30 +117,47 @@ function submit1(a,b){
 	document.getElementById(a).value=""
 	var httprequest=initAjax();
 	if(money!=""){
-	httprequest.open("post", "setReward", true);
-	httprequest.onreadystatechange = function(){
-		if(httprequest.readyState==4){
-			if(httprequest.status == 200) {
-				if(httprequest.responseText==0){
-					$(".layout").show();
-					$(".div1").show();
-					$(".btn-default").attr("disabled","disabled");
-				}
-				else  {
-					$("#out").html("你成功打赏"+money+"元");
-					$("#out").show();
-					setTimeout(function(){
-						$("#out").hide();
-					}, 3000);
-					document.getElementById(b).innerHTML=httprequest.responseText
+		if(money<=0){
+			$("#out").html("输入的金额必须大于0");
+			$("#out").show();
+			setTimeout(function(){
+				$("#out").hide();
+			}, 3000);
+		}
+		else{
+		httprequest.open("post", "setReward", true);
+		httprequest.onreadystatechange = function(){
+			if(httprequest.readyState==4){
+				if(httprequest.status == 200) {
+					if(httprequest.responseText==0){
+						$("#span1").html("你的账户余额不足！");
+						$("#span2").html("是否前去充值？");
+						$(".layout").show();
+						$(".div1").show();
+						$(".btn-default").attr("disabled","disabled");
+					} else if(httprequest.responseText==1){
+						$("#span1").html("你的账户没有激活！");
+						$("#span2").html("是否前去激活");
+						$(".layout").show();
+						$(".div1").show();
+						$(".btn-default").attr("disabled","disabled");
+					}
+					else  {
+						$("#out").html("你成功打赏"+money+"元");
+						$("#out").show();
+						setTimeout(function(){
+							$("#out").hide();
+						}, 3000);
+						document.getElementById(b).innerHTML=httprequest.responseText
+					}
 				}
 			}
+			
+		};
+		httprequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
+		var pr="pid="+a+"&money="+money;
+		httprequest.send(pr);
 		}
-		
-	};
-	httprequest.setRequestHeader("Content-type", "application/x-www-form-urlencoded;charset=UTF-8");
-	var pr="pid="+a+"&money="+money;
-	httprequest.send(pr);
 	}
 }
 
@@ -163,12 +180,11 @@ function submit1(a,b){
 
 </head>
 <body>
-<div class="layout">
-</div>
+<div class="layout"></div>
 <div class="div1">
 <div class="closed">X</div>
-	<span style="font-size: x-large;position:relative;left:100px; top: 50px">你的账户余额不足！</span>
-	<span style="font-size: x-large;position:relative;left:-100px; top: 100px">是否前去充值？</span>
+	<span id="span1" style="font-size: x-large;position:relative;left:100px; top: 50px">你的账户余额不足！</span>
+	<span id="span2" style="font-size: x-large;position:relative;left:-100px; top: 100px">是否前去充值？</span>
 	<button type="button" id="yes" class="btn-primary" style="position:absolute; left:120px; bottom: 50px; padding: 5px; width: 40px">是</button>
 	<button class="btn" id="no" style=" position:absolute; left:230px; bottom: 50px;">否</button>
 </div>

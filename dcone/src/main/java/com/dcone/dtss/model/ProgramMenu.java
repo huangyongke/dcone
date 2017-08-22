@@ -6,20 +6,24 @@ public class ProgramMenu {
 	String actor;
 	String department;
 	String showtime;
+	String stoptime;
 	int sequence;
 	int reward;
 	public ProgramMenu() {}
-	public ProgramMenu(int pid, String program, String actor, String department, String showtime, int sequence,
-			int reward) {
+	
+	public ProgramMenu(int pid, String program, String actor, String department, String showtime, String stoptime,
+			int sequence, int reward) {
 		super();
 		this.pid = pid;
 		this.program = program;
 		this.actor = actor;
 		this.department = department;
 		this.showtime = showtime;
+		this.stoptime = stoptime;
 		this.sequence = sequence;
 		this.reward = reward;
 	}
+
 	public int getPid() {
 		return pid;
 	}
@@ -62,10 +66,20 @@ public class ProgramMenu {
 	public void setReward(int reward) {
 		this.reward = reward;
 	}
+
+	public String getStoptime() {
+		return stoptime;
+	}
+
+	public void setStoptime(String stoptime) {
+		this.stoptime = stoptime;
+	}
+
 	@Override
 	public String toString() {
 		return "ProgramMenu [pid=" + pid + ", program=" + program + ", actor=" + actor + ", department=" + department
-				+ ", showtime=" + showtime + ", sequence=" + sequence + ", reward=" + reward + "]";
+				+ ", showtime=" + showtime + ", stoptime=" + stoptime + ", sequence=" + sequence + ", reward=" + reward
+				+ "]";
 	}
 	
 	

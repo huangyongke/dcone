@@ -15,13 +15,13 @@ textarea
 {
 width:100%;
 height:100%;
-background-image: url("img/inputbox.jpg");
-background-size: cover;
 font-size: 15px;
 font-weight:bold;
 padding-top:15px; 
 padding-left:10px; 
 padding-right:30px; 
+background-image: url("img/inputbox.jpg");
+background-size: cover;
 }
 .div1{
 background-image: url("img/outputbox.jpg");
@@ -36,6 +36,10 @@ padding-right:30px;
 background-image: url("img/userlistbackground.jpg");
 background-size: cover;
 font-size: 15px;
+}
+.div3{
+background-image: url("img/inputbox.jpg");
+background-size: cover;
 }
 </style>
 
@@ -124,11 +128,9 @@ setInterval('startrefresh1()',1000);
 <div id="div1" style="float: left; width:610px; height: 400px;overflow: auto;" class="div1">
 
 </div>
-<div id="div3" style="float: left; width:610px; heigth:100px;">
-<form action="setMessage" name="form1" onsubmit="return check()">
-<textarea rows="5" id="text" name="text" style="position:relative; width: 100%"></textarea>
-<input id="sub" type="button" value="发送">
-</form>
+<div id="div3" class="div3" style="float: left; heigth:300px;width: 610px; background-color: white;">
+<textarea id="text" rows="5" name="text" style="position:relative; height:60px; width: 100%"></textarea>
+<input id="sub" type="button" style="position:relative;left: 100%;" value="发送">
 </div>
 </div>
 </body>

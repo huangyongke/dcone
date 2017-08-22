@@ -10,20 +10,23 @@ public class Program {
 	String actor;
 	String department;
 	String showtime;
+	String stoptime;
 	int sequence;
 	float reward;
 	public Program() {}
-	public Program(int pid, String program, String actor, String department, String showtime, int sequence,
-			float reward) {
+	public Program(int pid, String program, String actor, String department, String showtime, String stoptime,
+			int sequence, float reward) {
 		super();
 		this.pid = pid;
 		this.program = program;
 		this.actor = actor;
 		this.department = department;
 		this.showtime = showtime;
+		this.stoptime = stoptime;
 		this.sequence = sequence;
 		this.reward = reward;
 	}
+
 	public int getPid() {
 		return pid;
 	}
@@ -66,10 +69,18 @@ public class Program {
 	public void setReward(float reward) {
 		this.reward = reward;
 	}
+	
+	public String getStoptime() {
+		return stoptime;
+	}
+	public void setStoptime(String stoptime) {
+		this.stoptime = stoptime;
+	}
 	@Override
 	public String toString() {
 		return "Program [pid=" + pid + ", program=" + program + ", actor=" + actor + ", department=" + department
-				+ ", showtime=" + showtime + ", sequence=" + sequence + ", reward=" + reward + "]";
+				+ ", showtime=" + showtime + ", stoptime=" + stoptime + ", sequence=" + sequence + ", reward=" + reward
+				+ "]";
 	}
 	public static List<Program> getProgram(List<ProgramMenu> menu) {
 		List<Program> programs = new ArrayList<Program>();
@@ -78,6 +89,7 @@ public class Program {
 			program.setPid(m.getPid());
 			program.setProgram(m.getProgram());
 			program.setShowtime(m.getShowtime());
+			program.setStoptime(m.getStoptime());
 			program.setDepartment(m.getDepartment());
 			program.setActor(m.getActor());
 			program.setSequence(m.getReward());

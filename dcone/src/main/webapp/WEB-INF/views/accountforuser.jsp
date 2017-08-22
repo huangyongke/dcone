@@ -10,6 +10,10 @@
 	<script src="js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 <style type="text/css">
+body{
+	background-image: url("img/space.jpg");
+	background-size: cover;
+}
 #layout { 
 	background:#000; 
 	position:absolute; 
@@ -47,6 +51,35 @@
 	top:-10px; 
 	right:-10px; 
 	cursor:pointer; 
+}
+.user1{
+	position: absolute;
+	float:left;
+	left: 200px;
+	top: 0px;
+	right: 0px;
+	width: 800px;
+	height:90%;
+	background-image: url("img/userback.jpg");
+	background-size: cover;
+	color:white;
+	font-weight: 700;
+}
+.form-group{
+	position:absolute;
+	float:left;
+	z-index:10;
+	margin:0px;
+}
+.out{
+	position:absolute;
+	left:30%;
+	top:60%;
+	background-color: #666666;
+	width: 300px;
+	text-align: center;
+	font-size:large;
+	display: none;
 }
 </style>
 <script type="text/javascript">
@@ -92,10 +125,19 @@ function checkimage() {
 				newpassword: $("#newpassword").val(),
 				renewpassword: $("#renewpassword").val()
 			},function(data,status){
-				if(data==1)
-					alert("密码修改成功");
-				else if(data==0){
-					alert("您的密码输入错误")	
+				if(data==1){
+					$(".out").html("密码修改成功");
+					$(".out").show();
+					setTimeout(() => {
+						$(".out").hide();
+					}, 3000);
+
+				}else if(data==0){
+					$("#div3").html("密码输入错误");
+					$("#div3").show();
+					setTimeout(() => {
+						$("#div3").hide();
+					}, 3000);
 				}
 				$("#password").val("");
 				$("#newpassword").val("");
@@ -112,31 +154,19 @@ function checkimage() {
 	});
 </script>
 </head>
-<body>
+<body >
+
 <div id="layout"></div>
 <div id="div1" class="div1">
 	<div id="closed">X</div>
 	<form class="form-horizontal" role="form">
 	<div id="info" style="color: red;"></div>
-	<div class="form-group" >
-    	<label for="password" class="col-sm-2 control-label" style="top: 15px;">密码</label></td>
-    	<div class="col-sm-10" style="top: 20px;">
-      		<input type="password" class="form-control" style="width: 80%" id="password" placeholder="请输入密码">
-    	</div>
-    </div>
-    <div class="form-group">
-    	<label for="newpassword"  class="col-sm-2 control-label" style="top: 15px;">新密码</label></td>
-    	<div class="col-sm-10" style="top: 20px;">
-      		<input type="password" class="form-control" style="width: 80%" id="newpassword" placeholder="请输入新密码">
-    	</div>
-    </div>
-    <div class="form-group">
-    	<label for="renewpassword" class="col-sm-2 control-label" style="top: 15px;">确认密码</label></td>
-    	<div class="col-sm-10" style="top: 20px;">
-      		<input type="password"  class="form-control" style="width: 80%" id="renewpassword" placeholder="请输入新密码">
-    	</div>
-    </div>
-  	<div class="form-group">
+	<table style="position:absolute; left: 25%; top:10%;padding: 10px;">
+	<tr><td align="left">原密码：</td><td><input type="password" class="form-control" style="width: 80%" id="password" placeholder="请输入密码"></td></tr>
+	<tr><td align="left">新密码：</td><td><input type="password" class="form-control" style="width: 80%" id="newpassword" placeholder="请输入密码"></td></tr>
+	<tr><td align="left">确认密码：</td><td><input type="password" class="form-control" style="width: 80%" id="renewpassword" placeholder="请输入密码"></td></tr>
+	</table>
+   	<div class="form-group" style="position: absolute;left: 50%;top: 60%;">
     	<div class="col-sm-offset-2 col-sm-10" style="left: -60px">
       		<button id="sub" type="button" class="btn btn-info">修改密码</button>
     	</div>
@@ -144,40 +174,34 @@ function checkimage() {
   	</form>
 </div>
 
-<div style="position:absolute;left: 10%;right: 10%;top:10%;">
-<div style="position:relative; width: 200px;height: 200px">
+<div style="position:absolute;left: 10%;right: 10%;top:10%; height: 90%;">
+<div style="float:left; width: 200px;height: 200px">
 <ul class="nav nav-pills nav-stacked">
 	<li class="active"><a href="accountforuser">个人账户</a></li>
 	<li><a href="walletforuser">钱包信息</a></li>
 	<li><a href="recordsforuser">交易记录</a></li>
 </ul>
 </div>
-<div style="position: absolute;left: 200px;top: 0px;right: 0px;">
-<div style="position: absolute;left: 200px;top: 0px;right: 0px;width: 800px;height: 100%">
-	<div class="form-group">
-    	<label class="col-sm-2 control-label">账号：</label>
-    	<div class="col-sm-10">
-      	<p class="form-control-static">${user.itcode }</p>
-    	</div>
-  	</div>
-  	<div class="form-group">
-    	<label class="col-sm-2 control-label">姓名：</label>
-    	<div class="col-sm-10">
-      	<p class="form-control-static">${user.username }</p>
-    	</div>
-  	</div>
-  	<p>
-  		<button id="change" type="button" class="btn btn-primary">更改密码</button>
-	</p>
-	<div style="position: absolute;top: 0px;right: 40px;width: 200px;">
-		<img alt="" src="getPhoto">
+<div style="position:relate;width:5%;"></div>
+<div style="float:left; height: 100%">
+<div class="user1">
+<div class="out">更改密码</div>
+	<div style="position: absolute;top: 80px;width: 200px; height: 185px; z-index:10;left: 60%;"><!-- 图片以及上传图片 -->
+		<img width="200px" height="150px" alt="" src="getPhoto">
 		<form id="subimg" action="setpicture" method="post" enctype="multipart/form-data" onsubmit="return checkimage()">
 		<p>
 			<input type="file" name="picture" id="image">
-  			<button id="changeimage" style=" position:static; left: 40px" type="button" class="btn btn-primary">更换头像</button>
+  			<button id="changeimage" style=" position:relative; left: 80px" type="button" class="btn btn-primary">更换头像</button>
 		</p>
 		</form>
 	</div>
+	<div style="position: absolute;top:30%; left:10%;">
+		<table style="color: black;">
+		<tr><td>账号：</td><td><input type="text" disabled="disabled" value="${user.itcode }"></td></tr>
+		<tr><td>姓名：</td><td><input type="text" disabled="disabled" value="${user.username }"></td></tr>
+		<tr><td>密码：</td><td><input type="password" disabled="disabled" value="000000"></td><td><button id="change" type="button" class="btn btn-primary">更改密码</button></td></tr>
+		</table>
+  	</div>
 </div>
 </div>
 </div>
