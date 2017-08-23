@@ -1,7 +1,9 @@
-<!doctype html>
-<html lang="zh">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-	<meta charset="UTF-8">
+<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>主界面</title>
@@ -62,7 +64,7 @@ button.ie{
 </style>
 </head>
 <body class="dm-demo4">
-	<div class="backbutton">
+<div class="backbutton">
 	<button id="back" class="ie">&nbsp;</button>
 	</div>
 	<div class="htmleaf-container" >

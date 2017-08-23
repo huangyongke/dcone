@@ -54,8 +54,8 @@ body{
 <table class="table table-striped">
 <tr><td style="width: 25%;"><input id="itcode" name="itcode" type="text" class="form-control" placeholder="输入员工号"></td>
 	<td style="width: 25%;"><input id="username" name="username" type="text" class="form-control" placeholder="输入姓名"></td>
-	<td><input id="starttime" name="starttime" type="text" class="Wdate" placeholder="输入开始时间" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})"></td>
-	<td><div class="input-group" ><input id="stoptime" name="stoptime" type="text" class="Wdate" placeholder="输入截止时间" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+	<td><input id="starttime" name="starttime" type="text" class="Wdate" style="height: 34px;" placeholder="输入开始时间" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})"></td>
+	<td><div class="input-group" ><input id="stoptime" name="stoptime" type="text" class="Wdate" style="height: 34px;" placeholder="输入截止时间" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})">
 		<span class="input-group-btn">
 			<button id="button2" class="btn btn-default" type="submit">查询</button> 
 		</span></div></td>

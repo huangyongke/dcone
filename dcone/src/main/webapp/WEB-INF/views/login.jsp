@@ -10,11 +10,11 @@
 <title>登录</title>
 
 <style type="text/css">
-body {
+ body {
 	background-image: url(img/luanchbackground.jpg);
-	background-size: cover;
+	background-size:cover;
 }
-.out{
+ .out{
 	position:absolute;
 	left:38%;
 	top:5%;
@@ -28,12 +28,16 @@ body {
 	position: absolute;
 	top:12%;
 	left: 40%;
+	width: 250px;
+	heigth:100px;
 }
 .inn1{
-	width:235px;
+	width:250px;
 	height:38px;
 	border-radius:10px;
 	margin-top:20px;
+	font-size:large;
+	text-align:center;
 	margin-bottom:10px;
 	/*background-color:transparent;*/
 	opacity:0.6;
@@ -41,10 +45,12 @@ body {
 	transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 .inn2{
-	width:110px;
+	width:130px;
 	height:38px;
 	border-radius:10px;
 	margin-top:20px;
+	font-size:large;
+	text-align:center;
 	margin-bottom:10px;
 	/*background-color:transparent;*/
 	opacity:0.6;
@@ -52,7 +58,7 @@ body {
 	transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 .inn3{
-	width:80px;
+	width:110px;
 	height:30px;
 	border-radius:10px;
 	margin-top:20px;
@@ -77,7 +83,7 @@ input:focus{
 ::-moz-input-placeholder{
 	text-indent: 20px;
 	font-size: 16px;
-	text-align: center;
+	text-align: left;
 }
 ::-ms-input-placeholder{
 	text-indent: 20px;
@@ -137,12 +143,12 @@ function checkname(){
 			if(httprequest.status == 200) {
 				if(httprequest.responseText==1)
 					{
-					window.location.href="index.html";
+					window.location.href="userindex";
 					changed()
 					}
 				if(httprequest.responseText==3)
 					{
-						window.location.href="index4.html";
+						window.location.href="adminindex";
 						changed()
 					}
 				else if(httprequest.responseText==2){
@@ -176,11 +182,24 @@ function changed() {
 	document.getElementById("image").src="checkimage?"+Math.random();
 	
 }
+	$(document).ready(function(){
+		$(".out").css("left",($(window).width()-300)/2);
+ 		$(".out").css("top",($(window).height()-400)/2-25);
+		$(".outter").css("left",($(window).width()-250)/2);
+		$(".outter").css("top",($(window).height()-400)/2);
+		$(window).resize(function(){  
+			$(".out").css("left",($(window).width()-300)/2);
+	 		$(".out").css("top",($(window).height()-400)/2-25);
+			$(".outter").css("left",($(window).width()-250)/2);
+			$(".outter").css("top",($(window).height()-400)/2);
+		});
+	});
 </script>
 
 
 </head>
 <body>
+
 <div class="out">密码错误</div>
 <form action="" name="form1" method="post">
 <div class=outter >
@@ -189,7 +208,7 @@ function changed() {
 <tr><td align="center" colspan="2"><img src="img/36ad55dd352e493c3ed8a53f314fb21f.png" width="100px" height="100px" style="opacity:0.8"></td></tr>
 <tr><td colspan="2"><input name="itcode" id="itcode" placeholder="请输入员工号" class=inn1></td></tr>
 <tr><td colspan="2"><input type="password" name="password" id="password" placeholder="请输入密码" class=inn1></td></tr>
-<tr><td><input name="imagecheck" id="imagecheck" placeholder="请输入验证码" class=inn2></td><td align="center" valign="middle"><img name="image" id="image" alt="" src="checkimage" onclick="changed()"></td></tr>
+<tr><td><input name="imagecheck" id="imagecheck" placeholder="验证码" class=inn2></td><td align="center" valign="middle"><img name="image" id="image" alt="" src="checkimage" onclick="changed()"></td></tr>
 <tr><td align="center" valign="middle"><input type="button" value="登录" onclick="checkname()" class="inn3"></td><td align="center" valign="middle"><input type="button" value="注册" onclick="register()" class="inn3"></tr>
 </table>
 </div>

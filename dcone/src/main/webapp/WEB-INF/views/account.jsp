@@ -192,7 +192,7 @@ function checkimage() {
 					} else{
 						$("#div3").html("充值失败");
 						$("#div3").show();
-						setTimeout(() => {
+						setTimeout(function() {
 							$("#div3").hide();
 						}, 3000);
 					}

@@ -50,13 +50,13 @@ body{
 </div>
 <div class="user1">
 <form action="grabluckyrecords" class="bs-example bs-example-form" role="form">
-<table class="table table-striped">
+<table class="table table-striped" align="center">
 <tr>
 	<td style="width: 20%;"><input id="itcode" name="itcode" type="text" class="form-control" placeholder="输入员工号"></td>
 	<td style="width: 20%;"><input id="username" name="username" type="text" class="form-control" placeholder="输入姓名"></td>
-	<td><input id="starttime" name="starttime" type="text" class="Wdate" placeholder="输入开始时间" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})"></td>
-	<td><input id="stoptime" name="stoptime" type="text" class="Wdate" placeholder="输入截止时间" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})"></td>
-	<td><div class="input-group" >
+	<td align="center"><input id="starttime" name="starttime" type="text" class="Wdate" placeholder="输入开始时间" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})">
+	<input id="stoptime" name="stoptime" type="text" class="Wdate" placeholder="输入截止时间" onClick="WdatePicker({el:this,dateFmt:'yyyy-MM-dd HH:mm:ss'})"></td>
+	<td colspan="2"><div class="input-group" >
 		<input id="round" name="round" type="text" class="form-control" placeholder="输入抢红包轮数">
 			<span class="input-group-btn">
 				<button id="button2" class="btn btn-default" type="submit">查询</button> 

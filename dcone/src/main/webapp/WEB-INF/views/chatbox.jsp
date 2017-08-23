@@ -90,6 +90,7 @@ setInterval('startrefresh1()',1000);
 		//$("#div3").width($("#div1")[0].offsetWidth)
 		$("#div1").load("frame_b");
 		$("#div2").load("frame_a");
+		$('#div1').scrollTop($('#div1')[0].scrollHeight);
 		$("textarea").keydown(function(e){ 
 		var curKey = e.which; 
 		if (e.ctrlKey && e.which ==13){ 
@@ -105,6 +106,7 @@ setInterval('startrefresh1()',1000);
 				$.post("setMessage",{
 					text:$("#text").val()
 				},function(data,status){
+					$('#div1').scrollTop($('#div1')[0].scrollHeight);
 					$("#text").val('');
 				});
 			}

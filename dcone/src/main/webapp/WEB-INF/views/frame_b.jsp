@@ -19,6 +19,8 @@ font-size: 15px;
 	padding:5px;
 	min-width:20px;
 	min-height:20px;
+	word-break: break-all;
+	max-width:300px;
 	opacity:0.6;
 	border: 1px solid;
 	border-radius: 10px;
@@ -34,6 +36,8 @@ font-size: 15px;
 	float:right;
 	min-width:20px;
 	min-height:20px;
+	word-break: break-all;
+	max-width:300px;
 	padding:5px;
 	opacity:0.6;
 	border: 1px solid;
@@ -72,11 +76,11 @@ font-size: 15px;
  */</style>
 <script type="text/javascript">
 <%
-	if((dc_user)session.getAttribute("user")==null){
+if((dc_user)session.getAttribute("user")==null){
 %>
-		window.parent.location.href="login";
+	window.parent.location.href="login";
 <% 	
-	}
+}
 %>
 </script>
 </head>

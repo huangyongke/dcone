@@ -12,18 +12,22 @@
 body {
 	background-image: url(img/luanchbackground.jpg);
 	background-size: cover;
+	
 }
 .outter{
-	
-	position: relative;
-	top:75px;
-	left: 500px;
+	position: absolute;
+	top:12%;
+	left: 40%;
+	width: 250px;
+	heigth:400px;
 }
 .inn1{
 	width:235px;
 	height:38px;
 	border-radius:10px;
 	margin-top:3px;
+	font-size:large;
+	text-align:center;
 	margin-bottom:3px;
 	/*background-color:transparent;*/
 	opacity:0.6;
@@ -31,10 +35,12 @@ body {
 	transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 .inn2{
-	width:110px;
+	width:50px;
 	height:38px;
 	border-radius:10px;
 	margin-top:20px;
+	text-align:center;
+	font-size:large;
 	margin-bottom:10px;
 	/*background-color:transparent;*/
 	opacity:0.6;
@@ -212,6 +218,16 @@ function check() {
  
  
  	$(document).ready(function(){
+ 		$(".out").css("left",($(window).width()-300)/2);
+ 		$(".out").css("top",($(window).height()-400)/2-20);
+ 		$(".outter").css("left",($(window).width()-250)/2);
+		$(".outter").css("top",($(window).height()-400)/2);
+		$(window).resize(function(){  
+			$(".out").css("left",($(window).width()-300)/2);
+			$(".out").css("top",($(window).height()-400)/2-20);
+			$(".outter").css("left",($(window).width()-250)/2);
+			$(".outter").css("top",($(window).height()-400)/2);
+		});
  		$("#closed").click(function(){
 			$("#div1").hide()
 			$("#layout").hide()
@@ -241,7 +257,6 @@ function checkname(){
 					setTimeout(() => {
 						$(".out").hide();
 					}, 3000);
-					document.getElementById("info").innerHTML="注册失败！用户名和员工号不匹配;";
 					changed()
 					}
 				else if(h==1)
@@ -257,7 +272,6 @@ function checkname(){
 					setTimeout(() => {
 						$(".out").hide();
 					}, 3000);
-					document.getElementById("info").innerHTML="注册失败！";
 					changed()
 					}
 				else if(h==3){
@@ -295,6 +309,7 @@ function checkname(){
 <body>
 <div class="out"></div>
 <div id="layout"></div>
+
 <div id="div1" class="div1">
 	<div id="closed">X</div>
 	<span style="position: absolute;top: 20%;left:35%;font-size:xx-large; ;">注册成功</span><br>
@@ -307,7 +322,7 @@ function checkname(){
 </div>
 
 <form action="" name="form1" method="get" onsubmit="">
-<table style="position:absolute;left: 40%;top: 20%;">
+<table class="outter">
 <caption style="font-size:xx-large;position:relative; left: 90px;">注册</caption>
 <tr><td colspan="2" align="center"><div id="info" style="color: red;"></div></td></tr>
 <tr>

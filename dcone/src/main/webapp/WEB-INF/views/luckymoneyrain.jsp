@@ -24,7 +24,7 @@ body{
 	opacity:0.5; 
 	filter:alpha(opacity=50); 
 	cursor:pointer;
-	
+	z-index: 100px;
 }
 .user1{
 	position: absolute;
@@ -47,6 +47,7 @@ body{
 	width: 200px;
 	height: 100px;
 	background-color: #ffa400;
+	z-index:1;
 }
 .redpacket{
 	position: absolute;
@@ -94,13 +95,10 @@ body{
 						$(".out").hide();
 					}, 3000);
 				}
+				doc();
 			});
 		});
 		$(".layout").click(function(){
-			$(".layout").hide();
-			$("#fdiv").html("");
-		});
-		$("#5").click(function(){
 			$(".layout").hide();
 			$("#fdiv").html("");
 			clearInterval($("#6").val());
@@ -122,9 +120,10 @@ body{
 	}
 	function do2(i){
 		var wid=$("#fdiv").width();
-		var left = Math.ceil(Math.random()*(wid-40));
+		var left = Math.ceil(Math.random()*(wid-50));
 		$("#div"+i).css("left", "1"*left);
 		$("#div"+i).css("top","0");
+		$("#div"+i).css("z-index", "10");
 		$("#div"+i).show();
 		$("#div"+i).animate({top:'80%'},1900);
 		setTimeout(() => {
@@ -153,10 +152,9 @@ body{
 </ul>
 </div>
 <div class="user1">
-<div id="fdiv"></div>
+<div id="fdiv" style="z-index:100"></div>
 <div class="out"></div>
 <div style="position: absolute;left: 43%;top: 80%;">
-<input type="button" class="btn btn-info" value="停止特效" id="5">
 <input type="hidden" id="6">
 </div>
 <div id="1" class="div1" style="position: absolute;left:20%;top:20%;">

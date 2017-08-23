@@ -1,7 +1,9 @@
-<!doctype html>
-<html lang="zh">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-	<meta charset="UTF-8">
+<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>主界面</title>
@@ -29,11 +31,11 @@
 	});
 </script>
 <style type="text/css">
-body.dm-demo4 {
+/* body.dm-demo4 {
   background-image:url("img/space.jpg");
   background-size: cover;
 }
-body.dm-demo4 .overlay {
+ */body.dm-demo4 .overlay {
   background-image:url("img/space.jpg");
   background-size: cover;
 }
@@ -61,6 +63,9 @@ button.ie{
 </style>
 </head>
 <body class="dm-demo4">
+<div style="position:absolute; width:100%; height:100%; z-index:-1">    
+	<img src="img/space.jpg" height="100%" width="100%"/>    
+	</div> 
 	<div class="backbutton">
 	<button id="back" class="ie">&nbsp;</button>
 	</div>
@@ -79,7 +84,6 @@ button.ie{
         <!-- Overlay (hidden by default)-->
         <section class="overlay" id="ov-topleft">
         	<iframe style="width: 100%;height: 100%;" src="chatbox">
-           
            
            </iframe>
             <button class="close"><span class="mfg-cancel"></span></button>
